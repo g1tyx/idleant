@@ -16,7 +16,7 @@ webpackEmptyContext.id = "../../../../../src async recursive";
 /***/ "../../../../../src/app/action/action.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card-block\">\n  <h3 class=\"card-title\"> {{action.name}}\n    <span *ngIf=\"!action.oneTime && action.showNumber\">({{action.quantity | format}})</span>\n  </h3>\n\n  <div class=\"toggle-switch hide\" *ngIf=\"action.showHide\">\n    <input type=\"checkbox\" [id]=\"action.getId()\" [(ngModel)]=\"action.show\">\n    <label [for]=\"action.getId()\">显示</label>\n  </div>\n\n  <p class=\"card-text\">\n    <span>{{action.description}} &nbsp;</span>\n    <br/>\n    <span *ngIf=\"!action.oneTime\">获取1个会花费：</span>\n    <span *ngIf=\"action.oneTime\">花费:</span>\n    <span *ngFor=\"let p of action.realPriceNow\" [ngClass]=\"{'notEnought': p.basePrice.greaterThan(p.unit.quantity)}\">\n      {{numberformat.formatShort(p.basePrice)}} {{p.unit.name}},\n    </span>\n    <br/>\n  </p>\n\n  <div *ngIf=\"action.maxBuy.greaterThanOrEqualTo(1)\">\n\n    <div class=\"form-group\" *ngIf=\"!action.oneTime\" class=\"toggle\">\n      <label>获取： </label>\n      <input type=\"number\" placeholder=\"1\" [(ngModel)]=\"required\" class=\"numIn\" min=\"1\">\n      <span>个</span>\n    </div>\n\n    <div class=\"form-group\">\n      <div class=\"btn-group w-100\" role=\"group\">\n\n        <button type=\"button\" class=\"btn btn-secondary w-100\" (click)=\"action.buy(getReqNum())\" [disabled]=\"!action.maxBuy.greaterThanOrEqualTo(1)\">\n          <span *ngIf=\"!action.oneTime\">{{getPriceString1()}}</span>\n          <span *ngIf=\"action.oneTime\">获取</span>\n        </button>\n        <button type=\"button \" class=\"btn btn-secondary w-100\" (click)=\"action.buy(action.maxBuy.div(2).ceil())\"\n          *ngIf=\"action.maxBuy.greaterThanOrEqualTo(3)\">\n          <span>{{getBuyStringHalf()}}</span>\n        </button>\n        <button type=\"button\" class=\"btn btn-secondary w-100\" (click)=\"action.buy(action.maxBuy)\" *ngIf=\"action.maxBuy.greaterThanOrEqualTo(2)\">\n          <span>{{getBuyStringMax()}}</span>\n        </button>\n      </div>\n    </div>\n\n  </div>\n\n  <div *ngIf=\"!action.maxBuy.greaterThanOrEqualTo(1) && !(action.oneTime && action.owned())\">\n    <div class=\"progress-block\" *ngFor=\"let cost of action.realPriceNow; trackBy:getPriceId\">\n      <label>{{cost.basePrice | format}}&nbsp;{{cost.unit.name}}</label>\n      <div class=\"progress-static\" [ngClass]=\"{'success': cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice), 'danger': !cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice)}\">\n        <div class=\"progress-meter\" max=\"100\" attr.data-value=\"{{Math.min(cost.unit.quantity.times(100).div(cost.basePrice).floor().toNumber(),100)}}\">\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>\n"
+module.exports = "<div class=\"card-block\">\n  <h3 class=\"card-title\"> {{action.name}}\n    <span *ngIf=\"!action.oneTime && action.showNumber\">({{action.quantity | format}})</span>\n  </h3>\n\n  <div class=\"toggle-switch hide\" *ngIf=\"action.showHide\">\n    <input type=\"checkbox\" [id]=\"action.getId()\" [(ngModel)]=\"action.show\">\n    <label [for]=\"action.getId()\">Show</label>\n  </div>\n\n  <p class=\"card-text\">\n    <span>{{action.description}} &nbsp;</span>\n    <br/>\n    <span *ngIf=\"!action.oneTime\">获取1个会花费：</span>\n    <span *ngIf=\"action.oneTime\">花费:</span>\n    <span *ngFor=\"let p of action.realPriceNow\" [ngClass]=\"{'notEnought': p.basePrice.greaterThan(p.unit.quantity)}\">\n      {{numberformat.formatShort(p.basePrice)}} {{p.unit.name}},\n    </span>\n    <br/>\n  </p>\n\n  <div *ngIf=\"action.maxBuy.greaterThanOrEqualTo(1)\">\n\n    <div class=\"form-group\" *ngIf=\"!action.oneTime\" class=\"toggle\">\n      <label>获取： </label>\n      <input type=\"number\" placeholder=\"1\" [(ngModel)]=\"required\" class=\"numIn\" min=\"1\">\n      <span>个</span>\n    </div>\n\n    <div class=\"form-group\">\n      <div class=\"btn-group w-100\" role=\"group\">\n\n        <button type=\"button\" class=\"btn btn-secondary w-100\" (click)=\"action.buy(getReqNum())\" [disabled]=\"!action.maxBuy.greaterThanOrEqualTo(1)\">\n          <span *ngIf=\"!action.oneTime\">{{getPriceString1()}}</span>\n          <span *ngIf=\"action.oneTime\">获取</span>\n        </button>\n        <button type=\"button \" class=\"btn btn-secondary w-100\" (click)=\"action.buy(action.maxBuy.div(2).ceil())\"\n          *ngIf=\"action.maxBuy.greaterThanOrEqualTo(3)\">\n          <span>{{getBuyStringHalf()}}</span>\n        </button>\n        <button type=\"button\" class=\"btn btn-secondary w-100\" (click)=\"action.buy(action.maxBuy)\" *ngIf=\"action.maxBuy.greaterThanOrEqualTo(2)\">\n          <span>{{getBuyStringMax()}}</span>\n        </button>\n      </div>\n    </div>\n\n  </div>\n\n  <div *ngIf=\"!action.maxBuy.greaterThanOrEqualTo(1) && !(action.oneTime && action.owned())\">\n    <div class=\"progress-block\" *ngFor=\"let cost of action.realPriceNow; trackBy:getPriceId\">\n      <label>{{cost.basePrice | format}}&nbsp;{{cost.unit.name}}</label>\n      <div class=\"progress-static\" [ngClass]=\"{'success': cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice), 'danger': !cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice)}\">\n        <div class=\"progress-meter\" max=\"100\" attr.data-value=\"{{Math.min(cost.unit.quantity.times(100).div(cost.basePrice).floor().toNumber(),100)}}\">\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -163,7 +163,7 @@ var _a;
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<clr-main-container>\n\n  <clr-header class=\"header-5\">\n    <div class=\"branding\">\n      <a href=\"javascript://\" class=\"nav-link\" routerLink=\"/main/unit\">\n        <!-- <clr-icon shape=\"vm-bug\"></clr-icon> -->\n\n        <span class=\"title\">蚂蚁放置</span>\n      </a>\n    </div>\n    <div class=\"header-nav\" [clr-nav-level]=\"1\">\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/main/unit\">单位</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/lab\" *ngIf=\"gameService.game.baseWorld.science.unlocked\">实验室</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/prestige\" *ngIf=\"gameService.game.worldTabAv\">旅行</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/main/exp\" *ngIf=\"gameService.game.expTabAv\">经验</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/world\" *ngIf=\"gameService.game.homeTabAv\">世界</a>\n\n    </div>\n    <div class=\"header-actions\">\n<a class=\"nav-link nav-icon\" href=\"https://zhaolinxu.github.io/IdleAnt/\" title=\"游戏不能直接刷新，想刷新页面请先“导出存档”并备份，然后点这里，！\">\n        刷新页面\n      </a>\n      <clr-dropdown>\n        <button class=\"nav-icon\" clrDropdownTrigger>\n          <clr-icon shape=\"tools\"></clr-icon>\n          <clr-icon shape=\"caret down\"></clr-icon>\n        </button>\n        <clr-dropdown-menu *clrIfOpen clrPosition=\"bottom-right\">\n          <a clrDropdownItem (click)=\"all100()\">全部 100%</a>\n\n          <clr-dropdown *ngFor=\"let list of gameService.game.lists | filterListNotEmpty; trackBy:getListId\">\n            <button type=\"button\" clrDropdownTrigger>{{list.type}}</button>\n            <clr-dropdown-menu clrPosition=\"left-top\">\n              <a clrDropdownItem (click)=\"list.allCustom(p)\" *ngFor=\"let p of percentPreset\">{{p}}%</a>\n            </clr-dropdown-menu>\n          </clr-dropdown>\n\n\n        </clr-dropdown-menu>\n      </clr-dropdown>\n\n      <a class=\"nav-link nav-icon\" href=\"javascript://\" (click)=\"opeTimeWarp()\" *ngIf=\"gameService.game.prestige.timeMaker.quantity.greaterThan(0)\">\n        <clr-icon shape=\"clock\"></clr-icon>\n      </a>\n\n      <a class=\"nav-link nav-icon\" href=\"javascript://\" (click)=\"gameService.game.pause = !gameService.game.pause\">\n        <clr-icon shape=\"play\" *ngIf=\"gameService.game.pause; else pauseB\"></clr-icon>\n        <ng-template #content #pauseB>\n          <clr-icon shape=\"pause\"></clr-icon>\n        </ng-template>\n      </a>\n\n      <a href=\"javascript://\" class=\"nav-link nav-icon\" routerLink=\"/options\">\n        <clr-icon shape=\"cog\"></clr-icon>\n      </a>\n\n    </div>\n  </clr-header>\n\n  <!-- Top Material Nav -->\n  <nav class=\"subnav\">\n    <ul class=\"nav navMat\">\n      <li class=\"nav-item\" class=\"matTab\" *ngFor=\"let g of gameService.game.baseWorld.listMaterial | filterMax\">\n        <a [routerLink]=\"['/main/unit/unit/'+g.id]\" class=\"nav-link matLink\" routerLinkActive=\"active\" [ngClass]=\"{'red': g.isEnding()}\">\n\n          <span style=\"display:block;\">\n            <clr-icon class=\"is-info\" shape=\"angle-double\" *ngIf=\"g.showUp\"></clr-icon>\n            <clr-icon class=\"alert-icon is-error\" shape=\"exclamation-triangle\" *ngIf=\"g.isEnding()\"></clr-icon>\n            <span class=\"first\">{{g.name}}</span>\n          </span>\n\n          <span class=\"perSecTab small\">\n            <span *ngIf=\"g.totalPerSec.abs().greaterThan(0.001)\">\n              {{g.totalPerSec | format}}/s\n            </span>\n          </span>\n          <span class=\"small\">{{g.quantity | format}}</span>\n\n        </a>\n      </li>\n    </ul>\n  </nav>\n\n  <router-outlet></router-outlet>\n\n  <clr-modal [(clrModalOpen)]=\"gameService.game.timeModalOpened\">\n    <h3 class=\"modal-title\">时间扭曲</h3>\n    <div class=\"modal-body actMinH\" *ngIf=\"gameService.game.actMin && gameService.game.actHour\">\n      <span> 你可以跳过 {{totTime()}}</span>\n      <app-action [action]=\"gameService.game.actMin\"></app-action>\n      <app-action [action]=\"gameService.game.actHour\"></app-action>\n    </div>\n  </clr-modal>\n\n</clr-main-container>\n"
+module.exports = "<clr-main-container>\n\n  <clr-header class=\"header-5\">\n    <div class=\"branding\">\n      <a href=\"javascript://\" class=\"nav-link\" routerLink=\"/main/unit\">\n        <!-- <clr-icon shape=\"vm-bug\"></clr-icon> -->\n\n        <span class=\"title\">蚂蚁放置</span>\n      </a>\n    </div>\n    <div class=\"header-nav\" [clr-nav-level]=\"1\">\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/main/unit\">单位</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/lab\" *ngIf=\"gameService.game.baseWorld.science.unlocked\">实验室</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/prestige\" *ngIf=\"gameService.game.worldTabAv\">旅行</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/main/exp\" *ngIf=\"gameService.game.expTabAv\">经验</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/world\" *ngIf=\"gameService.game.homeTabAv\">世界</a>\n\n    </div>\n    <div class=\"header-actions\">\n<a class=\"nav-link nav-icon\" href=\"http://likexia.gitee.io/idleant/\" title=\"游戏不能直接刷新，想刷新页面请先“导出存档”并备份，然后点这里，！\">\n        刷新页面\n      </a>\n      <clr-dropdown>\n        <button class=\"nav-icon\" clrDropdownTrigger>\n          <clr-icon shape=\"tools\"></clr-icon>\n          <clr-icon shape=\"caret down\"></clr-icon>\n        </button>\n        <clr-dropdown-menu *clrIfOpen clrPosition=\"bottom-right\">\n\n          <clr-dropdown *ngIf=\"gameService.game.prestige.timeMaker.quantity.greaterThan(0)\">\n            <button type=\"button\" clrDropdownTrigger>时间扭曲</button>\n            <clr-dropdown-menu clrPosition=\"left-top\">\n              <a clrDropdownItem (click)=\"warp(p)\" *ngFor=\"let p of minuteWarps\"\n               [ngClass]=\"{'disabled': !warpAv(p)}\">\n                扭曲 {{p}} 分钟\n              </a>\n            </clr-dropdown-menu>\n          </clr-dropdown>\n\n          <a clrDropdownItem (click)=\"all100()\">全部 100%</a>\n\n          <clr-dropdown *ngFor=\"let list of gameService.game.lists | filterListNotEmpty; trackBy:getListId\">\n            <button type=\"button\" clrDropdownTrigger>{{list.type}}</button>\n            <clr-dropdown-menu clrPosition=\"left-top\">\n              <a clrDropdownItem (click)=\"list.allCustom(p)\" *ngFor=\"let p of percentPreset\">{{p}}%</a>\n            </clr-dropdown-menu>\n          </clr-dropdown>\n\n\n        </clr-dropdown-menu>\n      </clr-dropdown>\n\n      <a class=\"nav-link nav-icon\" href=\"javascript://\" (click)=\"opeTimeWarp()\" *ngIf=\"gameService.game.prestige.timeMaker.quantity.greaterThan(0)\">\n        <clr-icon shape=\"clock\"></clr-icon>\n      </a>\n\n      <a class=\"nav-link nav-icon\" href=\"javascript://\" (click)=\"gameService.game.pause = !gameService.game.pause\">\n        <clr-icon shape=\"play\" *ngIf=\"gameService.game.pause; else pauseB\"></clr-icon>\n        <ng-template #content #pauseB>\n          <clr-icon shape=\"pause\"></clr-icon>\n        </ng-template>\n      </a>\n\n      <a href=\"javascript://\" class=\"nav-link nav-icon\" routerLink=\"/options\">\n        <clr-icon shape=\"cog\"></clr-icon>\n      </a>\n\n    </div>\n  </clr-header>\n\n  <!-- Top Material Nav -->\n  <nav class=\"subnav\">\n    <ul class=\"nav navMat\">\n      <li class=\"nav-item\" class=\"matTab\" *ngFor=\"let g of gameService.game.baseWorld.listMaterial | filterMax\">\n        <a [routerLink]=\"['/main/unit/unit/'+g.id]\" class=\"nav-link matLink\" routerLinkActive=\"active\" [ngClass]=\"{'red': g.isEnding()}\">\n\n          <span style=\"display:block;\">\n            <clr-icon class=\"is-info\" shape=\"angle-double\" *ngIf=\"g.showUp\"></clr-icon>\n            <clr-icon class=\"alert-icon is-error\" shape=\"exclamation-triangle\" *ngIf=\"g.isEnding()\"></clr-icon>\n            <span class=\"first\">{{g.name}}</span>\n          </span>\n\n          <span class=\"perSecTab small\">\n            <span *ngIf=\"g.totalPerSec.abs().greaterThan(0.001)\">\n              {{g.totalPerSec | format}}/s\n            </span>\n          </span>\n          <span class=\"small\">{{g.quantity | format}}</span>\n\n        </a>\n      </li>\n    </ul>\n  </nav>\n\n  <router-outlet></router-outlet>\n\n  <clr-modal [(clrModalOpen)]=\"gameService.game.timeModalOpened\">\n    <h3 class=\"modal-title\">时间扭曲</h3>\n    <div class=\"modal-body actMinH\" *ngIf=\"gameService.game.actMin && gameService.game.actHour\">\n      <span> 你可以跳过 {{totTime()}}</span>\n      <app-action [action]=\"gameService.game.actMin\"></app-action>\n      <app-action [action]=\"gameService.game.actHour\"></app-action>\n    </div>\n  </clr-modal>\n\n</clr-main-container>\n"
 
 /***/ }),
 
@@ -175,7 +175,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".nowrap {\n  white-space: nowrap;\n  overflow: hidden; }\n\n:host /deep/ .content-area {\n  padding: 10px 24px 24px 24px !important; }\n\n.matTab {\n  width: 10%;\n  max-width: 110px;\n  margin-left: 5px; }\n\n.matLink {\n  width: 100%;\n  line-height: 24px;\n  border-style: solid;\n  border-width: 0px 1px 0px 0px; }\n\n.navMat {\n  padding-left: 5px;\n  height: 48px; }\n\n.perSecTab {\n  float: right; }\n\n.main-container .subnav {\n  -webkit-box-flex: 0;\n      -ms-flex: 0 0 48px;\n          flex: 0 0 48px; }\n\n.red {\n  color: #F52F22 !important; }\n\n.small {\n  font-size: 13px; }\n\n.actMinH {\n  min-height: 400px; }\n", ""]);
+exports.push([module.i, ".nowrap {\n  white-space: nowrap;\n  overflow: hidden; }\n\n:host /deep/ .content-area {\n  padding: 10px 24px 24px 24px !important; }\n\n.matTab {\n  width: 10%;\n  max-width: 110px;\n  margin-left: 5px; }\n\n.matLink {\n  width: 100%;\n  line-height: 24px;\n  border-style: solid;\n  border-width: 0px 1px 0px 0px; }\n\n.navMat {\n  padding-left: 5px;\n  height: 48px; }\n\n.perSecTab {\n  float: right; }\n\n.main-container .subnav {\n  -webkit-box-flex: 0;\n      -ms-flex: 0 0 48px;\n          flex: 0 0 48px; }\n\n.red {\n  color: #F52F22 !important; }\n\n.small {\n  font-size: 13px; }\n\n.actMinH {\n  min-height: 400px; }\n\n:host /deep/ clr-tree-node {\n  overflow-y: visible !important; }\n", ""]);
 
 // exports
 
@@ -214,6 +214,7 @@ var AppComponent = (function () {
         this.gameService = gameService;
         this.toastr = toastr;
         this.percentPreset = [100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0];
+        this.minuteWarps = [1, 5, 10, 20, 30, 60, 90, 120, 240];
         this.toastr.setRootViewContainerRef(vcr);
     }
     AppComponent.prototype.opeTimeWarp = function () {
@@ -227,6 +228,12 @@ var AppComponent = (function () {
     AppComponent.prototype.all100 = function () {
         this.gameService.game.all.forEach(function (u) { return u.percentage = 100; });
         this.gameService.game.isChanged = true;
+    };
+    AppComponent.prototype.warp = function (minute) {
+        this.gameService.game.actMin.buy(Decimal(minute));
+    };
+    AppComponent.prototype.warpAv = function (minute) {
+        return this.gameService.game.actMin.maxBuy.greaterThanOrEqualTo(Decimal(minute));
     };
     return AppComponent;
 }());
@@ -524,13 +531,15 @@ var GameService = (function () {
         localStorage.clear();
         this.game = new __WEBPACK_IMPORTED_MODULE_0__model_gameModel__["a" /* GameModel */]();
     };
-    GameService.prototype.save = function () {
+    GameService.prototype.save = function (timer) {
+        if (timer === void 0) { timer = true; }
         try {
             if (typeof (Storage) !== 'undefined') {
                 var save = this.game.getSave();
                 localStorage.setItem('save', save);
                 console.log("Saved");
-                this.toastr.success("", 'Game Saved');
+                if (!timer || !this.game.hideSaveNotification)
+                    this.toastr.success("", 'Game Saved');
             }
             else {
                 this.toastr.warning("Canot access local storage", "Not saved");
@@ -935,6 +944,8 @@ var GameModel = (function () {
     function GameModel() {
         this.isChanged = true;
         this.timeToEnd = Number.POSITIVE_INFINITY;
+        this.gameVersion = "0.1.3";
+        this.hideSaveNotification = false;
         //#region
         //    Cost
         this.buyExp = Decimal(1.1);
@@ -1169,9 +1180,9 @@ var GameModel = (function () {
             this.checkResearch();
         if (this.activeUnit)
             this.activeUnit.reloadAtcMaxBuy();
-        if (this.timeModalOpened) {
-            this.prestige.time.reloadAtcMaxBuy();
-        }
+        // if (this.timeModalOpened) {
+        this.prestige.time.reloadAtcMaxBuy();
+        // }
     };
     /**
      * Perform an update without handling negative quantity number, can result in negative quantity.
@@ -1263,8 +1274,8 @@ var GameModel = (function () {
         save.ml = this.maxLevel;
         save.htv = this.homeTabAv;
         save.pause = this.pause;
-        // save.gameVers = "0.0.1"
-        save.gameVers = "0.1.0";
+        save.hsn = this.hideSaveNotification;
+        save.gameVers = this.gameVersion;
         return __WEBPACK_IMPORTED_MODULE_7_lz_string__["compressToBase64"](JSON.stringify(save));
     };
     /**
@@ -1341,6 +1352,8 @@ var GameModel = (function () {
             }
             if (save.pause)
                 this.pause = true;
+            if (save.hsn)
+                this.hideSaveNotification = save.hsn;
             this.reloadProduction();
             this.unitLists.splice(0, this.unitLists.length);
             //  this.reloadList()
@@ -2489,7 +2502,7 @@ var BaseWorld = (function () {
         this.listMaterial.push(this.science);
         this.fungus = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "fun", "真菌", "真菌是食物的来源。");
         this.listMaterial.push(this.fungus);
-        this.wood = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "wood", "木头", "木材用来制作更好的巢和机械。");
+        this.wood = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "wood", "木头", "木材用来制作更好的巢和机器。");
         this.listMaterial.push(this.wood);
         this.sand = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "sand", "沙子", "沙子可以用来制造水晶。");
         this.listMaterial.push(this.sand);
@@ -3360,7 +3373,7 @@ var Infestation = (function () {
         this.listInfestation = new Array();
         this.poisonousPlant = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "poisPlant", "有毒植物", "这种植物可以把他们全部杀死。");
         this.poisonousPlant2 = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "poisPlant2", "老有毒植物", "处理有毒植物！");
-        this.disinfestationAnt = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "defAnt", "消灭者蚂蚁", "摧毁有毒植物。");
+        this.disinfestationAnt = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "defAnt", "消灭蚂蚁", "摧毁有毒植物。");
         this.flametrowerAnt = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "flameAnt", "火焰蚂蚁", "烧掉有毒植物。");
         this.weedkiller = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "weedkiller", "除草剂", "有效地破坏有毒植物。");
         this.chemistAnt = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "chemistAnt", "化学家蚂蚁", "处理除草剂。");
@@ -3855,11 +3868,11 @@ var Prestige = (function () {
         this.timeBank = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this.game, "ptimeBank", "时间银行", "时间银行将最长存储时间增加1小时。 基地储存4小时。", true);
         this.timeMaker.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.timeMaker, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, Decimal(25), expIncrement)]));
         this.timeBank.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.timeBank, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, Decimal(100), expIncrement)]));
-        this.game.actMin = new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* TimeWarp */](this.game, Decimal(60), "分钟");
-        this.game.actHour = new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* TimeWarp */](this.game, Decimal(3600), "小时");
+        this.game.actMin = new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* TimeWarp */](this.game, Decimal(60), "Minutes");
+        this.game.actHour = new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* TimeWarp */](this.game, Decimal(3600), "Hours");
         this.time.actions.push(this.game.actMin);
         this.time.actions.push(this.game.actHour);
-        this.time.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* TimeWarp */](this.game, Decimal(3600 * 24), "天"));
+        this.time.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* TimeWarp */](this.game, Decimal(3600 * 24), "Days"));
         // this.time.addProductor(new Production(this.timeMaker, Decimal(0.1)))
         this.timeList = [this.time, this.timeMaker, this.timeBank];
         this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("时间管理", this.timeList));
@@ -3916,20 +3929,6 @@ var Researchs = (function () {
             _this.game.world.toUnlock.forEach(function (t) { return t.basePrice = t.basePrice.times(5); });
             _this.game.world.experience = _this.game.world.experience.times(3);
         });
-        //    Missing
-        // this.missing = new Research(
-        //   "missing",
-        //   "Missing", "Get 50% of missing world travel requirement.",
-        //   [new Cost(this.game.baseWorld.science, Decimal(2E11))],
-        //   [],
-        //   this.game,
-        //   () => {
-        //     this.game.world.toUnlock.filter(t => t.basePrice.greaterThan(t.unit.quantity))
-        //       .forEach(t => t.unit.quantity = t.unit.quantity.plus(
-        //         t.basePrice.minus(t.unit.quantity).div(2)
-        //       ))
-        //   }
-        // )
         //    Escape
         this.escape = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("escapism", "逃避", "降低50％前往一个新的世界的资源需求。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(5E10))], [], this.game, function () {
             _this.game.world.toUnlock.forEach(function (t) { return t.basePrice = t.basePrice.div(2); });
@@ -3961,14 +3960,6 @@ var Researchs = (function () {
         //    Scientific Method
         this.scientificMethod = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("scientificMethod", "科学方法", "科学生产 +100%", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(4E3))], [this.universityRes], this.game);
         this.game.baseWorld.science.bonusProduction.push([this.scientificMethod, Decimal(1)]);
-        // //    Stage
-        // this.stageRes = new Research(
-        //   "stageRes",
-        //   "Stage", "Stage.",
-        //   [new Cost(this.game.baseWorld.science, Decimal(3E6))],
-        //   this.game.machines.stageList,
-        //   this.game
-        // )
         var deps = this.game.engineers.listDep;
         this.departmentRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("departementsRes", "部门", "部门产生工程师。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E11))], deps, this.game);
         //    Engineer
@@ -4129,7 +4120,7 @@ var Science = (function () {
 /***/ "../../../../../src/app/options/options.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"content-area\">\n  <p>\n    游戏每3分钟自动保存。 您还可以手动保存，加载和导出保存游戏。 游戏存档存储在本地存储中，如果你没有备份存档，请不要清除浏览器缓存。\n  </p>\n  <strong>警告：重置按钮将会删除你的所有游戏记录，从零开始游戏！</strong>\n\n  <div class=\"form-group\">\n    <button class=\"btn btn-success\" (click)=\"save($event)\">保存</button>\n    <button class=\"btn btn-primary\" (click)=\"load($event)\">加载</button>\n    <button class=\"btn btn-danger\" (click)=\"clear($event)\">重置</button>\n  </div>\n  <div class=\"form-group\">\n    <h5>导出 / 导入存档</h5>\n    <label for=\"save\">保存</label>\n    <textarea ref-textarea class=\"form-control\" rows=\"6\" id=\"save\" [(ngModel)]=\"stringSave\"></textarea>\n    <button class=\"btn btn-success\" (click)=\"export($event)\">导出</button>\n    <button class=\"btn btn-primary\" (click)=\"import($event)\">导入</button>\n  </div>\n\n  <a href=\"https://zhaolinxu.github.io/IdleAnt/changelog.txt\" target=\"_blank\">更新日志</a>\n</div>\n"
+module.exports = "<div class=\"content-area\">\n  <p>\n    游戏每3分钟自动保存。 您还可以手动保存，加载和导出保存游戏。 游戏存档存储在本地存储中，如果你没有备份存档，请不要清除浏览器缓存。\n  </p>\n  <strong>警告：重置按钮将会删除你的所有游戏记录，从零开始游戏！</strong>\n\n  <div class=\"form-group\">\n    <button class=\"btn btn-success\" (click)=\"save($event)\">保存</button>\n    <button class=\"btn btn-primary\" (click)=\"load($event)\">加载</button>\n    <button class=\"btn btn-danger\" (click)=\"clear($event)\">重置</button>\n  </div>\n  <div class=\"form-group\">\n    <h5>导出 / 导入存档</h5>\n    <label for=\"save\">保存</label>\n    <textarea ref-textarea class=\"form-control\" rows=\"6\" id=\"save\" [(ngModel)]=\"stringSave\"></textarea>\n    <button class=\"btn btn-success\" (click)=\"export($event)\">导出</button>\n    <button class=\"btn btn-primary\" (click)=\"import($event)\">导入</button>\n  </div>\n\n  <div class=\"toggle-switch\">\n    <input type=\"checkbox\" id=\"toggle_1\" [(ngModel)]=\"gameService.game.hideSaveNotification\">\n    <label for=\"toggle_1\">隐藏成功保存通知</label>\n  </div><br/>\n  <span>版本号: {{gameService.game.gameVersion}}</span>\n  <a href=\"http://likexia.gitee.io/idleant/changelog.txt\" target=\"_blank\">更新日志</a>\n</div>\n"
 
 /***/ }),
 
@@ -4178,14 +4169,14 @@ var OptionsComponent = (function () {
     OptionsComponent.prototype.ngOnInit = function () {
         preventScroll();
     };
-    OptionsComponent.prototype.save = function (event) { this.gameService.save(); };
+    OptionsComponent.prototype.save = function (event) { this.gameService.save(false); };
     OptionsComponent.prototype.load = function (event) { this.gameService.load(); };
     OptionsComponent.prototype.clear = function (event) { this.gameService.clear(); };
     OptionsComponent.prototype.export = function (event) {
         this.stringSave = this.gameService.game.getSave();
     };
     OptionsComponent.prototype.import = function (event) {
-        this.gameService.game.load(this.stringSave);
+        this.gameService.game.load(this.stringSave.trim());
     };
     return OptionsComponent;
 }());
