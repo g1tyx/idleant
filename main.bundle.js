@@ -16,7 +16,7 @@ webpackEmptyContext.id = "../../../../../src async recursive";
 /***/ "../../../../../src/app/action/action.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card-block\">\n  <h3 class=\"card-title\"> {{action.name}}\n    <span *ngIf=\"!action.oneTime && action.showNumber\">({{action.quantity | format}})</span>\n  </h3>\n\n  <div class=\"toggle-switch hide\" *ngIf=\"action.showHide\">\n    <input type=\"checkbox\" [id]=\"action.getId()\" [(ngModel)]=\"action.show\">\n    <label [for]=\"action.getId()\">Show</label>\n  </div>\n\n  <p class=\"card-text\">\n    <span>{{action.description}} &nbsp;</span>\n    <br/>\n    <span *ngIf=\"!action.oneTime\">获取1个会花费：</span>\n    <span *ngIf=\"action.oneTime\">花费:</span>\n    <span *ngFor=\"let p of action.realPriceNow\" [ngClass]=\"{'notEnought': p.basePrice.greaterThan(p.unit.quantity)}\">\n      {{numberformat.formatShort(p.basePrice)}} {{p.unit.name}},\n    </span>\n    <br/>\n  </p>\n\n  <div *ngIf=\"action.maxBuy.greaterThanOrEqualTo(1)\">\n\n    <div class=\"form-group\" *ngIf=\"!action.oneTime\" class=\"toggle\">\n      <label>获取： </label>\n      <input type=\"number\" placeholder=\"1\" [(ngModel)]=\"required\" class=\"numIn\" min=\"1\">\n      <span>个</span>\n    </div>\n\n    <div class=\"form-group\">\n      <div class=\"btn-group w-100\" role=\"group\">\n\n        <button type=\"button\" class=\"btn btn-secondary w-100\" (click)=\"action.buy(getReqNum())\" [disabled]=\"!action.maxBuy.greaterThanOrEqualTo(1)\">\n          <span *ngIf=\"!action.oneTime\">{{getPriceString1()}}</span>\n          <span *ngIf=\"action.oneTime\">获取</span>\n        </button>\n        <button type=\"button \" class=\"btn btn-secondary w-100\" (click)=\"action.buy(action.maxBuy.div(2).ceil())\"\n          *ngIf=\"action.maxBuy.greaterThanOrEqualTo(3)\">\n          <span>{{getBuyStringHalf()}}</span>\n        </button>\n        <button type=\"button\" class=\"btn btn-secondary w-100\" (click)=\"action.buy(action.maxBuy)\" *ngIf=\"action.maxBuy.greaterThanOrEqualTo(2)\">\n          <span>{{getBuyStringMax()}}</span>\n        </button>\n      </div>\n    </div>\n\n  </div>\n\n  <div *ngIf=\"!action.maxBuy.greaterThanOrEqualTo(1) && !(action.oneTime && action.owned())\">\n    <div class=\"progress-block\" *ngFor=\"let cost of action.realPriceNow; trackBy:getPriceId\">\n      <label>{{cost.basePrice | format}}&nbsp;{{cost.unit.name}}</label>\n      <div class=\"progress-static\" [ngClass]=\"{'success': cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice), 'danger': !cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice)}\">\n        <div class=\"progress-meter\" max=\"100\" attr.data-value=\"{{Math.min(cost.unit.quantity.times(100).div(cost.basePrice).floor().toNumber(),100)}}\">\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>\n"
+module.exports = "<div class=\"card-block\">\n  <h3 class=\"card-title\"> {{action.name}}\n    <span *ngIf=\"!action.oneTime && action.showNumber\">({{action.quantity | format}})</span>\n  </h3>\n\n  <div class=\"toggle-switch hide\" *ngIf=\"action.showHide\">\n    <input type=\"checkbox\" [id]=\"action.getId()\" [(ngModel)]=\"action.show\">\n    <label [for]=\"action.getId()\">Show</label>\n  </div>\n\n  <p class=\"card-text\">\n    <span>{{action.description}} &nbsp;</span>\n    <br/>\n    <span *ngIf=\"!action.oneTime\">获取1个会花费：</span>\n    <span *ngIf=\"action.oneTime\">花费:</span>\n    <span *ngFor=\"let p of action.realPriceNow\" [ngClass]=\"{'notEnought': p.basePrice.greaterThan(p.unit.quantity)}\">\n      {{numberformat.formatShort(p.basePrice)}} {{p.unit.name}},\n    </span>\n    <br/>\n  </p>\n\n  <div *ngIf=\"action.maxBuy.greaterThanOrEqualTo(1)\">\n\n    <!-- <div class=\"form-group\" *ngIf=\"!action.oneTime\" class=\"toggle\">\n      <label>获取: </label>\n      <input type=\"number\" placeholder=\"1\" [(ngModel)]=\"required\" class=\"numIn\" min=\"1\">\n      <span>times</span>\n    </div> -->\n\n    <div class=\"form-group\">\n      <div class=\"btn-group w-100\" role=\"group\">\n\n        <button type=\"button\" class=\"btn btn-secondary w-100\" (click)=\"action.buy(getReqNum())\" [disabled]=\"!action.maxBuy.greaterThanOrEqualTo(1)\">\n          <span *ngIf=\"!action.oneTime\">{{getPriceString1()}}</span>\n          <span *ngIf=\"action.oneTime\">获取</span>\n        </button>\n        <button type=\"button \" class=\"btn btn-secondary w-100\" (click)=\"action.buy(action.maxBuy.div(2).ceil())\"\n          *ngIf=\"action.maxBuy.greaterThanOrEqualTo(3)\">\n          <span>{{getBuyStringHalf()}}</span>\n        </button>\n        <button type=\"button\" class=\"btn btn-secondary w-100\" (click)=\"action.buy(action.maxBuy)\" *ngIf=\"action.maxBuy.greaterThanOrEqualTo(2)\">\n          <span>{{getBuyStringMax()}}</span>\n        </button>\n      </div>\n    </div>\n\n  </div>\n\n  <div *ngIf=\"!action.maxBuy.greaterThanOrEqualTo(1) && !(action.oneTime && action.owned())\">\n    <div class=\"progress-block\" *ngFor=\"let cost of action.realPriceNow; trackBy:getPriceId\">\n      <label>{{cost.basePrice | format}}&nbsp;{{cost.unit.name}}</label>\n      <div class=\"progress-static\" [ngClass]=\"{'success': cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice), 'danger': !cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice)}\">\n        <div class=\"progress-meter\" max=\"100\" attr.data-value=\"{{Math.min(cost.unit.quantity.times(100).div(cost.basePrice).floor().toNumber(),100)}}\">\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -45,6 +45,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__model_units_action__ = __webpack_require__("../../../../../src/app/model/units/action.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_swarm_numberformat__ = __webpack_require__("../../../../swarm-numberformat/es/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__game_service__ = __webpack_require__("../../../../../src/app/game.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActionComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -58,8 +59,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ActionComponent = (function () {
-    function ActionComponent() {
+    function ActionComponent(gameService) {
+        this.gameService = gameService;
         this.card = 'card';
         this.maxBuy = Decimal(0);
         this.prices1 = new Array();
@@ -78,9 +81,12 @@ var ActionComponent = (function () {
     ActionComponent.prototype.ngOnInit = function () {
     };
     ActionComponent.prototype.getReqNum = function () {
-        if (!this.required)
+        if (!this.gameService.game.buyMulti || this.gameService.game.buyMulti < 1)
             return Decimal(1);
-        return Decimal(Math.max(Math.min(this.required, this.action.maxBuy.toNumber()), 1));
+        return Decimal(Math.max(Math.min(this.gameService.game.buyMulti, this.action.maxBuy.toNumber()), 1));
+        // if (!this.required)
+        //   return Decimal(1)
+        // return Decimal(Math.max(Math.min(this.required, this.action.maxBuy.toNumber()), 1))
     };
     ActionComponent.prototype.getPriceString1 = function () {
         return __WEBPACK_IMPORTED_MODULE_2_swarm_numberformat__["formatShort"](Decimal(this.action.up ? this.action.up.quantity.plus(1) : 1)
@@ -152,10 +158,10 @@ ActionComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/action/action.component.html"),
         styles: [__webpack_require__("../../../../../src/app/action/action.component.scss")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__game_service__["a" /* GameService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__game_service__["a" /* GameService */]) === "function" && _b || Object])
 ], ActionComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=action.component.js.map
 
 /***/ }),
@@ -163,7 +169,7 @@ var _a;
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<clr-main-container>\n\n  <clr-header class=\"header-5\">\n    <div class=\"branding\">\n      <a href=\"javascript://\" class=\"nav-link\" routerLink=\"/main/unit\">\n        <!-- <clr-icon shape=\"vm-bug\"></clr-icon> -->\n\n        <span class=\"title\">蚂蚁放置</span>\n      </a>\n    </div>\n    <div class=\"header-nav\" [clr-nav-level]=\"1\">\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/main/unit\">单位</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/lab\" *ngIf=\"gameService.game.baseWorld.science.unlocked\">实验室</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/prestige\" *ngIf=\"gameService.game.worldTabAv\">旅行</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/main/exp\" *ngIf=\"gameService.game.expTabAv\">经验</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/world\" *ngIf=\"gameService.game.homeTabAv\">世界</a>\n\n    </div>\n    <div class=\"header-actions\">\n<a class=\"nav-link nav-icon\" href=\"http://likexia.gitee.io/idleant/\" title=\"游戏不能直接刷新，想刷新页面请先“导出存档”并备份，然后点这里，！\">\n        刷新页面\n      </a>\n      <clr-dropdown>\n        <button class=\"nav-icon\" clrDropdownTrigger>\n          <clr-icon shape=\"tools\"></clr-icon>\n          <clr-icon shape=\"caret down\"></clr-icon>\n        </button>\n        <clr-dropdown-menu *clrIfOpen clrPosition=\"bottom-right\">\n\n          <clr-dropdown *ngIf=\"gameService.game.prestige.timeMaker.quantity.greaterThan(0)\">\n            <button type=\"button\" clrDropdownTrigger>时间扭曲</button>\n            <clr-dropdown-menu clrPosition=\"left-top\">\n              <a clrDropdownItem (click)=\"warp(p)\" *ngFor=\"let p of minuteWarps\"\n               [ngClass]=\"{'disabled': !warpAv(p)}\">\n                扭曲 {{p}} 分钟\n              </a>\n            </clr-dropdown-menu>\n          </clr-dropdown>\n\n          <a clrDropdownItem (click)=\"all100()\">全部 100%</a>\n\n          <clr-dropdown *ngFor=\"let list of gameService.game.lists | filterListNotEmpty; trackBy:getListId\">\n            <button type=\"button\" clrDropdownTrigger>{{list.type}}</button>\n            <clr-dropdown-menu clrPosition=\"left-top\">\n              <a clrDropdownItem (click)=\"list.allCustom(p)\" *ngFor=\"let p of percentPreset\">{{p}}%</a>\n            </clr-dropdown-menu>\n          </clr-dropdown>\n\n\n        </clr-dropdown-menu>\n      </clr-dropdown>\n\n      <a class=\"nav-link nav-icon\" href=\"javascript://\" (click)=\"opeTimeWarp()\" *ngIf=\"gameService.game.prestige.timeMaker.quantity.greaterThan(0)\">\n        <clr-icon shape=\"clock\"></clr-icon>\n      </a>\n\n      <a class=\"nav-link nav-icon\" href=\"javascript://\" (click)=\"gameService.game.pause = !gameService.game.pause\">\n        <clr-icon shape=\"play\" *ngIf=\"gameService.game.pause; else pauseB\"></clr-icon>\n        <ng-template #content #pauseB>\n          <clr-icon shape=\"pause\"></clr-icon>\n        </ng-template>\n      </a>\n\n      <a href=\"javascript://\" class=\"nav-link nav-icon\" routerLink=\"/options\">\n        <clr-icon shape=\"cog\"></clr-icon>\n      </a>\n\n    </div>\n  </clr-header>\n\n  <!-- Top Material Nav -->\n  <nav class=\"subnav\">\n    <ul class=\"nav navMat\">\n      <li class=\"nav-item\" class=\"matTab\" *ngFor=\"let g of gameService.game.baseWorld.listMaterial | filterMax\">\n        <a [routerLink]=\"['/main/unit/unit/'+g.id]\" class=\"nav-link matLink\" routerLinkActive=\"active\" [ngClass]=\"{'red': g.isEnding()}\">\n\n          <span style=\"display:block;\">\n            <clr-icon class=\"is-info\" shape=\"angle-double\" *ngIf=\"g.showUp\"></clr-icon>\n            <clr-icon class=\"alert-icon is-error\" shape=\"exclamation-triangle\" *ngIf=\"g.isEnding()\"></clr-icon>\n            <span class=\"first\">{{g.name}}</span>\n          </span>\n\n          <span class=\"perSecTab small\">\n            <span *ngIf=\"g.totalPerSec.abs().greaterThan(0.001)\">\n              {{g.totalPerSec | format}}/s\n            </span>\n          </span>\n          <span class=\"small\">{{g.quantity | format}}</span>\n\n        </a>\n      </li>\n    </ul>\n  </nav>\n\n  <router-outlet></router-outlet>\n\n  <clr-modal [(clrModalOpen)]=\"gameService.game.timeModalOpened\">\n    <h3 class=\"modal-title\">时间扭曲</h3>\n    <div class=\"modal-body actMinH\" *ngIf=\"gameService.game.actMin && gameService.game.actHour\">\n      <span> 你可以跳过 {{totTime()}}</span>\n      <app-action [action]=\"gameService.game.actMin\"></app-action>\n      <app-action [action]=\"gameService.game.actHour\"></app-action>\n    </div>\n  </clr-modal>\n\n</clr-main-container>\n"
+module.exports = "<clr-main-container>\n\n  <!-- class=\"header-5\"  -->\n  <clr-header [ngClass]=\"getClass()\">\n\n    <div class=\"branding\">\n      <a href=\"javascript://\" class=\"nav-link\" routerLink=\"/main/unit\">\n        <!-- <clr-icon shape=\"vm-bug\"></clr-icon> -->\n\n        <span class=\"title\">蚂蚁放置</span>\n      </a>\n    </div>\n    <div class=\"header-nav\" [clr-nav-level]=\"1\">\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/main/unit\">单位</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/lab\" *ngIf=\"gameService.game.baseWorld.science.unlocked\">实验室</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/prestige\" *ngIf=\"gameService.game.worldTabAv\">旅行</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/main/exp\" *ngIf=\"gameService.game.expTabAv\">经验</a>\n\n      <a class=\"nav-link\" class=\"nav-link nav-text\" routerLinkActive=\"active\" routerLink=\"/world\" *ngIf=\"gameService.game.homeTabAv\">世界</a>\n\n    </div>\n    <div class=\"header-actions\">\n<a class=\"nav-link nav-icon\" href=\"http://likexia.gitee.io/idleant/\" title=\"游戏不能直接刷新，想刷新页面请先“导出存档”并备份，然后点这里，！\">\n        刷新页面\n      </a>\n\n      <!-- <div class=\"form-group\">\n        <label for=\"formFields_10\">Textbox [type=\"tel\"]</label>\n        <input type=\"tel\" id=\"formFields_10\" size=\"35\">\n      </div> -->\n\n      <form class=\"search\">\n        <!-- <label for=\"search_input\"> -->\n        <label id=\"multiLabel\" for=\"multi\">购买:&nbsp;</label>\n        <input class=\"multiBuy\" min=\"1\" id=\"multi\" type=\"number\" name=\"buyMulti\" placeholder=\"Buy multiplier\" [(ngModel)]=\"gameService.game.buyMulti\">\n        <!-- </label> -->\n      </form>\n\n      <clr-dropdown>\n        <button class=\"nav-icon\" clrDropdownTrigger>\n          <clr-icon shape=\"tools\"></clr-icon>\n          <clr-icon shape=\"caret down\"></clr-icon>\n        </button>\n        <clr-dropdown-menu *clrIfOpen clrPosition=\"bottom-right\">\n\n          <clr-dropdown *ngIf=\"gameService.game.prestige.timeMaker.quantity.greaterThan(0)\">\n            <button type=\"button\" clrDropdownTrigger>时间扭曲</button>\n            <clr-dropdown-menu clrPosition=\"left-top\">\n              <a clrDropdownItem (click)=\"warp(p)\" *ngFor=\"let p of minuteWarps\" [ngClass]=\"{'disabled': !warpAv(p)}\">\n                扭曲 {{p}} 分钟\n              </a>\n            </clr-dropdown-menu>\n          </clr-dropdown>\n\n          <a clrDropdownItem (click)=\"all100()\">全部 100%</a>\n\n          <clr-dropdown *ngFor=\"let list of gameService.game.lists | filterListNotEmpty\">\n            <button type=\"button\" clrDropdownTrigger>{{list.type}}</button>\n            <clr-dropdown-menu clrPosition=\"left-top\">\n              <a clrDropdownItem (click)=\"list.allCustom(p)\" *ngFor=\"let p of percentPreset\">{{p}}%</a>\n            </clr-dropdown-menu>\n          </clr-dropdown>\n\n\n        </clr-dropdown-menu>\n      </clr-dropdown>\n\n      <a class=\"nav-link nav-icon\" href=\"javascript://\" (click)=\"opeTimeWarp()\" *ngIf=\"gameService.game.prestige.timeMaker.quantity.greaterThan(0)\">\n        <clr-icon shape=\"clock\"></clr-icon>\n      </a>\n\n      <a class=\"nav-link nav-icon\" href=\"javascript://\" (click)=\"gameService.game.pause = !gameService.game.pause\">\n        <clr-icon shape=\"play\" *ngIf=\"gameService.game.pause; else pauseB\"></clr-icon>\n        <ng-template #content #pauseB>\n          <clr-icon shape=\"pause\"></clr-icon>\n        </ng-template>\n      </a>\n\n      <a href=\"javascript://\" class=\"nav-link nav-icon\" routerLink=\"/options/save\">\n        <clr-icon shape=\"cog\"></clr-icon>\n      </a>\n\n    </div>\n  </clr-header>\n\n  <!-- Top Material Nav -->\n  <nav class=\"subnav\">\n    <ul class=\"nav navMat\">\n      <li class=\"nav-item\" class=\"matTab\" *ngFor=\"let g of gameService.game.baseWorld.listMaterial | filterMax\">\n        <a [routerLink]=\"['/main/unit/unit/'+g.id]\" class=\"nav-link matLink\" routerLinkActive=\"active\" [ngClass]=\"{'red': g.isEnding()}\">\n\n          <span style=\"display:block;\">\n            <clr-icon class=\"is-info\" shape=\"angle-double\" *ngIf=\"g.showUp\"></clr-icon>\n            <clr-icon class=\"alert-icon is-error\" shape=\"exclamation-triangle\" *ngIf=\"g.isEnding()\"></clr-icon>\n            <span class=\"first\">{{g.name}}</span>\n          </span>\n\n          <span class=\"perSecTab small\">\n            <span *ngIf=\"g.totalPerSec.abs().greaterThan(0.001)\">\n              {{g.totalPerSec | format}}/s\n            </span>\n          </span>\n          <span class=\"small\">{{g.quantity | format}}</span>\n\n        </a>\n      </li>\n    </ul>\n  </nav>\n\n  <router-outlet></router-outlet>\n\n  <clr-modal [(clrModalOpen)]=\"gameService.game.timeModalOpened\">\n    <h3 class=\"modal-title\">时间扭曲</h3>\n    <div class=\"modal-body actMinH\" *ngIf=\"gameService.game.actMin && gameService.game.actHour\">\n      <span> 你可以跳过 {{totTime()}}</span>\n      <app-action [action]=\"gameService.game.actMin\"></app-action>\n      <app-action [action]=\"gameService.game.actHour\"></app-action>\n    </div>\n  </clr-modal>\n\n</clr-main-container>\n"
 
 /***/ }),
 
@@ -175,7 +181,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".nowrap {\n  white-space: nowrap;\n  overflow: hidden; }\n\n:host /deep/ .content-area {\n  padding: 10px 24px 24px 24px !important; }\n\n.matTab {\n  width: 10%;\n  max-width: 110px;\n  margin-left: 5px; }\n\n.matLink {\n  width: 100%;\n  line-height: 24px;\n  border-style: solid;\n  border-width: 0px 1px 0px 0px; }\n\n.navMat {\n  padding-left: 5px;\n  height: 48px; }\n\n.perSecTab {\n  float: right; }\n\n.main-container .subnav {\n  -webkit-box-flex: 0;\n      -ms-flex: 0 0 48px;\n          flex: 0 0 48px; }\n\n.red {\n  color: #F52F22 !important; }\n\n.small {\n  font-size: 13px; }\n\n.actMinH {\n  min-height: 400px; }\n\n:host /deep/ clr-tree-node {\n  overflow-y: visible !important; }\n", ""]);
+exports.push([module.i, ".nowrap {\n  white-space: nowrap;\n  overflow: hidden; }\n\n:host /deep/ .content-area {\n  padding: 10px 24px 24px 24px !important; }\n\n.matTab {\n  width: 10% !important;\n  max-width: 110px !important;\n  margin-left: 5px !important; }\n\n.matLink {\n  width: 100% !important;\n  line-height: 24px !important;\n  border-style: solid !important;\n  border-width: 0px 1px 0px 0px !important; }\n\n.navMat {\n  padding-left: 5px !important;\n  height: 48px !important; }\n\n.perSecTab {\n  float: right; }\n\n.main-container .subnav {\n  -webkit-box-flex: 0;\n      -ms-flex: 0 0 48px;\n          flex: 0 0 48px; }\n\n.red {\n  color: #F52F22 !important; }\n\n.small {\n  font-size: 13px; }\n\n.actMinH {\n  min-height: 400px; }\n\n:host /deep/ clr-tree-node {\n  overflow-y: visible !important; }\n\n.multiBuy {\n  border: none;\n  background: none;\n  color: #fafafa;\n  padding: 0;\n  vertical-align: middle;\n  max-width: 2.5rem; }\n\n#multiLabel:before {\n  display: none; }\n\n.branding {\n  min-width: auto !important; }\n", ""]);
 
 // exports
 
@@ -235,6 +241,12 @@ var AppComponent = (function () {
     AppComponent.prototype.warpAv = function (minute) {
         return this.gameService.game.actMin.maxBuy.greaterThanOrEqualTo(Decimal(minute));
     };
+    AppComponent.prototype.getListId = function (index, list) {
+        return list.getId();
+    };
+    AppComponent.prototype.getClass = function () {
+        return "header-" + this.gameService.game.options.header;
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
@@ -261,7 +273,7 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/@angular/platform-browser/animations.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_clarity_angular__ = __webpack_require__("../../../../clarity-angular/clarity-angular/clarity-angular.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_clarity_angular__ = __webpack_require__("../../../../clarity-angular/clarity-angular.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__main_nav_main_nav_component__ = __webpack_require__("../../../../../src/app/main-nav/main-nav.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
@@ -278,6 +290,9 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_ng2_toastr_ng2_toastr___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18_ng2_toastr_ng2_toastr__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ng2_toastr_src_toast_options__ = __webpack_require__("../../../../ng2-toastr/src/toast-options.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ng2_toastr_src_toast_options___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_ng2_toastr_src_toast_options__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__opt_nav_opt_nav_component__ = __webpack_require__("../../../../../src/app/opt-nav/opt-nav.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ui_ui_component__ = __webpack_require__("../../../../../src/app/ui/ui.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__credit_credit_component__ = __webpack_require__("../../../../../src/app/credit/credit.component.ts");
 /* unused harmony export Format */
 /* unused harmony export FilterListNotEmpty */
 /* unused harmony export FilterMax */
@@ -319,6 +334,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
+
 var appRoutes = [
     {
         path: '', redirectTo: "main/unit", pathMatch: 'full'
@@ -334,7 +352,12 @@ var appRoutes = [
         path: 'lab', component: __WEBPACK_IMPORTED_MODULE_13__lab_lab_component__["a" /* LabComponent */]
     },
     {
-        path: 'options', component: __WEBPACK_IMPORTED_MODULE_1__options_options_component__["a" /* OptionsComponent */]
+        path: 'options', component: __WEBPACK_IMPORTED_MODULE_20__opt_nav_opt_nav_component__["a" /* OptNavComponent */],
+        children: [
+            { path: 'save', component: __WEBPACK_IMPORTED_MODULE_1__options_options_component__["a" /* OptionsComponent */] },
+            { path: 'ui', component: __WEBPACK_IMPORTED_MODULE_21__ui_ui_component__["a" /* UiComponent */] },
+            { path: 'credit', component: __WEBPACK_IMPORTED_MODULE_22__credit_credit_component__["a" /* CreditComponent */] },
+        ]
     },
     {
         path: 'prestige', component: __WEBPACK_IMPORTED_MODULE_12__prestige_prestige_component__["a" /* PrestigeComponent */]
@@ -420,7 +443,10 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_15__home_world_home_world_component__["a" /* HomeWorldComponent */],
             __WEBPACK_IMPORTED_MODULE_0__unit_unit_component__["c" /* FilterActive */],
             __WEBPACK_IMPORTED_MODULE_16__price_pipe_pipe__["a" /* PricePipePipe */],
-            __WEBPACK_IMPORTED_MODULE_17__prod_togle_pipe_pipe__["a" /* ProdToglePipePipe */]
+            __WEBPACK_IMPORTED_MODULE_17__prod_togle_pipe_pipe__["a" /* ProdToglePipePipe */],
+            __WEBPACK_IMPORTED_MODULE_20__opt_nav_opt_nav_component__["a" /* OptNavComponent */],
+            __WEBPACK_IMPORTED_MODULE_21__ui_ui_component__["a" /* UiComponent */],
+            __WEBPACK_IMPORTED_MODULE_22__credit_credit_component__["a" /* CreditComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__["BrowserModule"],
@@ -439,6 +465,67 @@ AppModule = __decorate([
 ], AppModule);
 
 //# sourceMappingURL=app.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/credit/credit.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  积分页面开发中...\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/credit/credit.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/credit/credit.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreditComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var CreditComponent = (function () {
+    function CreditComponent() {
+    }
+    CreditComponent.prototype.ngOnInit = function () {
+    };
+    return CreditComponent;
+}());
+CreditComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-credit',
+        template: __webpack_require__("../../../../../src/app/credit/credit.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/credit/credit.component.scss")]
+    }),
+    __metadata("design:paramtypes", [])
+], CreditComponent);
+
+//# sourceMappingURL=credit.component.js.map
 
 /***/ }),
 
@@ -759,7 +846,7 @@ var _a;
 /***/ "../../../../../src/app/main-nav/main-nav.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n<clr-vertical-nav [clrVerticalNavCollapsible]=\"false\" [clr-nav-level]=\"2\">\n\n  <a class=\"clr-treenode-link text-capitalize experience font-weight-bold\" routerLinkActive=\"active\" *ngIf=\"showPrestige\"\n    routerLink=\"./unit/exp\">\n    经验: {{gameService.game.prestige.experience.quantity | format}}\n  </a>\n  <clr-tree-node *ngFor=\"let list of typeLists | filterListNotEmpty; trackBy:getListId\">\n    <span class=\"font-weight-bold\">\n      <clr-icon class=\"alert-icon is-error\" shape=\"exclamation-triangle\" *ngIf=\"list.isEnding\"></clr-icon>\n      {{list.type}}\n    </span>\n\n    <ng-template [(clrIfExpanded)]=\"list.isCollapsed\">\n\n      <div class=\"unit-group\">\n        <clr-tree-node *ngFor=\"let g of list.list | filterMax; trackBy:getUnitId\">\n          <a [routerLink]=\"['./unit/'+g.id]\" class=\"clr-treenode-link\" routerLinkActive=\"active\">\n            <span class=\"resName\">\n              <clr-icon class=\"is-info\" shape=\"angle-double\" *ngIf=\"g.showUp\"></clr-icon>\n              <clr-icon class=\"alert-icon is-error\" shape=\"exclamation-triangle\" *ngIf=\"g.isEnding()\"></clr-icon>\n              <clr-icon class=\"is-warning is-solid\" shape=\"pause\" *ngIf=\"g.isStopped()\"></clr-icon>\n\n              {{g.name}}</span>\n            <span class=\"perSec\">\n              <span *ngIf=\"g.totalPerSec.abs().greaterThan(0.001)\">\n                {{g.totalPerSec | format:true}}/s\n              </span>\n            </span>\n            <span>{{g.quantity | format:true}}</span>\n            <!-- <span *ngIf=\"g.buyAction && g.buyAction.quantity.greaterThan(0)\"> / {{g.buyAction.quantity | format:true}}</span> -->\n          </a>\n        </clr-tree-node>\n      </div>\n\n    </ng-template>\n  </clr-tree-node>\n\n</clr-vertical-nav>\n"
+module.exports = "<clr-vertical-nav [clrVerticalNavCollapsible]=\"false\" [clr-nav-level]=\"2\">\n\n  <a class=\"clr-treenode-link text-capitalize experience font-weight-bold\" routerLinkActive=\"active\" *ngIf=\"showPrestige\"\n    routerLink=\"./unit/exp\">\n    经验: {{gameService.game.prestige.experience.quantity | format}}\n  </a>\n  <clr-tree-node *ngFor=\"let list of typeLists; trackBy:getListId\">\n    <span class=\"font-weight-bold\">\n      <clr-icon class=\"alert-icon is-error\" shape=\"exclamation-triangle\" *ngIf=\"list.isEnding\"></clr-icon>\n      {{list.type}}\n    </span>\n\n    <ng-template [(clrIfExpanded)]=\"list.isCollapsed\">\n\n      <div class=\"unit-group\">\n        <clr-tree-node *ngFor=\"let g of list.uiList; trackBy:getUnitId\">\n          <a [routerLink]=\"['./unit/'+g.id]\" class=\"clr-treenode-link\" routerLinkActive=\"active\">\n            <span class=\"resName\">\n              <clr-icon class=\"is-info\" shape=\"angle-double\" *ngIf=\"g.showUp\"></clr-icon>\n              <clr-icon class=\"alert-icon is-error\" shape=\"exclamation-triangle\" *ngIf=\"g.isEnding()\"></clr-icon>\n              <clr-icon class=\"is-warning is-solid\" shape=\"pause\" *ngIf=\"g.isStopped()\"></clr-icon>\n\n              {{g.name}}</span>\n            <span class=\"perSec\">\n              <span *ngIf=\"g.totalPerSec.abs().greaterThan(0.001)\">\n                {{g.totalPerSec | format:true}}/s\n              </span>\n            </span>\n            <span>{{g.quantity | format:true}}</span>\n            <!-- <span *ngIf=\"g.buyAction && g.buyAction.quantity.greaterThan(0)\"> / {{g.buyAction.quantity | format:true}}</span> -->\n          </a>\n        </clr-tree-node>\n      </div>\n\n    </ng-template>\n  </clr-tree-node>\n\n</clr-vertical-nav>\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -824,7 +911,7 @@ var MainNavComponent = (function () {
             _this.mioId = params['type'];
             // console.log(this.mioId)
             if (_this.mioId === "unit") {
-                _this.typeLists = _this.gameService.game.lists;
+                _this.typeLists = _this.gameService.game.uiLists;
                 // this.typeLists = this.gameService.game.unitLists
             }
             else {
@@ -920,7 +1007,9 @@ var Cost = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__worlds_prestige__ = __webpack_require__("../../../../../src/app/model/worlds/prestige.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__worlds_inferstation__ = __webpack_require__("../../../../../src/app/model/worlds/inferstation.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__worlds_science__ = __webpack_require__("../../../../../src/app/model/worlds/science.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__options__ = __webpack_require__("../../../../../src/app/model/options.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GameModel; });
+
 
 
 
@@ -946,6 +1035,8 @@ var GameModel = (function () {
         this.timeToEnd = Number.POSITIVE_INFINITY;
         this.gameVersion = "0.1.3";
         this.hideSaveNotification = false;
+        this.options = new __WEBPACK_IMPORTED_MODULE_18__options__["a" /* Options */]();
+        this.buyMulti = 1;
         //#region
         //    Cost
         this.buyExp = Decimal(1.1);
@@ -962,6 +1053,7 @@ var GameModel = (function () {
         this.worldList = Array();
         this.unitMap = new __WEBPACK_IMPORTED_MODULE_5_rxjs_util_Map__["Map"]();
         this.lists = new Array();
+        this.uiLists = new Array();
         this.unitWithUp = new Array();
         //    Prestige
         this.currentEarning = Decimal(0);
@@ -1024,6 +1116,7 @@ var GameModel = (function () {
         this.world = __WEBPACK_IMPORTED_MODULE_1__world__["a" /* World */].getBaseWorld(this);
         this.generateRandomWorld();
         this.setInitialStat();
+        this.prestige.expLists.forEach(function (v) { return v.reload(); });
         // console.log("prefix: " + World.worldPrefix.length)
         // console.log("type: " + World.worldTypes.length)
         // console.log("suff: " + World.worldSuffix.length)
@@ -1042,7 +1135,9 @@ var GameModel = (function () {
         this.unitWithUp.push(this.baseWorld.littleAnt);
         this.baseWorld.food.quantity = this.baseWorld.food.quantity.plus(100);
         this.unlockUnits(this.all.filter(function (u) { return u.quantity.greaterThan(0); }))();
+        this.unl = this.all.filter(function (u) { return u.unlocked; });
         this.reloadProduction();
+        this.reloadLists();
         //  this.reloadList()
     };
     GameModel.prototype.setMaxLevel = function () {
@@ -1077,7 +1172,6 @@ var GameModel = (function () {
         if (forceUp === void 0) { forceUp = false; }
         var maxTime = dif;
         var unitZero = null;
-        var unl = this.all.filter(function (u) { return u.unlocked; });
         //  Infestation fix 2
         if (this.infestation.poisonousPlant.unlocked && this.infestation.poisonousPlant.quantity.lessThan(1))
             this.infestation.poisonousPlant2.quantity = Decimal(0);
@@ -1091,39 +1185,37 @@ var GameModel = (function () {
                     .forEach(function (p) { return p.unit.percentage = 0; });
             });
             this.all.forEach(function (a) { return a.endIn = Number.POSITIVE_INFINITY; });
-            for (var _i = 0, _a = unl.filter(function (u) {
-                return u.producedBy.filter(function (p) { return p.efficiency.lessThan(0); }).length > 0;
-            }); _i < _a.length; _i++) {
+            for (var _i = 0, _a = this.unl; _i < _a.length; _i++) {
                 var res = _a[_i];
-                var a = Decimal(0);
-                var b = Decimal(0);
-                var c = Decimal(0);
+                res.a = Decimal(0);
+                res.b = Decimal(0);
+                res.c = Decimal(0);
                 var d = res.quantity;
                 for (var _b = 0, _c = res.producedBy.filter(function (r) { return r.isActive() && r.unit.unlocked; }); _b < _c.length; _b++) {
                     var prod1 = _c[_b];
                     // x
                     var prodX = prod1.getprodPerSec();
-                    c = c.plus(prodX.times(prod1.unit.quantity));
+                    res.c = res.c.plus(prodX.times(prod1.unit.quantity));
                     for (var _d = 0, _e = prod1.unit.producedBy.filter(function (r2) { return r2.isActive() && r2.unit.unlocked; }); _d < _e.length; _d++) {
                         var prod2 = _e[_d];
                         // x^2
                         var prodX2 = prod2.getprodPerSec().times(prodX);
-                        b = b.plus(prodX2.times(prod2.unit.quantity));
+                        res.b = res.b.plus(prodX2.times(prod2.unit.quantity));
                         for (var _f = 0, _g = prod2.unit.producedBy.filter(function (r3) { return r3.isActive() && r3.unit.unlocked; }); _f < _g.length; _f++) {
                             var prod3 = _g[_f];
                             // x^3
                             var prodX3 = prod3.getprodPerSec().times(prodX2);
-                            a = a.plus(prodX3.times(prod3.unit.quantity));
+                            res.a = res.a.plus(prodX3.times(prod3.unit.quantity));
                         }
                     }
                 }
-                a = a.div(6);
-                b = b.div(2);
-                if (a.lessThan(0)
-                    || b.lessThan(0)
-                    || c.lessThan(0)
+                res.a = res.a.div(6);
+                res.b = res.b.div(2);
+                if (res.a.lessThan(0)
+                    || res.b.lessThan(0)
+                    || res.c.lessThan(0)
                     || d.lessThan(0)) {
-                    var solution = __WEBPACK_IMPORTED_MODULE_2__utils__["a" /* Utils */].solveCubic(a, b, c, d).filter(function (s) { return s.greaterThan(0); });
+                    var solution = __WEBPACK_IMPORTED_MODULE_2__utils__["a" /* Utils */].solveCubic(res.a, res.b, res.c, d).filter(function (s) { return s.greaterThan(0); });
                     if (d.lessThan(Number.EPSILON)) {
                         res.quantity = Decimal(0);
                     }
@@ -1146,11 +1238,11 @@ var GameModel = (function () {
             // console.log("short")
             this.timeToEnd = this.timeToEnd - dif;
         }
-        unl.filter(function (u) { return u.endIn > 0; }).forEach(function (u) { return u.endIn = u.endIn - dif; });
+        this.unl.filter(function (u) { return u.endIn > 0; }).forEach(function (u) { return u.endIn = u.endIn - dif; });
         //  Update resource
         if (!this.pause || forceUp) {
             if (maxTime > Number.EPSILON)
-                this.update(maxTime);
+                this.update2(Decimal(maxTime).div(1000));
             if (unitZero) {
                 unitZero.producedBy.filter(function (p) { return p.efficiency.lessThan(0); }).forEach(function (p) { return p.unit.percentage = 0; });
                 // fix for infestatiion world
@@ -1189,25 +1281,28 @@ var GameModel = (function () {
      *
      * @param dif time elapsed in millisecond
      */
-    GameModel.prototype.update = function (dif) {
-        var fraction = Decimal(dif / 1000);
-        var all = Array.from(this.unitMap.values());
-        for (var _i = 0, all_1 = all; _i < all_1.length; _i++) {
-            var res = all_1[_i];
-            for (var _a = 0, _b = res.producedBy.filter(function (p) { return p.isActive() && p.unit.unlocked; }); _a < _b.length; _a++) {
-                var prod = _b[_a];
-                res.toAdd = res.toAdd.plus(this.getProduction(prod, Decimal(1), Decimal(1), fraction));
-            }
-        }
-        // all.forEach(u => {
-        //   u.quantity = u.quantity.plus(u.toAdd)
-        //   u.toAdd = Decimal(0)
-        // })
-        for (var _c = 0, all_2 = all; _c < all_2.length; _c++) {
-            var u = all_2[_c];
-            u.quantity = u.quantity.plus(u.toAdd);
-            u.toAdd = Decimal(0);
-        }
+    // update(dif: number) {
+    //   const fraction = Decimal(dif / 1000)
+    //   const all = Array.from(this.unitMap.values())
+    //   for (const res of all)
+    //     for (const prod of res.producedBy.filter(p => p.isActive() && p.unit.unlocked))
+    //       res.toAdd = res.toAdd.plus(this.getProduction(prod, Decimal(1), Decimal(1), fraction))
+    //   // all.forEach(u => {
+    //   //   u.quantity = u.quantity.plus(u.toAdd)
+    //   //   u.toAdd = Decimal(0)
+    //   // })
+    //   for (const u of all) {
+    //     u.quantity = u.quantity.plus(u.toAdd)
+    //     u.toAdd = Decimal(0)
+    //   }
+    // }
+    GameModel.prototype.update2 = function (dif) {
+        this.unl.forEach(function (u) {
+            u.quantity = u.quantity
+                .plus(u.a.times(Decimal.pow(dif, 3)))
+                .plus(u.b.times(Decimal.pow(dif, 2)))
+                .plus(u.c.times(dif));
+        });
     };
     /**
      * Unlock units and recheck dependencies.
@@ -1227,7 +1322,11 @@ var GameModel = (function () {
             _this.all.filter(function (u) { return u.unlocked; }).forEach(function (u2) { return u2.produces.forEach(function (p) {
                 return p.product.unlocked = p.product.avabileThisWorld;
             }); });
-            _this.unitWithUp = _this.all.filter(function (u) { return u.unlocked && (u.upHire || u.upSpecial || u.upAction); });
+            if (ok) {
+                _this.unitWithUp = _this.all.filter(function (u) { return u.unlocked && (u.upHire || u.upSpecial || u.upAction); });
+                _this.unl = _this.all.filter(function (u) { return u.unlocked; });
+                _this.reloadLists();
+            }
             // if (ok)
             //   this.reloadList()
             return ok;
@@ -1276,6 +1375,7 @@ var GameModel = (function () {
         save.pause = this.pause;
         save.hsn = this.hideSaveNotification;
         save.gameVers = this.gameVersion;
+        save.opti = this.options;
         return __WEBPACK_IMPORTED_MODULE_7_lz_string__["compressToBase64"](JSON.stringify(save));
     };
     /**
@@ -1309,11 +1409,6 @@ var GameModel = (function () {
                     res.restore(s);
             };
             var this_1 = this;
-            // for (const s of save.pre) {
-            //   const up = this.prestige.allPrestigeUp.find(p => p.id === s.id)
-            //   if (up)
-            //     up.restore(s)
-            // }
             for (var _b = 0, _c = save.res; _b < _c.length; _b++) {
                 var s = _c[_b];
                 _loop_1(s);
@@ -1354,9 +1449,13 @@ var GameModel = (function () {
                 this.pause = true;
             if (save.hsn)
                 this.hideSaveNotification = save.hsn;
+            if (save.opti) {
+                this.options.load(save.opti);
+                this.options.apply();
+            }
             this.reloadProduction();
             this.unitLists.splice(0, this.unitLists.length);
-            //  this.reloadList()
+            this.reloadLists();
             return save.last;
         }
         return null;
@@ -1381,10 +1480,40 @@ var GameModel = (function () {
         this.resList.filter(function (r) { return r.unlocked && r.avabileThisWorld; })
             .forEach(function (res) { return res.setMaxBuy(); });
     };
+    GameModel.prototype.reloadLists = function () {
+        this.lists.forEach(function (v) { return v.reload(); });
+        this.uiLists = this.lists.filter(function (u) { return u.uiList && u.uiList.length > 0; });
+    };
     return GameModel;
 }());
 
 //# sourceMappingURL=gameModel.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/model/options.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Options; });
+var Options = (function () {
+    function Options() {
+        this.header = 5;
+        this.dark = false;
+    }
+    Options.prototype.apply = function () {
+        setCss(this.dark);
+    };
+    Options.prototype.load = function (data) {
+        if (data.header)
+            this.header = data.header;
+        if (data.dark)
+            this.dark = data.dark;
+    };
+    return Options;
+}());
+
+//# sourceMappingURL=options.js.map
 
 /***/ }),
 
@@ -1465,6 +1594,7 @@ var TypeList = (function () {
         this.list = list;
         this.isCollapsed = false;
         this.isEnding = false;
+        this.uiList = new Array();
     }
     TypeList.prototype.getId = function () {
         return this.type;
@@ -1472,6 +1602,9 @@ var TypeList = (function () {
     TypeList.prototype.allCustom = function (percent) {
         this.list.filter(function (u) { return !u.alwaysOn; }).forEach(function (u) { return u.percentage = percent; });
         this.list[0].game.isChanged = true;
+    };
+    TypeList.prototype.reload = function () {
+        this.uiList = this.list.filter(function (u) { return u.unlocked; });
     };
     return TypeList;
 }());
@@ -1959,6 +2092,9 @@ var Unit = (function (_super) {
         _this.totalPerSec = Decimal(0);
         _this.totalProducers = Decimal(0);
         _this.togableProductions = null;
+        _this.a = Decimal(0);
+        _this.b = Decimal(0);
+        _this.c = Decimal(0);
         _this.model.unitMap.set(_this.id, _this);
         _this.name = name;
         _this.description = description;
@@ -4117,6 +4253,72 @@ var Science = (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/opt-nav/opt-nav.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"content-area\">\n  <router-outlet></router-outlet>\n</div>\n<clr-vertical-nav>\n  <a clrVerticalNavLink routerLink=\"./save\" routerLinkActive=\"active\">\n    <clr-icon clrVerticalNavIcon shape=\"floppy\"></clr-icon>\n    保存\n  </a>\n  <a clrVerticalNavLink routerLink=\"./ui\" routerLinkActive=\"active\">\n    <clr-icon clrVerticalNavIcon shape=\"ruler-pencil\"></clr-icon>\n    界面\n  </a>\n  <a clrVerticalNavLink routerLink=\"./credit\" routerLinkActive=\"active\">\n    <clr-icon clrVerticalNavIcon shape=\"certificate\"></clr-icon>\n    积分\n  </a>\n</clr-vertical-nav>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/opt-nav/opt-nav.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/opt-nav/opt-nav.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OptNavComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var OptNavComponent = (function () {
+    function OptNavComponent() {
+        this.className = 'content-container';
+    }
+    OptNavComponent.prototype.ngOnInit = function () {
+    };
+    return OptNavComponent;
+}());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostBinding"])('class.content-container'),
+    __metadata("design:type", Object)
+], OptNavComponent.prototype, "className", void 0);
+OptNavComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-opt-nav',
+        template: __webpack_require__("../../../../../src/app/opt-nav/opt-nav.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/opt-nav/opt-nav.component.scss")]
+    }),
+    __metadata("design:paramtypes", [])
+], OptNavComponent);
+
+//# sourceMappingURL=opt-nav.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/options/options.component.html":
 /***/ (function(module, exports) {
 
@@ -4425,10 +4627,78 @@ ResPipePipe = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/ui/ui.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form>\n\n  <section class=\"form-block\">\n    <label>界面选项</label>\n\n    <div class=\"form-group\">\n      <div class=\"toggle-switch\">\n        <input name=\"dark\" type=\"checkbox\" id=\"toggle_1\" [(ngModel)]=\"gameService.game.options.dark\" (change)=\"setCss()\">\n        <label for=\"toggle_1\">使用黑色皮肤</label>\n      </div>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"selects_1\">顶部颜色</label>\n      <div class=\"select\">\n        <select name=\"header\" id=\"selects_1\" [(ngModel)]=\"gameService.game.options.header\">\n          <option>1</option>\n          <option>2</option>\n          <option>3</option>\n          <option>4</option>\n          <option>5</option>\n          <option>6</option>\n          <option>7</option>\n        </select>\n      </div>\n\n    </div>\n  </section>\n\n</form>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/ui/ui.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/ui/ui.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__game_service__ = __webpack_require__("../../../../../src/app/game.service.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UiComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var UiComponent = (function () {
+    function UiComponent(gameService) {
+        this.gameService = gameService;
+    }
+    UiComponent.prototype.ngOnInit = function () {
+    };
+    UiComponent.prototype.setCss = function () {
+        setCss(this.gameService.game.options.dark);
+    };
+    return UiComponent;
+}());
+UiComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-ui',
+        template: __webpack_require__("../../../../../src/app/ui/ui.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/ui/ui.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__game_service__["a" /* GameService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__game_service__["a" /* GameService */]) === "function" && _a || Object])
+], UiComponent);
+
+var _a;
+//# sourceMappingURL=ui.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/unit/unit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1 class=\"text-capitalize no-mg-top\">{{gen.name}}</h1>\n\n<div *ngIf=\"gen.isEnding()\">\n  <clr-alert [clrAlertType]=\"'alert-warning'\">\n    <div class=\"alert-item\">\n      <span class=\"alert-text\">\n        结束时间： {{endTime()}} \n      </span>\n    </div>\n  </clr-alert>\n</div>\n\n<p>{{gen.description}}</p>\n<span>拥有: {{gen.quantity | format}}</span>\n\n\n<div *ngIf=\"gen.produces.length >0\">\n  <p *ngIf=\"gen.buyAction\">你已购买 {{gen.buyAction.quantity | format}} 次\n    <span *ngIf=\"gameService.game.research.up1.owned()\"> 获得 +{{gen.getBoost().times(100) | format}}% 生产加成</span>\n  </p>\n  <div *ngIf=\"!gen.alwaysOn\">\n    <input type=\"range\" min=\"0\" max=\"100\" [(ngModel)]=\"gen.percentage\" (change)=\"onChange($event.target.value)\">\n    <span>让 {{gen.percentage}} % 进行工作</span>\n  </div>\n</div>\n\n<div *ngIf=\"gen.showTables\">\n\n  <div class=\"row\">\n    <div *ngIf=\"gen.produces.length >0\" class=\"col-xs-12 col-md-12 col-lg-6 col-xl-6\">\n      <h5>\n        <span class=\"text-capitalize\">{{gen.name}}</span>生产：</h5>\n      <table class=\"table table-compact\">\n        <thead>\n          <tr>\n            <th class=\"w-33\">生产</th>\n            <th class=\"w-33\">1个</th>\n            <th class=\"w-33\">全部</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr *ngFor=\"let item of gen.produces | filterActive\" [ngClass]=\"{'bg-warning': item.efficiency.lessThan(0)}\">\n            <td class=\"w-33 text-capitalize\">\n              <a [routerLink]=\"['/main/unit/unit/'+item.product.id]\">{{item.product.name}}</a>\n            </td>\n            <td class=\"w-33\">{{item.getprodPerSec(false) | format}}</td>\n            <td class=\"w-33\">{{item.getprodPerSec().times(gen.quantity) | format}}</td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n\n    <div class=\"col-xs-12 col-md-12 col-lg-6 col-xl-6\" *ngIf=\"gameService.game.research.bi.owned()\">\n      <div *ngIf=\"showProducers()\">\n        <h5>\n          <span class=\"text-capitalize\">{{gen.name}}</span>产量来自：</h5>\n        <table class=\"table  table-compact\">\n          <thead>\n            <tr>\n              <th class=\"w-33\">单位</th>\n              <th class=\"w-33\">数量</th>\n              <th class=\"w-33\">总共</th>\n            </tr>\n          </thead>\n          <tfoot>\n            <tr class=\"bg-info text-white\">\n              <td>总共</td>\n              <td>{{gen.totalProducers | format}}</td>\n              <td>{{gen.totalPerSec | format}}</td>\n            </tr>\n          </tfoot>\n          <tbody>\n            <tr *ngFor=\"let item of gen.producedBy | filterActive; trackBy:getUnitId\" [ngClass]=\"{'bg-warning': item.efficiency.lessThan(0)}\">\n              <td class=\"text-capitalize\">\n                <a [routerLink]=\"['/main/unit/unit/'+item.unit.id]\">{{item.unit.name}}</a>\n              </td>\n              <td>{{item.unit.quantity | format}}</td>\n              <td>{{item.getprodPerSec().times(item.unit.quantity) | format}}</td>\n            </tr>\n          </tbody>\n        </table>\n      </div>\n    </div>\n  </div>\n\n</div>\n\n<div class=\"row\" *ngIf=\"gen.togableProductions\">\n  <div class=\"col-xs-12 col-md-12 col-lg-12 col-xl-12\">\n    <section class=\"form-block\">\n      <div class=\"form-group\">\n        <ul class=\"list-unstyled\">\n          <li *ngFor=\"let tp of gen.togableProductions | prodToglePipe\">\n            <div class=\"toggle-switch\">\n              <input type=\"checkbox\" [(ngModel)]=\"tp.uiModel\" [id]=\"tp.description\" (ngModelChange)=\"tp.turnOnOff()\"\n                (change)=\"onChange($event.target.value)\">\n              <label [for]=\"tp.description\">{{tp.description}}</label>\n            </div>\n          </li>\n        </ul>\n      </div>\n    </section>\n  </div>\n</div>\n\n<div class=\"row\">\n  <div class=\"card-columns card-columns-2\">\n    <app-action [action]=\"act\" *ngFor=\"let act of gen.actions| filterMax; trackBy:getUnitId\"></app-action>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n\n  <div class=\"col-xs-12 col-md-12 col-lg-6 col-xl-6\">\n    <h1 class=\"text-capitalize no-mg-top\">{{gen.name}}</h1>\n\n    <div *ngIf=\"gen.isEnding()\">\n      <clr-alert [clrAlertType]=\"'alert-warning'\">\n        <div class=\"alert-item\">\n          <span class=\"alert-text\">\n            将在 {{endTime()}} 结束\n          </span>\n        </div>\n      </clr-alert>\n    </div>\n\n    <p>{{gen.description}}</p>\n    <span>拥有: {{gen.quantity | format}}</span>\n\n\n    <div *ngIf=\"gen.produces.length >0\">\n      <p *ngIf=\"gen.buyAction\">你购买了 {{gen.buyAction.quantity | format}} 次\n        <span *ngIf=\"gameService.game.research.up1.owned()\"> 获得奖励 +{{gen.getBoost().times(100) | format}}% 生产</span>\n      </p>\n      <div *ngIf=\"!gen.alwaysOn\">\n        <input type=\"range\" min=\"0\" max=\"100\" [(ngModel)]=\"gen.percentage\" (change)=\"onChange($event.target.value)\">\n        <span>{{gen.percentage}} % 操作</span>\n      </div>\n    </div>\n\n    <div class=\"row\" *ngIf=\"gen.togableProductions\">\n      <div class=\"col-xs-12 col-md-12 col-lg-12 col-xl-12\">\n        <section class=\"form-block\">\n          <div class=\"form-group\">\n            <ul class=\"list-unstyled\">\n              <li *ngFor=\"let tp of gen.togableProductions | prodToglePipe\">\n                <div class=\"toggle-switch\">\n                  <input type=\"checkbox\" [(ngModel)]=\"tp.uiModel\" [id]=\"tp.description\" (ngModelChange)=\"tp.turnOnOff()\"\n                    (change)=\"onChange($event.target.value)\">\n                  <label [for]=\"tp.description\">{{tp.description}}</label>\n                </div>\n              </li>\n            </ul>\n          </div>\n        </section>\n      </div>\n    </div>\n\n    <div *ngIf=\"gen.showTables\">\n\n      <div class=\"row\">\n        <div *ngIf=\"gen.produces.length >0\" class=\"col-xs-12 col-md-12 col-lg-12 col-xl-12\">\n          <h5>\n            <span class=\"text-capitalize\">{{gen.name}}</span> 产生:</h5>\n          <table class=\"table table-compact\">\n            <thead>\n              <tr>\n                <th class=\"w-33\">产物</th>\n                <th class=\"w-33\">1个</th>\n                <th class=\"w-33\">全部</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr *ngFor=\"let item of gen.produces | filterActive\"\n              [ngClass]=\"{'alert alert-warning no-alert': item.efficiency.lessThan(0)}\">\n                <td class=\"w-33 text-capitalize\">\n                  <a [routerLink]=\"['/main/unit/unit/'+item.product.id]\">{{item.product.name}}</a>\n                </td>\n                <td class=\"w-33\">{{item.getprodPerSec(false) | format}}</td>\n                <td class=\"w-33\">{{item.getprodPerSec().times(gen.quantity) | format}}</td>\n              </tr>\n            </tbody>\n          </table>\n        </div>\n\n        <div class=\"col-xs-12 col-md-12 col-lg-12 col-xl-12\" *ngIf=\"gameService.game.research.bi.owned()\">\n          <div *ngIf=\"showProducers()\">\n            <h5>\n              <span class=\"text-capitalize\">{{gen.name}}</span> 是由:</h5>\n            <table class=\"table  table-compact\">\n              <thead>\n                <tr>\n                  <th class=\"w-33\">个体</th>\n                  <th class=\"w-33\">数量</th>\n                  <th class=\"w-33\">总计</th>\n                </tr>\n              </thead>\n              <tfoot>\n                  <!-- class=\"bg-info text-white\" -->\n                <tr class=\"alert alert-info no-alert\">\n                  <td>总计</td>\n                  <td>{{gen.totalProducers | format}}</td>\n                  <td>{{gen.totalPerSec | format}}</td>\n                </tr>\n              </tfoot>\n              <tbody>\n                <tr *ngFor=\"let item of gen.producedBy | filterActive; trackBy:getUnitId\"\n                [ngClass]=\"{'alert alert-warning no-alert': item.efficiency.lessThan(0)}\">\n                  <td class=\"text-capitalize\">\n                    <a [routerLink]=\"['/main/unit/unit/'+item.unit.id]\">{{item.unit.name}}</a>\n                  </td>\n                  <td>{{item.unit.quantity | format}}</td>\n                  <td>{{item.getprodPerSec().times(item.unit.quantity) | format}}</td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n      </div>\n\n    </div>\n\n  </div>\n  <div class=\"col-xs-12 col-md-12 col-lg-6 col-xl-6 no-card-top\">\n    <div class=\"row\">\n      <!-- <div class=\"card-columns\"> -->\n      <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">\n        <app-action [action]=\"act\" *ngFor=\"let act of gen.actions| filterMax; trackBy:getUnitId\"></app-action>\n      </div>\n    </div>\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -4440,7 +4710,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "table {\n  margin-top: 12px; }\n\n.w-33 {\n  width: 33%; }\n\n.no-mg-top {\n  margin-top: 0px !important; }\n", ""]);
+exports.push([module.i, "table {\n  margin-top: 12px; }\n\n.w-33 {\n  width: 33%; }\n\n.no-mg-top {\n  margin-top: 0px !important; }\n\n.no-card-top {\n  margin-top: -12px !important; }\n\n.card {\n  margin-top: 12px !important; }\n\n.no-alert {\n  font-size: .54167rem;\n  letter-spacing: normal;\n  line-height: .75rem;\n  position: relative;\n  box-sizing: border-box;\n  display: table-row;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: row;\n  flex-direction: row;\n  width: auto;\n  border-radius: 0px;\n  margin-top: auto; }\n", ""]);
 
 // exports
 
