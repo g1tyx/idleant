@@ -3089,7 +3089,7 @@ var Bee = (function () {
         this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.universityBee, Decimal(600)));
         this.scientistBee.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.universityBee, Decimal(0.01)));
         this.game.engineers.beeEnginer.addProductor(this.engineersProd);
-        this.universityBee.togableProductions = [new __WEBPACK_IMPORTED_MODULE_0__units_togableProductions__["a" /* TogableProduction */]("Generate engineers", [this.engineersProd])];
+        this.universityBee.togableProductions = [new __WEBPACK_IMPORTED_MODULE_0__units_togableProductions__["a" /* TogableProduction */]("产生蜜蜂工程师", [this.engineersProd])];
         //  Research
         this.universityResBee2 = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("uniResBee2", "蜜蜂工程系", "蜜蜂大学还产生蜜蜂工程师。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(7E7))], [this.engineersProd], this.game);
         //  Research
