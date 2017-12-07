@@ -16,7 +16,7 @@ webpackEmptyContext.id = "../../../../../src async recursive";
 /***/ "../../../../../src/app/action/action.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card-block\">\n  <h3 class=\"card-title\"> {{action.name}}\n    <span *ngIf=\"!action.oneTime && action.showNumber\">({{action.quantity | format}})</span>\n  </h3>\n\n  <div class=\"toggle-switch hide\" *ngIf=\"action.showHide\">\n    <input type=\"checkbox\" [id]=\"action.getId()\" [(ngModel)]=\"action.show\">\n    <label [for]=\"action.getId()\">Show</label>\n  </div>\n\n  <p class=\"card-text\">\n    <span>{{action.description}} &nbsp;</span>\n    <br/>\n    <span *ngIf=\"!action.oneTime\">获取1个会花费：</span>\n    <span *ngIf=\"action.oneTime\">花费:</span>\n    <span *ngFor=\"let p of action.realPriceNow\" [ngClass]=\"{'notEnought': p.basePrice.greaterThan(p.unit.quantity)}\">\n      {{numberformat.formatShort(p.basePrice)}} {{p.unit.name}},\n    </span>\n    <br/>\n  </p>\n\n  <div *ngIf=\"action.maxBuy.greaterThanOrEqualTo(1)\">\n\n    <!-- <div class=\"form-group\" *ngIf=\"!action.oneTime\" class=\"toggle\">\n      <label>获取: </label>\n      <input type=\"number\" placeholder=\"1\" [(ngModel)]=\"required\" class=\"numIn\" min=\"1\">\n      <span>times</span>\n    </div> -->\n\n    <div class=\"form-group\">\n      <div class=\"btn-group w-100\" role=\"group\">\n\n        <button type=\"button\" class=\"btn btn-secondary w-100\" (click)=\"action.buy(getReqNum())\" [disabled]=\"!action.maxBuy.greaterThanOrEqualTo(1)\">\n          <span *ngIf=\"!action.oneTime\">{{getPriceString1()}}</span>\n          <span *ngIf=\"action.oneTime\">获取</span>\n        </button>\n        <button type=\"button \" class=\"btn btn-secondary w-100\" (click)=\"action.buy(action.maxBuy.div(2).ceil())\"\n          *ngIf=\"action.maxBuy.greaterThanOrEqualTo(3)\">\n          <span>{{getBuyStringHalf()}}</span>\n        </button>\n        <button type=\"button\" class=\"btn btn-secondary w-100\" (click)=\"action.buy(action.maxBuy)\" *ngIf=\"action.maxBuy.greaterThanOrEqualTo(2)\">\n          <span>{{getBuyStringMax()}}</span>\n        </button>\n      </div>\n    </div>\n\n  </div>\n\n  <div *ngIf=\"!action.maxBuy.greaterThanOrEqualTo(1) && !(action.oneTime && action.owned())\">\n    <div class=\"progress-block\" *ngFor=\"let cost of action.realPriceNow; trackBy:getPriceId\">\n      <label>{{cost.basePrice | format}}&nbsp;{{cost.unit.name}}</label>\n      <div class=\"progress-static\" [ngClass]=\"{'success': cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice), 'danger': !cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice)}\">\n        <div class=\"progress-meter\" max=\"100\" attr.data-value=\"{{Math.min(cost.unit.quantity.times(100).div(cost.basePrice).floor().toNumber(),100)}}\">\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>\n"
+module.exports = "<div class=\"card-block\">\n  <h3 class=\"card-title\"> {{action.name}}\n    <span *ngIf=\"!action.oneTime && action.showNumber\">({{action.quantity | format}})</span>\n  </h3>\n\n  <div class=\"toggle-switch hide\" *ngIf=\"action.showHide\">\n    <input type=\"checkbox\" [id]=\"action.getId()\" [(ngModel)]=\"action.show\">\n    <label [for]=\"action.getId()\">显示</label>\n  </div>\n\n  <div class=\"card-text\">\n    <span>{{action.description}} &nbsp;</span>\n    <br/>\n    <p *ngIf=\"!(action.oneTime && action.owned()) && !action.limit?.greaterThanOrEqualTo(action.maxBuy)\">\n      <span *ngIf=\"!action.oneTime; else costs\">获取1个会花费:</span>\n      <ng-template #costs>\n        <span *ngIf=\"action.oneTime\">花费:</span>\n      </ng-template>\n      <span *ngFor=\"let p of action.realPriceNow\" [ngClass]=\"{'notEnought': p.basePrice.greaterThan(p.unit.quantity)}\">\n        {{numberformat.formatShort(p.basePrice)}} {{p.unit.name}},\n      </span>\n      <br/>\n    </p>\n  </div>\n\n  <div *ngIf=\"action.maxBuy.greaterThanOrEqualTo(1)\">\n\n    <!-- <div class=\"form-group\" *ngIf=\"!action.oneTime\" class=\"toggle\">\n      <label>获取: </label>\n      <input type=\"number\" placeholder=\"1\" [(ngModel)]=\"required\" class=\"numIn\" min=\"1\">\n      <span>times</span>\n    </div> -->\n\n    <div class=\"form-group\">\n      <div class=\"btn-group w-100\" role=\"group\">\n\n        <button type=\"button\" class=\"btn btn-secondary w-100\" (click)=\"action.buy(getReqNum())\" [disabled]=\"!action.maxBuy.greaterThanOrEqualTo(1)\">\n          <span *ngIf=\"!action.oneTime ; else get\">{{getPriceString1()}}</span>\n          <ng-template #get>\n            <span *ngIf=\"action.oneTime\">获取</span>\n          </ng-template>\n        </button>\n        <button type=\"button \" class=\"btn btn-secondary w-100\" (click)=\"action.buy(action.maxBuy.div(2).ceil())\"\n          *ngIf=\"action.maxBuy.greaterThanOrEqualTo(3)\">\n          <span>{{getBuyStringHalf()}}</span>\n        </button>\n        <button type=\"button\" class=\"btn btn-secondary w-100\" (click)=\"action.buy(action.maxBuy)\" *ngIf=\"action.maxBuy.greaterThanOrEqualTo(2)\">\n          <span>{{getBuyStringMax()}}</span>\n        </button>\n      </div>\n    </div>\n\n  </div>\n\n  <div *ngIf=\"!action.maxBuy.greaterThanOrEqualTo(1) && !(action.oneTime && action.owned())\">\n    <div class=\"progress-block\" *ngFor=\"let cost of action.realPriceNow; trackBy:getPriceId\">\n      <label>{{cost.basePrice | format}}&nbsp;{{cost.unit.name}}</label>\n      <div class=\"progress-static\" [ngClass]=\"{'success': cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice), 'danger': !cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice)}\">\n        <div class=\"progress-meter\" max=\"100\" attr.data-value=\"{{Math.min(cost.unit.quantity.times(100).div(cost.basePrice).floor().toNumber(),100)}}\">\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -64,7 +64,7 @@ var ActionComponent = (function () {
     function ActionComponent(gameService) {
         this.gameService = gameService;
         this.card = 'card';
-        this.maxBuy = Decimal(0);
+        this.maxBuy = new Decimal(0);
         this.prices1 = new Array();
         this.pricesHalf = new Array();
         this.pricesMax = new Array();
@@ -79,65 +79,25 @@ var ActionComponent = (function () {
         this.Math = Math;
     }
     ActionComponent.prototype.ngOnInit = function () {
+        this.action.reload();
+        this.action.maxBuy = this.action.getBuyMax();
     };
     ActionComponent.prototype.getReqNum = function () {
         if (!this.gameService.game.buyMulti || this.gameService.game.buyMulti < 1)
-            return Decimal(1);
-        return Decimal(Math.max(Math.min(this.gameService.game.buyMulti, this.action.maxBuy.toNumber()), 1));
-        // if (!this.required)
-        //   return Decimal(1)
-        // return Decimal(Math.max(Math.min(this.required, this.action.maxBuy.toNumber()), 1))
+            return new Decimal(1);
+        return new Decimal(Math.max(Math.min(this.gameService.game.buyMulti, this.action.maxBuy.toNumber()), 1));
     };
     ActionComponent.prototype.getPriceString1 = function () {
-        return __WEBPACK_IMPORTED_MODULE_2_swarm_numberformat__["formatShort"](Decimal(this.action.up ? this.action.up.quantity.plus(1) : 1)
+        return __WEBPACK_IMPORTED_MODULE_2_swarm_numberformat__["formatShort"](new Decimal(this.action.up ? this.action.up.quantity.plus(1) : 1)
             .times(this.getReqNum()));
     };
     ActionComponent.prototype.getBuyStringHalf = function () {
-        return __WEBPACK_IMPORTED_MODULE_2_swarm_numberformat__["formatShort"](Decimal(this.action.up ? this.action.up.quantity.plus(1) : 1)
-            .times(this.action.getBuyMax().div(2).ceil()));
+        return __WEBPACK_IMPORTED_MODULE_2_swarm_numberformat__["formatShort"](new Decimal(this.action.up ? this.action.up.quantity.plus(1) : 1)
+            .times(this.action.maxBuy.div(2).ceil()));
     };
     ActionComponent.prototype.getBuyStringMax = function () {
-        return __WEBPACK_IMPORTED_MODULE_2_swarm_numberformat__["formatShort"](Decimal(this.action.up ? this.action.up.quantity.plus(1) : 1)
-            .times(this.action.getBuyMax()));
-    };
-    ActionComponent.prototype.ngAfterViewChecked = function () {
-        // if (this.action)
-        //   this.refresh();
-    };
-    ActionComponent.prototype.refresh = function () {
-        this.maxBuy = this.action.getBuyMax();
-        this.prices1 = this.action.getCosts(Decimal(1));
-        this.pricesHalf = this.action.getCosts(this.maxBuy.div(2).ceil());
-        this.pricesMax = this.action.getCosts(this.maxBuy);
-        var buyMulti = Decimal(this.action.up ? this.action.up.quantity.plus(1) : 1);
-        this.buyString1 = __WEBPACK_IMPORTED_MODULE_2_swarm_numberformat__["formatShort"](buyMulti);
-        this.buyStringHalf = __WEBPACK_IMPORTED_MODULE_2_swarm_numberformat__["formatShort"](buyMulti.times(this.maxBuy.div(2).ceil()));
-        this.buyStringMax = __WEBPACK_IMPORTED_MODULE_2_swarm_numberformat__["formatShort"](buyMulti.times(this.maxBuy));
-        this.priceString1 = '';
-        for (var _i = 0, _a = this.prices1; _i < _a.length; _i++) {
-            var p = _a[_i];
-            this.priceString1 += __WEBPACK_IMPORTED_MODULE_2_swarm_numberformat__["formatShort"](p.basePrice) +
-                ' ' + p.unit.name + '\n';
-        }
-        this.priceStringHalf = '';
-        for (var _b = 0, _c = this.pricesHalf; _b < _c.length; _b++) {
-            var p = _c[_b];
-            this.priceStringHalf += __WEBPACK_IMPORTED_MODULE_2_swarm_numberformat__["formatShort"](p.basePrice) +
-                ' ' + p.unit.name + '\n';
-        }
-        this.priceStringMax = '';
-        for (var _d = 0, _e = this.pricesMax; _d < _e.length; _d++) {
-            var p = _e[_d];
-            this.priceStringMax += __WEBPACK_IMPORTED_MODULE_2_swarm_numberformat__["formatShort"](p.basePrice) +
-                ' ' + p.unit.name + '\n';
-        }
-    };
-    ActionComponent.prototype.buyFirefox = function () {
-        if (this.action) {
-            var b = this.maxBuy.toNumber();
-            return b >= 1;
-        }
-        return false;
+        return __WEBPACK_IMPORTED_MODULE_2_swarm_numberformat__["formatShort"](new Decimal(this.action.up ? this.action.up.quantity.plus(1) : 1)
+            .times(this.action.maxBuy));
     };
     ActionComponent.prototype.getPriceId = function (index, cost) {
         return cost.unit.id;
@@ -150,7 +110,7 @@ __decorate([
 ], ActionComponent.prototype, "card", void 0);
 __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Input"])(),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__model_units_action__["h" /* Action */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__model_units_action__["h" /* Action */]) === "function" && _a || Object)
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__model_units_action__["i" /* Action */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__model_units_action__["i" /* Action */]) === "function" && _a || Object)
 ], ActionComponent.prototype, "action", void 0);
 ActionComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
@@ -236,10 +196,10 @@ var AppComponent = (function () {
         this.gameService.game.isChanged = true;
     };
     AppComponent.prototype.warp = function (minute) {
-        this.gameService.game.actMin.buy(Decimal(minute));
+        this.gameService.game.actMin.buy(new Decimal(minute));
     };
     AppComponent.prototype.warpAv = function (minute) {
-        return this.gameService.game.actMin.maxBuy.greaterThanOrEqualTo(Decimal(minute));
+        return this.gameService.game.actMin.maxBuy.greaterThanOrEqualTo(new Decimal(minute));
     };
     AppComponent.prototype.getListId = function (index, list) {
         return list.getId();
@@ -293,6 +253,8 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__opt_nav_opt_nav_component__ = __webpack_require__("../../../../../src/app/opt-nav/opt-nav.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ui_ui_component__ = __webpack_require__("../../../../../src/app/ui/ui.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__credit_credit_component__ = __webpack_require__("../../../../../src/app/credit/credit.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__world_world_component__ = __webpack_require__("../../../../../src/app/world/world.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__world_builder_world_builder_component__ = __webpack_require__("../../../../../src/app/world-builder/world-builder.component.ts");
 /* unused harmony export Format */
 /* unused harmony export FilterListNotEmpty */
 /* unused harmony export FilterMax */
@@ -314,6 +276,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -364,6 +328,9 @@ var appRoutes = [
     },
     {
         path: 'world', component: __WEBPACK_IMPORTED_MODULE_15__home_world_home_world_component__["a" /* HomeWorldComponent */]
+    },
+    {
+        path: 'world-build', component: __WEBPACK_IMPORTED_MODULE_24__world_builder_world_builder_component__["a" /* WorldBuilderComponent */]
     }
 ];
 var Format = (function () {
@@ -446,7 +413,9 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_17__prod_togle_pipe_pipe__["a" /* ProdToglePipePipe */],
             __WEBPACK_IMPORTED_MODULE_20__opt_nav_opt_nav_component__["a" /* OptNavComponent */],
             __WEBPACK_IMPORTED_MODULE_21__ui_ui_component__["a" /* UiComponent */],
-            __WEBPACK_IMPORTED_MODULE_22__credit_credit_component__["a" /* CreditComponent */]
+            __WEBPACK_IMPORTED_MODULE_22__credit_credit_component__["a" /* CreditComponent */],
+            __WEBPACK_IMPORTED_MODULE_23__world_world_component__["a" /* WorldComponent */],
+            __WEBPACK_IMPORTED_MODULE_24__world_builder_world_builder_component__["a" /* WorldBuilderComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__["BrowserModule"],
@@ -684,7 +653,7 @@ var GameService = (function () {
 }());
 GameService = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_ng2_toastr_ng2_toastr__["ToastsManager"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ng2_toastr_ng2_toastr__["ToastsManager"]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_ng2_toastr_ng2_toastr__["ToastsManager"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ng2_toastr_ng2_toastr__["ToastsManager"]) === "function" && _b || Object])
 ], GameService);
 
 var _a, _b;
@@ -947,7 +916,7 @@ MainNavComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/main-nav/main-nav.component.html"),
         styles: [__webpack_require__("../../../../../src/app/main-nav/main-nav.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__game_service__["a" /* GameService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__game_service__["a" /* GameService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__game_service__["a" /* GameService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__game_service__["a" /* GameService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _d || Object])
 ], MainNavComponent);
 
 var _a, _b, _c, _d;
@@ -963,8 +932,8 @@ var _a, _b, _c, _d;
 var Cost = (function () {
     function Cost(unit, basePrice, growFactor) {
         if (unit === void 0) { unit = null; }
-        if (basePrice === void 0) { basePrice = Decimal(1); }
-        if (growFactor === void 0) { growFactor = Decimal(1); }
+        if (basePrice === void 0) { basePrice = new Decimal(1); }
+        if (growFactor === void 0) { growFactor = new Decimal(1); }
         this.unit = unit;
         this.basePrice = basePrice;
         this.growFactor = growFactor;
@@ -1033,20 +1002,20 @@ var GameModel = (function () {
     function GameModel() {
         this.isChanged = true;
         this.timeToEnd = Number.POSITIVE_INFINITY;
-        this.gameVersion = "0.1.3";
+        this.gameVersion = "0.2.0";
         this.hideSaveNotification = false;
         this.options = new __WEBPACK_IMPORTED_MODULE_18__options__["a" /* Options */]();
         this.buyMulti = 1;
         //#region
         //    Cost
-        this.buyExp = Decimal(1.1);
-        this.buyExpUnit = Decimal(1);
-        this.scienceCost1 = Decimal(100);
-        this.scienceCost2 = Decimal(1E3);
-        this.scienceCost3 = Decimal(1E4);
-        this.scienceCost4 = Decimal(1E5);
-        this.upgradeScienceExp = Decimal(4);
-        this.upgradeScienceHireExp = Decimal(6);
+        this.buyExp = new Decimal(1.1);
+        this.buyExpUnit = new Decimal(1);
+        this.scienceCost1 = new Decimal(100);
+        this.scienceCost2 = new Decimal(1E3);
+        this.scienceCost3 = new Decimal(1E4);
+        this.scienceCost4 = new Decimal(1E5);
+        this.upgradeScienceExp = new Decimal(4);
+        this.upgradeScienceHireExp = new Decimal(6);
         this.actionList = new Array();
         //  Research
         this.resList = Array();
@@ -1056,25 +1025,26 @@ var GameModel = (function () {
         this.uiLists = new Array();
         this.unitWithUp = new Array();
         //    Prestige
-        this.currentEarning = Decimal(0);
-        this.lifeEarning = Decimal(0);
-        this.prestigeDone = Decimal(0);
-        this.maxLevel = Decimal(0);
+        this.currentEarning = new Decimal(0);
+        this.lifeEarning = new Decimal(0);
+        this.prestigeDone = new Decimal(0);
+        this.maxLevel = new Decimal(0);
         this.worldTabAv = false;
         this.expTabAv = false;
         this.homeTabAv = false;
         this.minUser = 0;
-        this.maxUser = 100;
-        this.maxMax = 100;
+        this.maxUser = 1000;
+        this.maxMax = 1000;
         // ui stuff
         this.isLab = false;
         this.pause = false;
         this.timeModalOpened = false;
         this.unitLists = new Array();
+        this.skip = false;
         this.initialize();
     }
     GameModel.prototype.initialize = function () {
-        this.currentEarning = Decimal(0);
+        this.currentEarning = new Decimal(0);
         this.allBase = [];
         this.unitMap = new __WEBPACK_IMPORTED_MODULE_5_rxjs_util_Map__["Map"]();
         this.lists = new Array();
@@ -1141,12 +1111,12 @@ var GameModel = (function () {
         //  this.reloadList()
     };
     GameModel.prototype.setMaxLevel = function () {
-        this.maxMax = Decimal.min(this.maxLevel.div(12), 1000).floor().toNumber();
+        this.maxMax = Decimal.min(this.maxLevel.div(12), 10000).floor().toNumber();
         this.maxUser = Decimal.min(this.maxUser, this.maxMax).floor().toNumber();
     };
     GameModel.prototype.getProduction = function (prod, level, factorial, fraction, previous) {
-        if (previous === void 0) { previous = Decimal(1); }
-        var ret = Decimal(0);
+        if (previous === void 0) { previous = new Decimal(1); }
+        var ret = new Decimal(0);
         var production = prod.getprodPerSec();
         if (prod.isActive())
             ret = Decimal.pow(fraction, level) //    exponential
@@ -1174,7 +1144,7 @@ var GameModel = (function () {
         var unitZero = null;
         //  Infestation fix 2
         if (this.infestation.poisonousPlant.unlocked && this.infestation.poisonousPlant.quantity.lessThan(1))
-            this.infestation.poisonousPlant2.quantity = Decimal(0);
+            this.infestation.poisonousPlant2.quantity = new Decimal(0);
         // console.log(this.timeToEnd + " " + dif)
         if (this.isChanged || dif > this.timeToEnd || dif > 1000) {
             //  reload max time
@@ -1187,9 +1157,9 @@ var GameModel = (function () {
             this.all.forEach(function (a) { return a.endIn = Number.POSITIVE_INFINITY; });
             for (var _i = 0, _a = this.unl; _i < _a.length; _i++) {
                 var res = _a[_i];
-                res.a = Decimal(0);
-                res.b = Decimal(0);
-                res.c = Decimal(0);
+                res.a = new Decimal(0);
+                res.b = new Decimal(0);
+                res.c = new Decimal(0);
                 var d = res.quantity;
                 for (var _b = 0, _c = res.producedBy.filter(function (r) { return r.isActive() && r.unit.unlocked; }); _b < _c.length; _b++) {
                     var prod1 = _c[_b];
@@ -1217,7 +1187,7 @@ var GameModel = (function () {
                     || d.lessThan(0)) {
                     var solution = __WEBPACK_IMPORTED_MODULE_2__utils__["a" /* Utils */].solveCubic(res.a, res.b, res.c, d).filter(function (s) { return s.greaterThan(0); });
                     if (d.lessThan(Number.EPSILON)) {
-                        res.quantity = Decimal(0);
+                        res.quantity = new Decimal(0);
                     }
                     for (var _h = 0, solution_1 = solution; _h < solution_1.length; _h++) {
                         var s = solution_1[_h];
@@ -1242,12 +1212,12 @@ var GameModel = (function () {
         //  Update resource
         if (!this.pause || forceUp) {
             if (maxTime > Number.EPSILON)
-                this.update2(Decimal(maxTime).div(1000));
+                this.update2(new Decimal(maxTime).div(1000));
             if (unitZero) {
                 unitZero.producedBy.filter(function (p) { return p.efficiency.lessThan(0); }).forEach(function (p) { return p.unit.percentage = 0; });
                 // fix for infestatiion world
                 if (unitZero === this.infestation.poisonousPlant) {
-                    this.infestation.poisonousPlant2.quantity = Decimal(0);
+                    this.infestation.poisonousPlant2.quantity = new Decimal(0);
                 }
             }
             var remaning = dif - maxTime;
@@ -1263,8 +1233,8 @@ var GameModel = (function () {
      * Called when update end, adjust some values.
      */
     GameModel.prototype.postUpdate = function () {
-        this.all.filter(function (u) { return u.quantity.lessThan(Number.EPSILON); }).forEach(function (u) { return u.quantity = Decimal(0); });
-        this.lists.forEach(function (l) { return l.isEnding = !!l.list.find(function (u) { return u.isEnding(); }); });
+        this.all.filter(function (u) { return u.quantity.lessThan(Number.EPSILON); }).forEach(function (u) { return u.quantity = new Decimal(0); });
+        this.lists.forEach(function (l) { return l.isEnding = !!l.uiList.find(function (u) { return u.isEnding(); }); });
         this.all.filter(function (un) { return un.unlocked; }).forEach(function (u) {
             u.reloadUiPerSec();
         });
@@ -1282,18 +1252,18 @@ var GameModel = (function () {
      * @param dif time elapsed in millisecond
      */
     // update(dif: number) {
-    //   const fraction = Decimal(dif / 1000)
+    //   const fraction = new Decimal(dif / 1000)
     //   const all = Array.from(this.unitMap.values())
     //   for (const res of all)
     //     for (const prod of res.producedBy.filter(p => p.isActive() && p.unit.unlocked))
-    //       res.toAdd = res.toAdd.plus(this.getProduction(prod, Decimal(1), Decimal(1), fraction))
+    //       res.toAdd = res.toAdd.plus(this.getProduction(prod, new Decimal(1), new Decimal(1), fraction))
     //   // all.forEach(u => {
     //   //   u.quantity = u.quantity.plus(u.toAdd)
-    //   //   u.toAdd = Decimal(0)
+    //   //   u.toAdd = new Decimal(0)
     //   // })
     //   for (const u of all) {
     //     u.quantity = u.quantity.plus(u.toAdd)
-    //     u.toAdd = Decimal(0)
+    //     u.toAdd = new Decimal(0)
     //   }
     // }
     GameModel.prototype.update2 = function (dif) {
@@ -1390,10 +1360,10 @@ var GameModel = (function () {
             saveRaw = __WEBPACK_IMPORTED_MODULE_7_lz_string__["decompressFromBase64"](saveRaw);
             var save = JSON.parse(saveRaw);
             // console.log(saveRaw)
-            this.currentEarning = Decimal(save.cur);
-            this.lifeEarning = Decimal(save.life);
+            this.currentEarning = new Decimal(save.cur);
+            this.lifeEarning = new Decimal(save.life);
             this.world.restore(save.w, true);
-            this.maxLevel = Decimal(save.ml);
+            this.maxLevel = new Decimal(save.ml);
             for (var _i = 0, _a = save.list; _i < _a.length; _i++) {
                 var s = _a[_i];
                 var unit = this.unitMap.get(s.id);
@@ -1414,7 +1384,7 @@ var GameModel = (function () {
                 _loop_1(s);
             }
             if (save.pd)
-                this.prestigeDone = Decimal(save.pd);
+                this.prestigeDone = new Decimal(save.pd);
             if (save.worldTabAv)
                 this.worldTabAv = save.worldTabAv;
             if (save.expTabAv)
@@ -1438,7 +1408,7 @@ var GameModel = (function () {
                     if (tu.unit === _this.baseWorld.nestAnt ||
                         tu.unit === _this.bee.hiveBee ||
                         tu.unit === _this.forest.beetleNest) {
-                        tu.basePrice = Decimal(30).times(toUnlockMultiplier_1).floor();
+                        tu.basePrice = new Decimal(30).times(toUnlockMultiplier_1).floor();
                     }
                     if (tu.unit === _this.bee.hiveBee) {
                         tu.basePrice = tu.basePrice.div(2);
@@ -1468,10 +1438,10 @@ var GameModel = (function () {
         // console.log("reloadProduction")
     };
     GameModel.prototype.getCost = function (data) {
-        return new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.all.find(function (u) { return u.id === data.u; }), Decimal(data.b), Decimal(data.g));
+        return new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.all.find(function (u) { return u.id === data.u; }), new Decimal(data.b), new Decimal(data.g));
     };
     GameModel.prototype.getExperience = function () {
-        return Decimal(this.world.experience);
+        return new Decimal(this.world.experience);
     };
     GameModel.prototype.reloadUpIcons = function () {
         this.unitWithUp.forEach(function (u) { return u.checkUp(); });
@@ -1538,7 +1508,7 @@ var Production = (function (_super) {
     __extends(Production, _super);
     function Production(unit, // who make
         efficiency, unlocked) {
-        if (efficiency === void 0) { efficiency = Decimal(1); }
+        if (efficiency === void 0) { efficiency = new Decimal(1); }
         if (unlocked === void 0) { unlocked = true; }
         var _this = _super.call(this, unlocked) || this;
         _this.unit = unit;
@@ -1552,24 +1522,24 @@ var Production = (function (_super) {
     Production.prototype.getprodPerSec = function (eff) {
         if (eff === void 0) { eff = true; }
         if (this.unit.unlocked && this.unlocked) {
-            var sum = Decimal(1);
+            var sum = new Decimal(1);
             for (var _i = 0, _a = this.product.bonusProduction; _i < _a.length; _i++) {
                 var p = _a[_i];
                 sum = sum.plus(p[0].quantity.times(p[1]));
             }
-            var totalBonus = Decimal(1);
+            var totalBonus = new Decimal(1);
             if (this.bonusList && this.bonusList.length > 0)
                 for (var i = 0; i < this.bonusList.length; i++)
                     totalBonus = totalBonus.plus(this.bonusList[i][0].quantity.times(this.bonusList[i][1]));
             return this.efficiency
                 .times(this.unit.getProduction())
-                .times(eff ? this.unit.percentage : Decimal(100)).div(100)
-                .times(this.efficiency.greaterThan(0) ? this.product.worldProdModifiers : Decimal(1))
+                .times(eff ? this.unit.percentage : new Decimal(100)).div(100)
+                .times(this.efficiency.greaterThan(0) ? this.product.worldProdModifiers : new Decimal(1))
                 .times(sum)
                 .times(totalBonus);
         }
         else
-            return Decimal(0);
+            return new Decimal(0);
     };
     Production.prototype.isActive = function () {
         return this.active && this.unlocked;
@@ -1619,15 +1589,16 @@ var TypeList = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base__ = __webpack_require__("../../../../../src/app/model/units/base.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__cost__ = __webpack_require__("../../../../../src/app/model/cost.ts");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return Action; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return Action; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return BuyAction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return BuyAndUnlockAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return BuyAndUnlockAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Research; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return UpAction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return UpSpecial; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return UpHire; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return UpAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return UpSpecial; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return UpHire; });
 /* unused harmony export UnlockProd */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return TimeWarp; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return TimeWarp; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Resupply; });
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -1710,19 +1681,17 @@ var Action = (function (_super) {
     };
     Action.prototype.getBuyMax = function () {
         if (!this.unlocked)
-            return Decimal(0);
+            return new Decimal(0);
         var price = this.getRealPrices();
         //    https://blog.kongregate.com/the-math-of-idle-games-part-i/
-        var max = Decimal(Infinity);
+        var max = new Decimal(Number.POSITIVE_INFINITY);
         for (var _i = 0, price_1 = price; _i < price_1.length; _i++) {
             var p = price_1[_i];
-            max = Decimal.min(max, (p.growFactor.lessThanOrEqualTo(1) ?
-                p.unit.quantity.div(p.basePrice) :
-                Decimal.log((((p.growFactor.minus(1)).times(p.unit.quantity))
-                    .div((p.growFactor.pow(this.quantity)).times(p.basePrice))).plus(1), p.growFactor.toNumber())).floor());
+            max = Decimal.min(max, Math.floor(p.growFactor.lessThanOrEqualTo(1) ? p.unit.quantity.div(p.basePrice) : (((p.growFactor.minus(1)).times(p.unit.quantity))
+                .div((p.growFactor.pow(this.quantity)).times(p.basePrice))).plus(1).log(p.growFactor)));
         }
         if (this.oneTime && max.greaterThanOrEqualTo(1))
-            return Decimal(1);
+            return new Decimal(1);
         if (this.limit)
             max = Decimal.min(max, this.limit.minus(this.quantity));
         return max;
@@ -1735,7 +1704,7 @@ var Action = (function (_super) {
     };
     Action.prototype.setMaxBuy = function () {
         if (this.oneTime) {
-            this.maxBuy = !this.owned() && this.checkBuy() ? Decimal(1) : Decimal(0);
+            this.maxBuy = !this.owned() && this.checkBuy() ? new Decimal(1) : new Decimal(0);
         }
         else {
             this.maxBuy = this.getBuyMax();
@@ -1777,7 +1746,7 @@ var BuyAction = (function (_super) {
     function BuyAction(game, unit, cost, doNext) {
         if (doNext === void 0) { doNext = null; }
         var _this = _super.call(this, "actBuy", "雇佣", (function (n) {
-            _this.unit.quantity = _this.unit.quantity.plus(n.times(_this.unit.upHire ? _this.unit.upHire.quantity.plus(1) : Decimal(1)));
+            _this.unit.quantity = _this.unit.quantity.plus(n.times(_this.unit.upHire ? _this.unit.upHire.quantity.plus(1) : new Decimal(1)));
             if (_this.doNext)
                 _this.doNext();
             return true;
@@ -1853,8 +1822,8 @@ var UpSpecial = (function (_super) {
     __extends(UpSpecial, _super);
     function UpSpecial(game, unit) {
         var _this = _super.call(this, "upS", "实验", null, [
-            new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](unit, Decimal(100), Decimal(10)),
-            new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](unit.model.baseWorld.science, Decimal(100), Decimal(12))
+            new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](unit, new Decimal(100), new Decimal(10)),
+            new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](unit.model.baseWorld.science, new Decimal(100), new Decimal(12))
         ], "做一些实验，以增加产量。", game, unit) || this;
         _this.unit = unit;
         _this.unit.upSpecial = _this;
@@ -1898,7 +1867,7 @@ var TimeWarp = (function (_super) {
             game.longUpdate(n.times(timeUnits).times(1000).toNumber(), true);
             _this.game.isChanged = true;
             return true;
-        }), [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](game.prestige.time, timeUnits, Decimal(1))], "时间扭曲通过 " + timeName, game) || this;
+        }), [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](game.prestige.time, timeUnits, new Decimal(1))], "时间扭曲通过 " + timeName, game) || this;
         _this.timeUnits = timeUnits;
         _this.timeName = timeName;
         _this.initialize();
@@ -1910,6 +1879,24 @@ var TimeWarp = (function (_super) {
         this.showNumber = false;
     };
     return TimeWarp;
+}(Action));
+
+var Resupply = (function (_super) {
+    __extends(Resupply, _super);
+    function Resupply(game, unit, supplyPrestige) {
+        var _this = _super.call(this, "resup", "Resupply", function (n) {
+            _this.unit.quantity = _this.unit.quantity.times(1.5);
+            return true;
+        }, [], "Get 50% more", game, unit) || this;
+        _this.supplyPrestige = supplyPrestige;
+        _this.unit.upResup = _this;
+        return _this;
+    }
+    Resupply.prototype.getBuyMax = function () {
+        this.limit = this.unit.prestigeBonusStart.quantity;
+        return _super.prototype.getBuyMax.call(this);
+    };
+    return Resupply;
 }(Action));
 
 //# sourceMappingURL=action.js.map
@@ -1963,7 +1950,7 @@ var Base = (function (_super) {
         if (description === void 0) { description = ""; }
         // public types: Type[] = [],
         if (unlocked === void 0) { unlocked = false; }
-        if (quantity === void 0) { quantity = Decimal(0); }
+        if (quantity === void 0) { quantity = new Decimal(0); }
         if (avabileBaseWorld === void 0) { avabileBaseWorld = true; }
         if (avabileThisWorld === void 0) { avabileThisWorld = true; }
         var _this = _super.call(this, unlocked) || this;
@@ -1993,7 +1980,7 @@ var Base = (function (_super) {
         if (data.q)
             this.quantity = new Decimal(data.q);
         else
-            this.quantity = Decimal(0);
+            this.quantity = new Decimal(0);
         if (data.u)
             this.unlocked = data.u;
         else
@@ -2003,7 +1990,7 @@ var Base = (function (_super) {
     };
     Base.prototype.initialize = function () {
         this.unlocked = false;
-        this.quantity = Decimal(0);
+        this.quantity = new Decimal(0);
         this.avabileThisWorld = this.avabileBaseWorld;
     };
     Base.prototype.isEnding = function () {
@@ -2073,28 +2060,28 @@ var Unit = (function (_super) {
         var _this = _super.call(this, model, id) || this;
         _this.model = model;
         _this.neverEnding = neverEnding;
-        _this.toAdd = Decimal(0);
+        _this.toAdd = new Decimal(0);
         _this.producedBy = Array();
         _this.produces = Array();
         _this.percentage = 100;
-        _this.worldProdModifiers = Decimal(1);
-        _this.worldEffModifiers = Decimal(1);
-        _this.worldBuyModifiers = Decimal(1);
+        _this.worldProdModifiers = new Decimal(1);
+        _this.worldEffModifiers = new Decimal(1);
+        _this.worldBuyModifiers = new Decimal(1);
         _this.actions = Array();
         _this.bonusProduction = Array();
         _this.prestigeBonusProduction = Array();
-        _this.prestigeBonusQuantityValue = Decimal(5);
+        _this.prestigeBonusQuantityValue = new Decimal(5);
         _this.alwaysOn = false;
         _this.showUp = false;
         _this.showTables = true;
         _this.showActions = true;
-        _this.production = Decimal(0);
-        _this.totalPerSec = Decimal(0);
-        _this.totalProducers = Decimal(0);
+        _this.production = new Decimal(0);
+        _this.totalPerSec = new Decimal(0);
+        _this.totalProducers = new Decimal(0);
         _this.togableProductions = null;
-        _this.a = Decimal(0);
-        _this.b = Decimal(0);
-        _this.c = Decimal(0);
+        _this.a = new Decimal(0);
+        _this.b = new Decimal(0);
+        _this.c = new Decimal(0);
         _this.model.unitMap.set(_this.id, _this);
         _this.name = name;
         _this.description = description;
@@ -2106,18 +2093,18 @@ var Unit = (function (_super) {
         prod.unit.produces.push(prod);
     };
     Unit.prototype.loadProduction = function () {
-        var sum = Decimal(1);
+        var sum = new Decimal(1);
         for (var _i = 0, _a = this.prestigeBonusProduction; _i < _a.length; _i++) {
             var p = _a[_i];
             sum = sum.plus(p.quantity.times(0.3));
         } //  hardcoded +30% prestige bonus...
-        this.production = (this.getBoost().plus(1)).times((this.upSpecial ? this.upSpecial.quantity : Decimal(0)).plus(1)).times(this.worldEffModifiers).times(sum);
+        this.production = (this.getBoost().plus(1)).times((this.upSpecial ? this.upSpecial.quantity : new Decimal(0)).plus(1)).times(this.worldEffModifiers).times(sum);
         this.showActions = !!this.actions.find(function (a) { return a.unlocked; });
     };
     Unit.prototype.reloadUiPerSec = function () {
         var _this = this;
-        this.totalProducers = Decimal(0);
-        this.totalPerSec = Decimal(0);
+        this.totalProducers = new Decimal(0);
+        this.totalPerSec = new Decimal(0);
         this.producedBy.filter(function (p) { return p.isActive() && p.unit.unlocked; }).forEach(function (p) {
             _this.totalPerSec = _this.totalPerSec.plus(p.getprodPerSec().times(p.unit.quantity));
             _this.totalProducers = _this.totalProducers.plus(p.unit.quantity);
@@ -2126,9 +2113,9 @@ var Unit = (function (_super) {
     Unit.prototype.getBoost = function () {
         return this.model.research.up1.owned() && this.buyAction ?
             this.buyAction.quantity.times(0.005)
-                .times(this.upAction ? this.upAction.quantity.plus(1) : Decimal(1))
-                .times(Decimal(1).plus(this.upHire && this.model.research.upCombined.owned() ? this.upHire.quantity : Decimal(0)))
-            : Decimal(0);
+                .times(this.upAction ? this.upAction.quantity.plus(1) : new Decimal(1))
+                .times(new Decimal(1).plus(this.upHire && this.model.research.upCombined.owned() ? this.upHire.quantity : new Decimal(0)))
+            : new Decimal(0);
     };
     Unit.prototype.getProduction = function () {
         // this.loadProduction()
@@ -2186,15 +2173,14 @@ var Unit = (function (_super) {
     };
     Unit.prototype.initialize = function () {
         _super.prototype.initialize.call(this);
-        this.worldProdModifiers = Decimal(1);
-        this.worldEffModifiers = Decimal(1);
-        this.worldBuyModifiers = Decimal(1);
+        this.worldProdModifiers = new Decimal(1);
+        this.worldEffModifiers = new Decimal(1);
+        this.worldBuyModifiers = new Decimal(1);
         if (this.prestigeBonusStart) {
             this.quantity = this.prestigeBonusQuantityValue.times(this.prestigeBonusStart.quantity);
-            // if (this.quantity.greaterThan(0)) {
-            //   this.unlocked = true
-            // }
         }
+        if (this.upResup)
+            this.upResup.unlocked = this.upResup.supplyPrestige.quantity.greaterThan(0);
         this.producedBy.forEach(function (p) { return p.unlocked = p.defaultUnlocked; });
     };
     Unit.prototype.isStopped = function () {
@@ -2266,13 +2252,13 @@ var Utils = (function () {
             roots = [this.cuberoot(q.times(-1))];
         }
         else if (q.abs().lessThan(Number.EPSILON)) {
-            roots = [Decimal(0)].concat(p.lessThan(0) ? [(p.times(-1)).sqrt(), (p.times(-1)).sqrt().times(-1)] : []);
+            roots = [new Decimal(0)].concat(p.lessThan(0) ? [(p.times(-1)).sqrt(), (p.times(-1)).sqrt().times(-1)] : []);
         }
         else {
-            var D = q.pow(2).div(Decimal(4).plus(p.pow(3).div(27)));
+            var D = q.pow(2).div(new Decimal(4).plus(p.pow(3).div(27)));
             // console.log("D: " + D.toString())
             if (D.abs().lessThan(Number.EPSILON)) {
-                roots = [q.times(-1.5).div(p), Decimal(3).times(q).times(p)];
+                roots = [q.times(-1.5).div(p), new Decimal(3).times(q).times(p)];
             }
             else if (D.greaterThan(0)) {
                 // var u = cuberoot(-q/2 - Math.sqrt(D));
@@ -2281,9 +2267,9 @@ var Utils = (function () {
                 roots = [u.minus(p.div(u.times(3)))];
             }
             else {
-                var u = Decimal(2).times(Decimal.sqrt(p.times(-1).div(3)));
+                var u = new Decimal(2).times(Decimal.sqrt(p.times(-1).div(3)));
                 // console.log(q.toString() + " " + p.toString() + " " + u.toString())
-                // let acos = Decimal(3).times(q).div(p).div(u)
+                // let acos = new Decimal(3).times(q).div(p).div(u)
                 var acos = q;
                 acos = acos.div(p);
                 acos = acos.div(u);
@@ -2292,10 +2278,10 @@ var Utils = (function () {
                 if (acos.lessThan(-1))
                     return [];
                 //  workaround for aprossimation 2
-                acos = Decimal.min(Decimal.max(acos, 1), -1);
-                var t = Decimal.acos(acos).div(3);
+                acos = Decimal.min(Decimal.max(acos, 1), -1).toNumber();
+                var t = new Decimal(Math.acos(acos) / 3);
                 // const t = Math.acos(3 * q / p / u) / 3;  // D < 0 implies p < 0 and acos argument in [-1..1]
-                var k = Decimal(2).times(Math.PI).div(3);
+                var k = new Decimal(2).times(Math.PI).div(3);
                 roots = [u.times(t.cos()), u.times((t.minus(k)).cos()), u.times(t.minus(k.times(2)).cos())];
                 // console.log(roots[0].toString())
                 // console.log(roots[1].toString())
@@ -2320,6 +2306,18 @@ var Unlocable = (function () {
     return Unlocable;
 }());
 
+Decimal.prototype.lessThanOrEqualTo = function (other) {
+    return this.cmp(other) < 1;
+};
+Decimal.prototype.lessThan = function (other) {
+    return this.cmp(other) < 0;
+};
+Decimal.prototype.greaterThan = function (other) {
+    return this.cmp(other) > 0;
+};
+Decimal.prototype.greaterThanOrEqualTo = function (other) {
+    return this.cmp(other) > -1;
+};
 //# sourceMappingURL=utils.js.map
 
 /***/ }),
@@ -2336,7 +2334,7 @@ var World = (function () {
         if (unitMod === void 0) { unitMod = []; }
         if (unitPrice === void 0) { unitPrice = []; }
         if (unlockedUnits === void 0) { unlockedUnits = []; }
-        if (experience === void 0) { experience = Decimal(2.5); }
+        if (experience === void 0) { experience = new Decimal(2.5); }
         if (toUnlockMax === void 0) { toUnlockMax = new Array(); }
         this.game = game;
         this.name = name;
@@ -2355,18 +2353,25 @@ var World = (function () {
     }
     World.getBaseWorld = function (game) {
         var baseWorld = new World(game, "Home", "Nothing special.", [], [], [
-            new __WEBPACK_IMPORTED_MODULE_0__cost__["a" /* Cost */](game.baseWorld.food, Decimal(1E12)),
-            new __WEBPACK_IMPORTED_MODULE_0__cost__["a" /* Cost */](game.baseWorld.nestAnt, Decimal(40))
+            new __WEBPACK_IMPORTED_MODULE_0__cost__["a" /* Cost */](game.baseWorld.food, new Decimal(1E12)),
+            new __WEBPACK_IMPORTED_MODULE_0__cost__["a" /* Cost */](game.baseWorld.nestAnt, new Decimal(40))
         ]);
-        baseWorld.experience = Decimal(10);
+        baseWorld.experience = new Decimal(10);
         return baseWorld;
     };
-    World.getRandomWorld = function (game) {
+    World.getRandomWorld = function (game, worldPrefix, worldType, worldSuffix, level) {
+        if (worldPrefix === void 0) { worldPrefix = null; }
+        if (worldType === void 0) { worldType = null; }
+        if (worldSuffix === void 0) { worldSuffix = null; }
+        if (level === void 0) { level = -1; }
         var worldRet = new World(game, "", "", [], [], []);
-        worldRet.experience = Decimal(0);
-        var worldType = World.worldTypes[Math.floor(Math.random() * (World.worldTypes.length))];
-        var worldPrefix = World.worldPrefix[Math.floor(Math.random() * (World.worldPrefix.length))];
-        var worldSuffix = World.worldSuffix[Math.floor(Math.random() * (World.worldSuffix.length))];
+        worldRet.experience = new Decimal(0);
+        if (!worldType)
+            worldType = World.worldTypes[Math.floor(Math.random() * (World.worldTypes.length))];
+        if (!worldPrefix)
+            worldPrefix = World.worldPrefix[Math.floor(Math.random() * (World.worldPrefix.length))];
+        if (!worldSuffix)
+            worldSuffix = World.worldSuffix[Math.floor(Math.random() * (World.worldSuffix.length))];
         var worlds = [worldType, worldPrefix, worldSuffix, this.getBaseWorld(game)];
         worldRet.name = worldPrefix.name + " " + worldType.name + " " + worldSuffix.name;
         worldRet.description = worldPrefix.description +
@@ -2429,22 +2434,27 @@ var World = (function () {
                 .filter(function (u) { return !game.infestation.listInfestation.map(function (u2) { return u2; }).includes(u); });
         }
         //    Scale the world level
-        var min = game.minUser;
-        var max = game.maxUser;
-        if (!min)
-            min = 0;
-        if (!max)
-            max = game.maxMax;
-        min = Math.min(game.minUser, game.maxMax);
-        max = Math.min(game.maxUser, game.maxMax);
-        worldRet.level = Decimal.random().times(Decimal(1 + max - min)).floor().plus(min).toNumber();
+        if (level < 0) {
+            var min = game.minUser;
+            var max = game.maxUser;
+            if (!min)
+                min = 0;
+            if (!max)
+                max = game.maxMax;
+            min = Math.min(game.minUser, game.maxMax);
+            max = Math.min(game.maxUser, game.maxMax);
+            worldRet.level = new Decimal(Math.random()).times(new Decimal(1 + max - min)).floor().plus(min).toNumber();
+        }
+        else {
+            worldRet.level = Math.min(Math.max(level, 0), game.maxMax);
+        }
         // worldRet.level = 1000
         var linear = 1 / 4;
         var linearExp = 1 / 2;
-        var toUnlockMultiplier = Decimal(worldRet.level + 1 / linear).times(linear);
-        // const toUnlockMultiplier = Decimal(worldRet.level + 1 / linear)
-        //   .times(Decimal(linear).div(Decimal.log(Decimal(10).plus(Decimal(worldRet.level).div(125)))))
-        var expMultiplier = Decimal.pow(1.00138, worldRet.level).times(Decimal(worldRet.level + 1 / linearExp).times(linearExp));
+        var toUnlockMultiplier = new Decimal(worldRet.level + 1 / linear).times(linear);
+        // const toUnlockMultiplier = new Decimal(worldRet.level + 1 / linear)
+        //   .times(new Decimal(linear).div(Decimal.log(new Decimal(10).plus(new Decimal(worldRet.level).div(125)))))
+        var expMultiplier = Decimal.pow(1.00138, worldRet.level).times(new Decimal(worldRet.level + 1 / linearExp).times(linearExp));
         worldRet.toUnlock.forEach(function (t) { return t.basePrice = t.basePrice.times(toUnlockMultiplier).floor(); });
         worldRet.unlockedUnits.forEach(function (t) { return t[1] = Decimal.max(t[1].times(toUnlockMultiplier.times(2)).floor(), 0); });
         worldRet.experience = worldRet.experience.times(expMultiplier).plus(0.5).floor();
@@ -2487,7 +2497,7 @@ var World = (function () {
         this.game.world = this;
         this.game.all.forEach(function (u) { return u.reloadtAct(); });
         //  research fix
-        this.game.resList.forEach(function (r) { return r.quantity = Decimal(0); });
+        this.game.resList.forEach(function (r) { return r.quantity = new Decimal(0); });
         this.game.worldTabAv = true;
         this.game.homeTabAv = true;
         this.game.expTabAv = true;
@@ -2523,7 +2533,7 @@ var World = (function () {
             this.avaiableUnits = data.a.map(function (a) { return _this.game.allBase.find(function (u) { return u.id === a; }); });
         this.prodMod = [];
         if (typeof data.p !== "undefined" && data.p != null && data.p.length > 0)
-            this.prodMod = data.p.map(function (p) { return [_this.game.all.find(function (u) { return u.id === p[0]; }), Decimal(p[1])]; });
+            this.prodMod = data.p.map(function (p) { return [_this.game.all.find(function (u) { return u.id === p[0]; }), new Decimal(p[1])]; });
         this.toUnlock = [];
         if (typeof data.t !== "undefined" && data.t != null && data.t.length > 0)
             this.toUnlock = data.t.map(function (c) { return _this.game.getCost(c); });
@@ -2532,13 +2542,13 @@ var World = (function () {
             this.toUnlockMax = data.m.map(function (c) { return _this.game.getCost(c); });
         this.unitMod = [];
         if (typeof data.um !== "undefined" && data.um != null && data.um.length > 0)
-            this.unitMod = data.um.map(function (p) { return [_this.game.all.find(function (u) { return u.id === p[0]; }), Decimal(p[1])]; });
+            this.unitMod = data.um.map(function (p) { return [_this.game.all.find(function (u) { return u.id === p[0]; }), new Decimal(p[1])]; });
         this.unitPrice = [];
         if (typeof data.up !== "undefined" && data.up != null && data.up.length > 0)
-            this.unitPrice = data.up.map(function (p) { return [_this.game.all.find(function (u) { return u.id === p[0]; }), Decimal(p[1])]; });
+            this.unitPrice = data.up.map(function (p) { return [_this.game.all.find(function (u) { return u.id === p[0]; }), new Decimal(p[1])]; });
         this.unlockedUnits = [];
         if (typeof data.uu !== "undefined" && data.uu != null && data.uu.length > 0)
-            this.unlockedUnits = data.uu.map(function (p) { return [_this.game.allBase.find(function (u) { return u.id === p[0]; }), Decimal(p[1])]; });
+            this.unlockedUnits = data.uu.map(function (p) { return [_this.game.allBase.find(function (u) { return u.id === p[0]; }), new Decimal(p[1])]; });
         this.experience = new Decimal(10);
         if (data.e)
             this.experience = new Decimal(data.e);
@@ -2600,17 +2610,17 @@ var BaseWorld = (function () {
         this.level1 = Array();
         this.level2 = Array();
         this.listJobs = Array();
-        this.baseFood = Decimal(800);
-        this.price2 = Decimal(100);
+        this.baseFood = new Decimal(800);
+        this.price2 = new Decimal(100);
         //  Prices
-        this.specialProduction = Decimal(100);
-        this.specialCost = Decimal(-40);
-        this.specialFood = Decimal(1E7);
-        this.specialRes2 = Decimal(1E4);
-        this.prestigeFood = Decimal(1E10);
-        this.prestigeOther1 = Decimal(1E6);
-        this.prestigeOther2 = Decimal(1E5);
-        this.prestigeUnit = Decimal(200);
+        this.specialProduction = new Decimal(100);
+        this.specialCost = new Decimal(-40);
+        this.specialFood = new Decimal(1E7);
+        this.specialRes2 = new Decimal(1E4);
+        this.prestigeFood = new Decimal(1E10);
+        this.prestigeOther1 = new Decimal(1E6);
+        this.prestigeOther2 = new Decimal(1E5);
+        this.prestigeUnit = new Decimal(200);
         this.list = Array();
     }
     BaseWorld.prototype.declareStuff = function () {
@@ -2649,7 +2659,7 @@ var BaseWorld = (function () {
         this.ice = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "ice", "冰", "冰");
         this.listMaterial.push(this.ice);
         //    Fungus
-        this.fungus.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpSpecial */](this.game, this.fungus));
+        this.fungus.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpSpecial */](this.game, this.fungus));
     };
     BaseWorld.prototype.declareGenerators = function () {
         this.littleAnt = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "G1", "蚂蚁", "蚂蚁是最低级的工人。 他们不断收集食物。");
@@ -2682,78 +2692,78 @@ var BaseWorld = (function () {
         this.list.push(this.littleAnt, this.queenAnt, this.nestAnt);
         // this.list.forEach(ant => ant.types = [Type.Ant, Type.Generator])
         this.littleAnt.unlocked = true;
-        this.littleAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* BuyAndUnlockAction */](this.game, this.littleAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, Decimal(15), Decimal(this.game.buyExp))], [this.queenAnt]));
-        this.queenAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* BuyAndUnlockAction */](this.game, this.queenAnt, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, Decimal(8E2), Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, Decimal(20), Decimal(this.game.buyExpUnit))
+        this.littleAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.littleAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, new Decimal(15), new Decimal(this.game.buyExp))], [this.queenAnt]));
+        this.queenAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.queenAnt, [
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, new Decimal(8E2), new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(20), new Decimal(this.game.buyExpUnit))
         ], [this.nestAnt, this.geologist]));
         this.nestAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.nestAnt, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.prestigeFood, Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.soil, this.prestigeOther1, Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.wood, this.prestigeOther2, Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.queenAnt, this.prestigeUnit, Decimal(this.game.buyExpUnit))
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.prestigeFood, new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.soil, this.prestigeOther1, new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.wood, this.prestigeOther2, new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.queenAnt, this.prestigeUnit, new Decimal(this.game.buyExpUnit))
         ]));
         for (var i = 0; i < this.list.length - 1; i++)
             this.list[i].addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.list[i + 1]));
         for (var i = 0; i < this.list.length; i++) {
-            this.list[i].actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.list[i], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.science, Decimal(Decimal(100).times(Decimal.pow(10, Decimal(i)))), this.game.upgradeScienceExp)]));
-            this.list[i].actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.list[i], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.science, Decimal(Decimal(100).times(Decimal.pow(10, Decimal(i)))), this.game.upgradeScienceHireExp)]));
+            this.list[i].actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.list[i], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.science, new Decimal(new Decimal(100).times(Decimal.pow(10, new Decimal(i)))), this.game.upgradeScienceExp)]));
+            this.list[i].actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.list[i], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.science, new Decimal(new Decimal(100).times(Decimal.pow(10, new Decimal(i)))), this.game.upgradeScienceHireExp)]));
         }
         this.list = this.list.reverse();
     };
     BaseWorld.prototype.initJobs = function () {
         var _this = this;
         //    Prices && Production
-        this.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.littleAnt, Decimal(1)));
-        this.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.fungus, Decimal(2)));
+        this.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.littleAnt, new Decimal(1)));
+        this.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.fungus, new Decimal(2)));
         this.fungus.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.farmer));
-        this.soil.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.farmer, Decimal(-1)));
-        this.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.geologist, Decimal(0.2)));
+        this.soil.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.farmer, new Decimal(-1)));
+        this.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.geologist, new Decimal(0.2)));
         this.soil.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.carpenter));
         this.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.lumberjack));
-        this.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.hunter, Decimal(50)));
-        this.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.hunter, Decimal(-2)));
-        this.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.advancedHunter, Decimal(250)));
-        this.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.advancedHunter, Decimal(-10)));
-        this.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.advancedHunter, Decimal(-5)));
+        this.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.hunter, new Decimal(50)));
+        this.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.hunter, new Decimal(-2)));
+        this.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.advancedHunter, new Decimal(250)));
+        this.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.advancedHunter, new Decimal(-10)));
+        this.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.advancedHunter, new Decimal(-5)));
         //    Geologist
-        this.geologist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* BuyAndUnlockAction */](this.game, this.geologist, [
+        this.geologist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.geologist, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood, this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, Decimal(1), this.game.buyExpUnit)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), this.game.buyExpUnit)
         ], [this.crystal, this.game.science.student]));
         //    Carpenter
-        this.carpenter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* BuyAndUnlockAction */](this.game, this.carpenter, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood, Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, Decimal(1), Decimal(this.game.buyExpUnit))
+        this.carpenter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.carpenter, [
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood, new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit))
         ], [this.science]));
         //    Lumberjack
-        this.lumberjack.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* BuyAndUnlockAction */](this.game, this.lumberjack, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood, Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.soil, this.price2, Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, Decimal(1), Decimal(this.game.buyExpUnit)),
+        this.lumberjack.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.lumberjack, [
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood, new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.soil, this.price2, new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit)),
         ], [this.wood]));
         //    Farmer
-        this.farmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* BuyAndUnlockAction */](this.game, this.farmer, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood, Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.soil, this.price2, Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, Decimal(1), Decimal(this.game.buyExpUnit)),
+        this.farmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.farmer, [
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood, new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.soil, this.price2, new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit)),
         ], [this.fungus]));
         //    Hunter
         this.hunter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.hunter, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood.div(1.5), Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.wood, this.price2.div(1.5), Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, Decimal(1), Decimal(this.game.buyExpUnit)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood.div(1.5), new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.wood, this.price2.div(1.5), new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit)),
         ]));
         //    Hunter 2
         this.advancedHunter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.advancedHunter, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood, Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.wood, this.price2, Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crystal, this.price2.div(1.5), Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, Decimal(1), Decimal(this.game.buyExpUnit)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood, new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.wood, this.price2, new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crystal, this.price2.div(1.5), new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit)),
         ]));
         this.level1.forEach(function (l) {
-            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost2, _this.game.upgradeScienceExp)]));
-            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost2, _this.game.upgradeScienceHireExp)]));
+            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost2, _this.game.upgradeScienceExp)]));
+            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost2, _this.game.upgradeScienceHireExp)]));
         });
         //
         //    Special
@@ -2764,7 +2774,7 @@ var BaseWorld = (function () {
         this.composterAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.composterAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.specialFood, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.wood, this.specialRes2, this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, Decimal(1), this.game.buyExpUnit)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), this.game.buyExpUnit)
         ]));
         this.soil.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.composterAnt, this.specialProduction));
         this.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.composterAnt, this.specialCost));
@@ -2774,7 +2784,7 @@ var BaseWorld = (function () {
         this.refineryAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.refineryAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.specialFood, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.soil, this.specialRes2, this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, Decimal(1), this.game.buyExpUnit)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), this.game.buyExpUnit)
         ]));
         this.sand.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.refineryAnt, this.specialProduction));
         this.soil.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.refineryAnt, this.specialCost));
@@ -2784,7 +2794,7 @@ var BaseWorld = (function () {
         this.laserAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.laserAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.specialFood, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.sand, this.specialRes2, this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, Decimal(1), this.game.buyExpUnit)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), this.game.buyExpUnit)
         ]));
         this.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.laserAnt, this.specialProduction));
         this.sand.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.laserAnt, this.specialCost));
@@ -2794,7 +2804,7 @@ var BaseWorld = (function () {
         this.hydroAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.hydroAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.specialFood, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crystal, this.specialRes2, this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, Decimal(1), this.game.buyExpUnit)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), this.game.buyExpUnit)
         ]));
         this.fungus.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.hydroAnt, this.specialProduction));
         this.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.hydroAnt, this.specialCost));
@@ -2804,43 +2814,43 @@ var BaseWorld = (function () {
         this.planterAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.planterAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.specialFood, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.fungus, this.specialRes2, this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, Decimal(1), this.game.buyExpUnit)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), this.game.buyExpUnit)
         ]));
         this.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.planterAnt, this.specialProduction));
         this.fungus.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.planterAnt, this.specialCost));
         this.level2.forEach(function (l) {
-            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost3, _this.game.upgradeScienceExp)]));
-            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost3, _this.game.upgradeScienceHireExp)]));
+            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost3, _this.game.upgradeScienceExp)]));
+            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost3, _this.game.upgradeScienceHireExp)]));
         });
     };
     BaseWorld.prototype.addWorld = function () {
-        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldTypes.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "Park", "", [], [], []), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "Mine", "一个矿井", [this.game.machines.mine, this.game.engineers.mineEnginer], [
-            [this.game.baseWorld.crystal, Decimal(1.2)],
-            [this.game.baseWorld.wood, Decimal(0.8)],
-            [this.game.baseWorld.fungus, Decimal(0.8)]
+        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldTypes.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "公园", "", [], [], []), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "矿山", "一个矿井", [this.game.machines.mine, this.game.engineers.mineEnginer], [
+            [this.game.baseWorld.crystal, new Decimal(1.2)],
+            [this.game.baseWorld.wood, new Decimal(0.8)],
+            [this.game.baseWorld.fungus, new Decimal(0.8)]
         ], []));
-        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldPrefix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "", "", [], [], []), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "炎热", "", [], [[this.game.baseWorld.food, Decimal(2)]], [], [], [], [], Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "干旱", "", [], [[this.game.baseWorld.fungus, Decimal(0.5)]], [], [], [], [], Decimal(3)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "树木繁茂", "", [this.game.engineers.woodEnginer, this.game.machines.loggingMachine], [[this.game.baseWorld.wood, Decimal(2)]], [], [], [], [], Decimal(1.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "结晶", "", [this.game.machines.mine, this.game.engineers.mineEnginer], [
-            [this.game.baseWorld.crystal, Decimal(1.5)],
-            [this.game.baseWorld.food, Decimal(0.4)],
-            [this.game.baseWorld.fungus, Decimal(0.4)]
+        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldPrefix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "", "", [], [], []), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "炎热", "", [], [[this.game.baseWorld.food, new Decimal(2)]], [], [], [], [], new Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "干旱", "", [], [[this.game.baseWorld.fungus, new Decimal(0.5)]], [], [], [], [], new Decimal(3)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "树木繁茂", "", [this.game.engineers.woodEnginer, this.game.machines.loggingMachine], [[this.game.baseWorld.wood, new Decimal(2)]], [], [], [], [], new Decimal(1.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "结晶", "", [this.game.machines.mine, this.game.engineers.mineEnginer], [
+            [this.game.baseWorld.crystal, new Decimal(1.5)],
+            [this.game.baseWorld.food, new Decimal(0.4)],
+            [this.game.baseWorld.fungus, new Decimal(0.4)]
         ], []), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "垂死的", "", [], [
-            [this.food, Decimal(0.5)],
-            [this.fungus, Decimal(0.5)],
-            [this.wood, Decimal(0.5)],
-            [this.honey, Decimal(0.5)],
-            [this.nectar, Decimal(0.5)]
-        ], [], [], [], [], Decimal(4.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "多雨的", "", [], [
-            [this.wood, Decimal(1.5)],
-            [this.fungus, Decimal(1.5)]
-        ], [], [], [], [], Decimal(1.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "有雾", "", [], [
-            [this.wood, Decimal(0.7)],
-            [this.fungus, Decimal(0.7)]
-        ], [], [], [], [], Decimal(3)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "技术", "", [], [
-            [this.science, Decimal(1.5)]
-        ], [], [], [], [], Decimal(1.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "饥饿", "", [], [
-            [this.food, Decimal(0.3)]
-        ], [], [], [], [], Decimal(3.5)));
-        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldSuffix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "", "", [], [], []), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的真菌", "", [], [[this.game.baseWorld.fungus, Decimal(2)]], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, Decimal(1E7))], [], [], [], Decimal(3.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的蚂蚁", "", [], [], [], [[this.littleAnt, Decimal(2)]], [], [], Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的科学家", "", [], [], [], [[this.game.science.scientist, Decimal(2)]], [], [], Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的农民", "", [], [], [], [[this.farmer, Decimal(2)]], [], [], Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的水晶", "", [this.game.machines.mine, this.game.engineers.mineEnginer], [[this.crystal, Decimal(2)]], [], [], [], [], Decimal(2)));
+            [this.food, new Decimal(0.5)],
+            [this.fungus, new Decimal(0.5)],
+            [this.wood, new Decimal(0.5)],
+            [this.honey, new Decimal(0.5)],
+            [this.nectar, new Decimal(0.5)]
+        ], [], [], [], [], new Decimal(4.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "多雨的", "", [], [
+            [this.wood, new Decimal(1.5)],
+            [this.fungus, new Decimal(1.5)]
+        ], [], [], [], [], new Decimal(1.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "有雾", "", [], [
+            [this.wood, new Decimal(0.7)],
+            [this.fungus, new Decimal(0.7)]
+        ], [], [], [], [], new Decimal(3)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "技术", "", [], [
+            [this.science, new Decimal(1.5)]
+        ], [], [], [], [], new Decimal(1.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "饥饿", "", [], [
+            [this.food, new Decimal(0.3)]
+        ], [], [], [], [], new Decimal(3.5)));
+        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldSuffix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "", "", [], [], []), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的真菌", "", [], [[this.game.baseWorld.fungus, new Decimal(2)]], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, new Decimal(1E7))], [], [], [], new Decimal(3.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的蚂蚁", "", [], [], [], [[this.littleAnt, new Decimal(2)]], [], [], new Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的科学家", "", [], [], [], [[this.game.science.scientist, new Decimal(2)]], [], [], new Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的农民", "", [], [], [], [[this.farmer, new Decimal(2)]], [], [], new Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的水晶", "", [this.game.machines.mine, this.game.engineers.mineEnginer], [[this.crystal, new Decimal(2)]], [], [], [], [], new Decimal(2)));
     };
     return BaseWorld;
 }());
@@ -2887,84 +2897,84 @@ var Beach = (function () {
         beachList.push(this.shrimp);
         beachList.push(this.lobster);
         //    lobster
-        this.lobsterRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("lobsterRes", "龙虾", "解锁龙虾。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E5))], [this.lobster], this.game);
+        this.lobsterRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("lobsterRes", "龙虾", "解锁龙虾。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E5))], [this.lobster], this.game);
         //    shrimp
-        this.shrimpRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("shrimpRes", " 虾", "解锁虾。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(2E3))], [this.shrimp], this.game);
+        this.shrimpRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("shrimpRes", "虾", "解锁虾。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(2E3))], [this.shrimp], this.game);
         //    Crab Jobs
-        this.crabJobRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("crabJobRes", "螃蟹作业", "为您的螃蟹解锁更多的工作。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1.5E3))], [this.crabFarmer, this.crabScientist], this.game);
+        this.crabJobRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("crabJobRes", "螃蟹作业", "为您的螃蟹解锁更多的工作。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1.5E3))], [this.crabFarmer, this.crabScientist], this.game);
         //    Research
-        this.seaRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("seaRes", "海上助手", "解锁海上助手。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(30))], [this.crab, this.crabQueen, this.crabJobRes, this.shrimpRes, this.lobsterRes], this.game);
+        this.seaRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("seaRes", "海上助手", "解锁海上助手。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(30))], [this.crab, this.crabQueen, this.crabJobRes, this.shrimpRes, this.lobsterRes], this.game);
         this.seaRes.avabileBaseWorld = false;
         this.game.lists.push(new __WEBPACK_IMPORTED_MODULE_4__typeList__["a" /* TypeList */]("海滩", beachList));
     };
     Beach.prototype.initStuff = function () {
         //    Crab
-        this.crab.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.crab, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(1E3), this.game.buyExp)]));
-        this.crab.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.crab, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.crab.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.crab, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
+        this.crab.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.crab, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E3), this.game.buyExp)]));
+        this.crab.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.crab, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.crab.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.crab, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
         this.game.baseWorld.sand.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crab));
         //    Crab Farmer
         this.crabFarmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.crabFarmer, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(1E3), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.sand, Decimal(100), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crab, Decimal(1), this.game.buyExpUnit)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E3), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.sand, new Decimal(100), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crab, new Decimal(1), this.game.buyExpUnit)
         ]));
-        this.crabFarmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.crabFarmer, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.crabFarmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.crabFarmer, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
+        this.crabFarmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.crabFarmer, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.crabFarmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.crabFarmer, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
         this.game.baseWorld.fungus.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crabFarmer));
-        this.game.baseWorld.sand.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crabFarmer, Decimal(-1)));
-        var specialProduction = Decimal(15);
-        var specialCost = Decimal(-4);
-        var specialFood = Decimal(1E7);
-        var specialRes2 = Decimal(1E4);
+        this.game.baseWorld.sand.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crabFarmer, new Decimal(-1)));
+        var specialProduction = new Decimal(15);
+        var specialCost = new Decimal(-4);
+        var specialFood = new Decimal(1E7);
+        var specialRes2 = new Decimal(1E4);
         //    Crab Scientist
         this.crabScientist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.crabScientist, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, specialFood.div(5), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.sand, specialRes2.div(5), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crab, Decimal(1), this.game.buyExpUnit)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crab, new Decimal(1), this.game.buyExpUnit)
         ]));
-        this.crabScientist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.crabScientist, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.times(1.5), this.game.upgradeScienceExp)]));
-        this.crabScientist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.crabScientist, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.times(1.5), this.game.upgradeScienceHireExp)]));
+        this.crabScientist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.crabScientist, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.times(1.5), this.game.upgradeScienceExp)]));
+        this.crabScientist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.crabScientist, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.times(1.5), this.game.upgradeScienceHireExp)]));
         this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crabScientist, specialProduction.times(0.75)));
         this.game.baseWorld.sand.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crabScientist, specialCost));
         //    Crab Queen ?!
         //    Not sure if really exists
-        this.crabQueen.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* BuyAndUnlockAction */](this.game, this.crabQueen, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(1E5), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crab, Decimal(50), this.game.buyExpUnit)
+        this.crabQueen.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.crabQueen, [
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E5), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crab, new Decimal(50), this.game.buyExpUnit)
         ], [this.crabNest]));
-        this.crabQueen.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.crabQueen, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
-        this.crabQueen.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.crabQueen, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceHireExp)]));
+        this.crabQueen.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.crabQueen, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.crabQueen.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.crabQueen, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceHireExp)]));
         this.crab.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crabQueen));
         //    Crab Nest
         this.crabNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.crabNest, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.baseWorld.prestigeFood.div(1.5), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.sand, this.game.baseWorld.prestigeOther1.times(2), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crabQueen, Decimal(250), this.game.buyExpUnit)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crabQueen, new Decimal(250), this.game.buyExpUnit)
         ]));
-        this.crabNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.crabNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
-        this.crabNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.crabNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceHireExp)]));
+        this.crabNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.crabNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
+        this.crabNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.crabNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceHireExp)]));
         this.crabQueen.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crabNest));
         //    Shrimp
-        this.shrimp.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.shrimp, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(3E3), this.game.buyExp)]));
-        this.shrimp.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.shrimp, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.shrimp.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.shrimp, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
+        this.shrimp.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.shrimp, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(3E3), this.game.buyExp)]));
+        this.shrimp.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.shrimp, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.shrimp.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.shrimp, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
         this.game.baseWorld.sand.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.shrimp));
-        this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.shrimp, Decimal(0.5)));
+        this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.shrimp, new Decimal(0.5)));
         //    lobster
         var lobsterScience = this.game.scienceCost3.times(1.5);
         this.lobster.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.lobster, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.machines.price1.times(5000), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.sand, this.game.machines.price1.times(1.5), this.game.buyExp)
         ]));
-        this.lobster.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.lobster, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, lobsterScience, this.game.upgradeScienceExp)]));
-        this.lobster.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.lobster, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, lobsterScience, this.game.upgradeScienceHireExp)]));
+        this.lobster.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.lobster, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, lobsterScience, this.game.upgradeScienceExp)]));
+        this.lobster.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.lobster, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, lobsterScience, this.game.upgradeScienceHireExp)]));
         this.game.baseWorld.sand.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.lobster, this.game.machines.machineryProd.div(5)));
         this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.lobster, this.game.machines.machineryProd.div(10)));
     };
     Beach.prototype.addWorld = function () {
-        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldTypes.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "海滩", "一个海滩", [this.game.machines.sandDigger, this.game.engineers.sandEnginer], [], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.beach.crabNest, Decimal(50))], [], [], [[this.game.beach.seaRes, Decimal(0)]], Decimal(3)));
-        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldPrefix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "海岸", "", [this.game.machines.sandDigger, this.game.engineers.sandEnginer], [[this.game.baseWorld.sand, Decimal(1.5)], [this.game.baseWorld.fungus, Decimal(0.7)]], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.beach.crabNest, Decimal(50))], [[this.game.baseWorld.fungus, Decimal(0.7)]], [], [[this.game.beach.seaRes, Decimal(0)]], Decimal(3.5)));
+        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldTypes.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "海滩", "一个海滩", [this.game.machines.sandDigger, this.game.engineers.sandEnginer], [], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.beach.crabNest, new Decimal(50))], [], [], [[this.game.beach.seaRes, new Decimal(0)]], new Decimal(3)));
+        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldPrefix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "海岸", "", [this.game.machines.sandDigger, this.game.engineers.sandEnginer], [[this.game.baseWorld.sand, new Decimal(1.5)], [this.game.baseWorld.fungus, new Decimal(0.7)]], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.beach.crabNest, new Decimal(50))], [[this.game.baseWorld.fungus, new Decimal(0.7)]], [], [[this.game.beach.seaRes, new Decimal(0)]], new Decimal(3.5)));
     };
     return Beach;
 }());
@@ -3013,102 +3023,102 @@ var Bee = (function () {
         this.listBee.push(this.scientistBee);
         this.listBee.push(this.foodBee);
         this.game.lists.push(new __WEBPACK_IMPORTED_MODULE_5__typeList__["a" /* TypeList */]("蜜蜂", this.listBee));
-        this.engineersProd = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.universityBee, Decimal(0.1), false);
+        this.engineersProd = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.universityBee, new Decimal(0.1), false);
     };
     Bee.prototype.initStuff = function () {
         var beeTeamUp = this.game.upgradeScienceExp.times(0.8);
         var beeHireUp = this.game.upgradeScienceHireExp.times(0.8);
         //    Foragging
         // this.foragingBee.types = [Type.Bee]
-        this.foragingBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.foragingBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(100), this.game.buyExp)]));
+        this.foragingBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.foragingBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(100), this.game.buyExp)]));
         this.game.baseWorld.nectar.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.foragingBee));
-        this.foragingBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["d" /* UpAction */](this.game, this.foragingBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, beeTeamUp)]));
-        this.foragingBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["e" /* UpHire */](this.game, this.foragingBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, beeHireUp)]));
+        this.foragingBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.foragingBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, beeTeamUp)]));
+        this.foragingBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.foragingBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, beeHireUp)]));
         // this.queenBee.types = [Type.Bee]
         // this.hiveBee.types = [Type.Bee]
         //    Worker
         // this.workerBee.types = [Type.Bee]
-        this.workerBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* BuyAndUnlockAction */](this.game, this.workerBee, [
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.nectar, Decimal(100), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(1000), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, Decimal(1), this.game.buyExpUnit)
+        this.workerBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["d" /* BuyAndUnlockAction */](this.game, this.workerBee, [
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.nectar, new Decimal(100), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1000), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, new Decimal(1), this.game.buyExpUnit)
         ], [this.queenBee]));
-        this.game.baseWorld.nectar.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.workerBee, Decimal(-2)));
-        this.game.baseWorld.honey.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.workerBee, Decimal(1.5)));
-        this.workerBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["d" /* UpAction */](this.game, this.workerBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeTeamUp)]));
-        this.workerBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["e" /* UpHire */](this.game, this.workerBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeHireUp)]));
+        this.game.baseWorld.nectar.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.workerBee, new Decimal(-2)));
+        this.game.baseWorld.honey.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.workerBee, new Decimal(1.5)));
+        this.workerBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.workerBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeTeamUp)]));
+        this.workerBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.workerBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeHireUp)]));
         //  Queen
-        this.queenBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* BuyAndUnlockAction */](this.game, this.queenBee, [
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, Decimal(50), this.game.buyExpUnit),
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, Decimal(1E3), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(1E6), this.game.buyExp),
+        this.queenBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["d" /* BuyAndUnlockAction */](this.game, this.queenBee, [
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, new Decimal(50), this.game.buyExpUnit),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, new Decimal(1E3), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E6), this.game.buyExp),
         ], [this.hiveBee]));
         this.foragingBee.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.queenBee));
         //  Hive
         this.hiveBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.hiveBee, [
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.queenBee, Decimal(100), this.game.buyExpUnit),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.queenBee, new Decimal(100), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, this.game.baseWorld.prestigeOther1.times(1.5), this.game.buyExp.times(1.1)),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.baseWorld.prestigeFood.times(0.8), this.game.buyExp),
         ]));
         this.queenBee.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.hiveBee));
-        this.foragingBee.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.hiveBee, Decimal(-5)));
-        this.workerBee.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.hiveBee, Decimal(5)));
-        this.queenBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["d" /* UpAction */](this.game, this.queenBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, beeTeamUp)]));
-        this.queenBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["e" /* UpHire */](this.game, this.queenBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, Decimal(10))]));
-        this.hiveBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["d" /* UpAction */](this.game, this.hiveBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, beeTeamUp)]));
-        this.hiveBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["e" /* UpHire */](this.game, this.hiveBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, beeHireUp)]));
+        this.foragingBee.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.hiveBee, new Decimal(-5)));
+        this.workerBee.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.hiveBee, new Decimal(5)));
+        this.queenBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.queenBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, beeTeamUp)]));
+        this.queenBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.queenBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, new Decimal(10))]));
+        this.hiveBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.hiveBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, beeTeamUp)]));
+        this.hiveBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.hiveBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, beeHireUp)]));
         //    Scientist
         // this.scientistBee.types = [Type.Bee]
         this.scientistBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.scientistBee, [
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, Decimal(1), this.game.buyExpUnit),
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, Decimal(6E3), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.crystal, Decimal(4E3), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, new Decimal(1), this.game.buyExpUnit),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, new Decimal(6E3), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.crystal, new Decimal(4E3), this.game.buyExp),
         ]));
-        this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.scientistBee, Decimal(15)));
-        this.game.baseWorld.honey.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.scientistBee, Decimal(-2)));
-        this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.scientistBee, Decimal(-1)));
-        this.scientistBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["d" /* UpAction */](this.game, this.scientistBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeTeamUp)]));
-        this.scientistBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["e" /* UpHire */](this.game, this.scientistBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeHireUp)]));
+        this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.scientistBee, new Decimal(15)));
+        this.game.baseWorld.honey.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.scientistBee, new Decimal(-2)));
+        this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.scientistBee, new Decimal(-1)));
+        this.scientistBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.scientistBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeTeamUp)]));
+        this.scientistBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.scientistBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeHireUp)]));
         //    Food
         // this.foodBee.types = [Type.Bee]
         this.foodBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.foodBee, [
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, Decimal(1), this.game.buyExpUnit),
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, Decimal(1E3), this.game.buyExp)
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, new Decimal(1), this.game.buyExpUnit),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, new Decimal(1E3), this.game.buyExp)
         ]));
-        this.game.baseWorld.food.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.foodBee, Decimal(15)));
-        this.game.baseWorld.honey.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.foodBee, Decimal(-5)));
-        this.foodBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["d" /* UpAction */](this.game, this.foodBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E3), Decimal(10))]));
-        this.foodBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["e" /* UpHire */](this.game, this.foodBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E3), Decimal(10))]));
+        this.game.baseWorld.food.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.foodBee, new Decimal(15)));
+        this.game.baseWorld.honey.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.foodBee, new Decimal(-5)));
+        this.foodBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.foodBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E3), new Decimal(10))]));
+        this.foodBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.foodBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E3), new Decimal(10))]));
         //    University
         this.universityBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.universityBee, [
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, Decimal(1E3), this.game.buyExpUnit),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, new Decimal(1E3), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.wood, this.game.machines.price1, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.game.machines.price2, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, this.game.machines.price2, this.game.buyExp)
         ]));
-        this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.universityBee, Decimal(600)));
-        this.scientistBee.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.universityBee, Decimal(0.01)));
+        this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.universityBee, new Decimal(600)));
+        this.scientistBee.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.universityBee, new Decimal(0.01)));
         this.game.engineers.beeEnginer.addProductor(this.engineersProd);
         this.universityBee.togableProductions = [new __WEBPACK_IMPORTED_MODULE_0__units_togableProductions__["a" /* TogableProduction */]("产生蜜蜂工程师", [this.engineersProd])];
         //  Research
-        this.universityResBee2 = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("uniResBee2", "蜜蜂工程系", "蜜蜂大学还产生蜜蜂工程师。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(7E7))], [this.engineersProd], this.game);
+        this.universityResBee2 = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("uniResBee2", "蜜蜂工程系", "蜜蜂大学还产生蜜蜂工程师。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(7E7))], [this.engineersProd], this.game);
         //  Research
-        this.universityResBee = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("universityResBee", "蜜蜂大学", "获得一所蜜蜂大学", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(6E6))], [this.universityBee, this.universityResBee2], this.game);
+        this.universityResBee = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("universityResBee", "蜜蜂大学", "获得一所蜜蜂大学。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(6E6))], [this.universityBee, this.universityResBee2], this.game);
         //  Research
-        this.advancedBee = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("advBee", "高级蜜蜂", "蜜蜂更多的工作种类。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E3))], [this.scientistBee, this.foodBee, this.universityResBee], this.game);
+        this.advancedBee = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("advBee", "高级蜜蜂", "蜜蜂更多的工作种类。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E3))], [this.scientistBee, this.foodBee, this.universityResBee], this.game);
         //    Bee
-        this.beeResearch = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("beeRes", "蜜蜂", "解锁蜜蜂！", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(0))], [this.game.baseWorld.nectar, this.foragingBee, this.workerBee, this.game.baseWorld.honey, this.advancedBee], this.game);
+        this.beeResearch = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("beeRes", "蜜蜂", "解锁蜜蜂 !", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(0))], [this.game.baseWorld.nectar, this.foragingBee, this.workerBee, this.game.baseWorld.honey, this.advancedBee], this.game);
         this.beeResearch.avabileBaseWorld = false;
     };
     Bee.prototype.addWorld = function () {
         __WEBPACK_IMPORTED_MODULE_6__world__["a" /* World */].worldPrefix.push(new __WEBPACK_IMPORTED_MODULE_6__world__["a" /* World */](this.game, "蜜蜂的", "", [this.game.machines.honeyMaker, this.game.engineers.beeEnginer], [], [
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.hiveBee, Decimal(20)),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.hiveBee, new Decimal(20)),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, this.game.baseWorld.prestigeFood)
-        ], [], [], [[this.beeResearch, Decimal(0)]], Decimal(3)));
+        ], [], [], [[this.beeResearch, new Decimal(0)]], new Decimal(3)));
         __WEBPACK_IMPORTED_MODULE_6__world__["a" /* World */].worldSuffix.push(new __WEBPACK_IMPORTED_MODULE_6__world__["a" /* World */](this.game, "蜜蜂", "", [this.game.machines.honeyMaker, this.game.engineers.beeEnginer], [], [
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.hiveBee, Decimal(25)),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.hiveBee, new Decimal(25)),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, this.game.baseWorld.prestigeFood)
-        ], [[this.foragingBee, Decimal(2)]], [], [[this.beeResearch, Decimal(0)]], Decimal(3)));
+        ], [[this.foragingBee, new Decimal(2)]], [], [[this.beeResearch, new Decimal(0)]], new Decimal(3)));
     };
     return Bee;
 }());
@@ -3209,17 +3219,17 @@ var Engineers = (function () {
         var _this = this;
         this.listEnginer.forEach(function (e) {
             e.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](_this.game, e, [
-                new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.game.baseWorld.littleAnt, Decimal(1E4), _this.game.buyExpUnit),
+                new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.game.baseWorld.littleAnt, new Decimal(1E4), _this.game.buyExpUnit),
                 new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.game.baseWorld.science, _this.game.scienceCost3, _this.game.buyExp)
             ]));
-            e.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](_this.game, e, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.game.baseWorld.science, _this.game.scienceCost4, _this.game.upgradeScienceExp)]));
-            e.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](_this.game, e, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.game.baseWorld.science, _this.game.scienceCost4, _this.game.upgradeScienceHireExp)]));
+            e.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](_this.game, e, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.game.baseWorld.science, _this.game.scienceCost4, _this.game.upgradeScienceExp)]));
+            e.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](_this.game, e, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.game.baseWorld.science, _this.game.scienceCost4, _this.game.upgradeScienceHireExp)]));
         });
         var _loop_1 = function (i) {
             var engineer = this_1.listEnginer[i];
             var machine = this_1.game.machines.listMachinery[i];
-            machine.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](engineer, Decimal(0.01)));
-            this_1.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](engineer, Decimal(-200)));
+            machine.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](engineer, new Decimal(0.01)));
+            this_1.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](engineer, new Decimal(-200)));
             machine.buyAction.priceF.forEach(function (price) {
                 price.unit.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](engineer, price.basePrice.div(-50)));
                 engineer.buyAction.priceF.push(new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](price.unit, price.basePrice.times(5), _this.game.buyExpUnit));
@@ -3231,7 +3241,7 @@ var Engineers = (function () {
         }
         //  Bee engineer should actually be a Bee
         this.beeEnginer.buyAction.priceF = [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.bee.foragingBee, Decimal(1E4), this.game.buyExpUnit),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.bee.foragingBee, new Decimal(1E4), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.buyExp)
         ];
         this.beeEnginer.upAction.priceF[0].basePrice = this.beeEnginer.upAction.priceF[0].basePrice.times(0.8);
@@ -3241,12 +3251,12 @@ var Engineers = (function () {
             var engineer = this.listEnginer[i];
             var machine = this.game.machines.listMachinery[i];
             var dep = this.listDep[i];
-            engineer.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](dep, Decimal(1)));
-            this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](dep, Decimal(-2000)));
+            engineer.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](dep, new Decimal(1)));
+            this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](dep, new Decimal(-2000)));
             dep.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, dep, [
-                new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.science.university, Decimal(1), this.game.buyExpUnit),
-                new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](engineer, Decimal(100), this.game.buyExp),
-                new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](machine, Decimal(1E4), this.game.buyExp)
+                new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.science.university, new Decimal(1), this.game.buyExpUnit),
+                new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](engineer, new Decimal(100), this.game.buyExp),
+                new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](machine, new Decimal(1E4), this.game.buyExp)
             ]));
         }
     };
@@ -3298,96 +3308,96 @@ var Forest = (function () {
         this.listForest.push(this.ambrosiaBeetle);
         this.listForest.push(this.ladybird);
         this.game.lists.push(new __WEBPACK_IMPORTED_MODULE_4__typeList__["a" /* TypeList */]("甲虫", this.listForest));
-        this.beetleWoodProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetle, Decimal(0.4), false);
-        this.beetleSoilProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetle, Decimal(0.2), false);
-        this.beetleCrystalProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetle, Decimal(0.1), false);
-        var beetleWood = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleWood", "伐木训练", "甲虫也生产木材", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(500))], [this.beetleWoodProduction], this.game);
-        var beetleSoil = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleSoil", "土壤训练", "甲虫也生产土壤", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(5E4))], [this.beetleSoilProduction], this.game);
-        var beetleCrystal = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleCrystal", "采矿培训", "甲虫也产生水晶", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E6))], [this.beetleCrystalProduction], this.game);
-        var advancedBeetle = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("advBeetle", "高级甲虫作业", "更多的甲虫工作", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(3E3))], [this.ambrosiaBeetle, this.ladybird], this.game);
-        this.beetleResearch = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleRes", "甲虫", "解锁甲壳虫", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(600))], [this.larva, advancedBeetle, beetleWood, beetleSoil, beetleCrystal], this.game);
+        this.beetleWoodProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetle, new Decimal(0.4), false);
+        this.beetleSoilProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetle, new Decimal(0.2), false);
+        this.beetleCrystalProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetle, new Decimal(0.1), false);
+        var beetleWood = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleWood", "伐木训练", "甲虫也生产木材", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(500))], [this.beetleWoodProduction], this.game);
+        var beetleSoil = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleSoil", "土壤训练", "甲虫也生产土壤", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E4))], [this.beetleSoilProduction], this.game);
+        var beetleCrystal = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleCrystal", "采矿培训", "甲虫也产生水晶", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E6))], [this.beetleCrystalProduction], this.game);
+        var advancedBeetle = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("advBeetle", "高级甲虫作业", "更多的甲虫工作", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E3))], [this.ambrosiaBeetle, this.ladybird], this.game);
+        this.beetleResearch = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleRes", "甲虫", "解锁甲壳虫", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(600))], [this.larva, advancedBeetle, beetleWood, beetleSoil, beetleCrystal], this.game);
         this.beetleResearch.avabileBaseWorld = false;
     };
     Forest.prototype.initStuff = function () {
-        this.game.baseWorld.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.larva, Decimal(0.1)));
+        this.game.baseWorld.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.larva, new Decimal(0.1)));
         this.game.baseWorld.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetle));
         this.game.baseWorld.crystal.addProductor(this.beetleCrystalProduction);
         this.game.baseWorld.soil.addProductor(this.beetleSoilProduction);
         this.game.baseWorld.wood.addProductor(this.beetleWoodProduction);
-        this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.ladybird, Decimal(5)));
-        this.game.baseWorld.fungus.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.ambrosiaBeetle, Decimal(-6)));
-        this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.ambrosiaBeetle, Decimal(15)));
-        this.beetle.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetleNest, Decimal(0.01)));
+        this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.ladybird, new Decimal(5)));
+        this.game.baseWorld.fungus.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.ambrosiaBeetle, new Decimal(-6)));
+        this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.ambrosiaBeetle, new Decimal(15)));
+        this.beetle.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetleNest, new Decimal(0.01)));
         this.larva.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetleNest));
-        this.beetleNest.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetleColony, Decimal(0.1)));
+        this.beetleNest.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetleColony, new Decimal(0.1)));
         this.game.baseWorld.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.powderpostBeetle));
         this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.powderpostBeetle));
         //    Larva
-        this.larva.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* BuyAndUnlockAction */](this.game, this.larva, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(10), this.game.buyExp)], [this.beetle, this.powderpostBeetle]));
-        this.larva.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.larva, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, this.game.upgradeScienceExp)]));
-        this.larva.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.larva, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, this.game.upgradeScienceExp)]));
+        this.larva.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.larva, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(10), this.game.buyExp)], [this.beetle, this.powderpostBeetle]));
+        this.larva.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.larva, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, this.game.upgradeScienceExp)]));
+        this.larva.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.larva, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, this.game.upgradeScienceExp)]));
         //    Beetle
-        this.beetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* BuyAndUnlockAction */](this.game, this.beetle, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.larva, Decimal(1), this.game.buyExpUnit),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(4000), this.game.buyExp)
+        this.beetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.beetle, [
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.larva, new Decimal(1), this.game.buyExpUnit),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(4000), this.game.buyExp)
         ], [this.beetleNest]));
-        this.beetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.beetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.beetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.beetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.beetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.beetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.beetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.beetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         //    Beetle Nest
-        this.beetleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* BuyAndUnlockAction */](this.game, this.beetleNest, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.beetle, Decimal(100), this.game.buyExpUnit),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, Decimal(1E4), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, Decimal(1E3), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(1E3), this.game.buyExp)
+        this.beetleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.beetleNest, [
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.beetle, new Decimal(100), this.game.buyExpUnit),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(1E4), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, new Decimal(1E3), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E3), this.game.buyExp)
         ], [this.beetleColony]));
-        this.beetleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.beetleNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
-        this.beetleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.beetleNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.beetleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.beetleNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.beetleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.beetleNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
         //    Beetle Colony
         this.beetleColony.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.beetleColony, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.beetleNest, Decimal(200), this.game.buyExpUnit),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(1E10), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, Decimal(1E6), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, Decimal(1E5), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, Decimal(5E4), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.beetleNest, new Decimal(200), this.game.buyExpUnit),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E10), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(1E6), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, new Decimal(1E5), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, new Decimal(5E4), this.game.buyExp),
         ]));
-        this.beetleColony.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.beetleColony, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
-        this.beetleColony.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.beetleColony, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
+        this.beetleColony.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.beetleColony, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
+        this.beetleColony.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.beetleColony, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
         //    Lady Beetle
         this.ladybird.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.ladybird, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.larva, Decimal(1), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, Decimal(1E4), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(1E6), this.game.buyExp)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.larva, new Decimal(1), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, new Decimal(1E4), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E6), this.game.buyExp)
         ]));
-        this.ladybird.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.ladybird, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
-        this.ladybird.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.ladybird, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.ladybird.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.ladybird, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.ladybird.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.ladybird, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
         //    Ambrosia Beetle
         this.ambrosiaBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.ambrosiaBeetle, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.larva, Decimal(1), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, Decimal(1E4), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, Decimal(1E4), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(1E7), this.game.buyExp)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.larva, new Decimal(1), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, new Decimal(1E4), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(1E4), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E7), this.game.buyExp)
         ]));
-        this.ambrosiaBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.ambrosiaBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.ambrosiaBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.ambrosiaBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.ambrosiaBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.ambrosiaBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.ambrosiaBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.ambrosiaBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         //    Powderpost
         this.powderpostBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.powderpostBeetle, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.larva, Decimal(1), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, Decimal(1000), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(5000), this.game.buyExp)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.larva, new Decimal(1), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(1000), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(5000), this.game.buyExp)
         ]));
-        this.powderpostBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.powderpostBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.powderpostBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.powderpostBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.powderpostBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.powderpostBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.powderpostBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.powderpostBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
     };
     Forest.prototype.addWorld = function () {
         __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldTypes.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "森林", "一片森林", [
             this.game.engineers.woodEnginer, this.game.machines.loggingMachine,
             this.game.infestation.disinfestationBeetle, this.game.infestation.flametrowerBeetle
-        ], [[this.game.baseWorld.wood, Decimal(2)]], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.beetleColony, Decimal(50))], [], [], [[this.beetleResearch, Decimal(0)]], Decimal(3.5)));
+        ], [[this.game.baseWorld.wood, new Decimal(2)]], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.beetleColony, new Decimal(50))], [], [], [[this.beetleResearch, new Decimal(0)]], new Decimal(3.5)));
         __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldSuffix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "甲虫", "", [
             this.game.infestation.disinfestationBeetle, this.game.infestation.flametrowerBeetle
         ], [
-            [this.larva, Decimal(2)]
-        ], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.beetleColony, Decimal(50))], [], [], [[this.beetleResearch, Decimal(0)]], Decimal(4)));
+            [this.larva, new Decimal(2)]
+        ], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.beetleColony, new Decimal(50))], [], [], [[this.beetleResearch, new Decimal(0)]], new Decimal(4)));
     };
     return Forest;
 }());
@@ -3427,8 +3437,8 @@ var Frozen = (function () {
         this.listFreezig.push(this.iceAnt);
         this.listFreezig.push(this.iceDrillAnt);
         this.listFreezig.push(this.iceMelter);
-        var iceResearch2 = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("iceRes2", "喷火器", "用火融化冰。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(800))], [this.iceMelter], this.game);
-        this.iceResearch = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("iceRes", "冰", "冰", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(30))], [this.iceAnt, this.iceDrillAnt, iceResearch2], this.game);
+        var iceResearch2 = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("iceRes2", "喷火器", "用火融化冰。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(800))], [this.iceMelter], this.game);
+        this.iceResearch = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("iceRes", "冰", "冰", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(30))], [this.iceAnt, this.iceDrillAnt, iceResearch2], this.game);
         this.iceResearch.avabileBaseWorld = false;
         this.game.lists.push(new __WEBPACK_IMPORTED_MODULE_4__typeList__["a" /* TypeList */]("冻结", this.listFreezig));
     };
@@ -3436,35 +3446,35 @@ var Frozen = (function () {
         //  Ice Provisioner
         this.game.baseWorld.ice.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.iceAnt));
         this.iceAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.iceAnt, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(1000), Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, Decimal(1), Decimal(this.game.buyExpUnit))
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1000), new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit))
         ]));
-        this.iceAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.iceAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.iceAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.iceAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.iceAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.iceAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.iceAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.iceAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         //  Ice Driller
-        this.game.baseWorld.ice.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.iceDrillAnt, Decimal(-10)));
+        this.game.baseWorld.ice.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.iceDrillAnt, new Decimal(-10)));
         this.iceDrillAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.iceDrillAnt, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(1000), Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, Decimal(1), Decimal(this.game.buyExpUnit))
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1000), new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit))
         ]));
-        this.iceDrillAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.iceDrillAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.iceDrillAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.iceDrillAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.iceDrillAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.iceDrillAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.iceDrillAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.iceDrillAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         // Ice Melter
-        this.game.baseWorld.ice.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.iceMelter, Decimal(-100)));
-        this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.iceMelter, Decimal(-5)));
+        this.game.baseWorld.ice.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.iceMelter, new Decimal(-100)));
+        this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.iceMelter, new Decimal(-5)));
         this.iceMelter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.iceMelter, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(1E7), Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, Decimal(1E4), Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, Decimal(1), Decimal(this.game.buyExpUnit))
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E7), new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(1E4), new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit))
         ]));
-        this.iceMelter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.iceMelter, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
-        this.iceMelter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.iceMelter, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.iceMelter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.iceMelter, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.iceMelter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.iceMelter, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
     };
     Frozen.prototype.addWorld = function () {
         __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldPrefix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "寒冷", "", [], [
-            [this.game.baseWorld.food, Decimal(0.6)],
-            [this.game.baseWorld.ice, Decimal(0.5)]
-        ], [], [], [], [[this.iceResearch, Decimal(0)]], Decimal(3)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "冻结", "", [
+            [this.game.baseWorld.food, new Decimal(0.6)],
+            [this.game.baseWorld.ice, new Decimal(0.5)]
+        ], [], [], [], [[this.iceResearch, new Decimal(0)]], new Decimal(3)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "冻结", "", [
             this.game.machines.iceCollector,
             this.game.machines.iceCompacter,
             this.game.engineers.iceCompEngineer,
@@ -3472,9 +3482,9 @@ var Frozen = (function () {
             this.game.machines.burningGlass,
             this.game.engineers.lensEnginer
         ], [
-            [this.game.baseWorld.food, Decimal(0.3)]
-        ], [], [], [], [[this.game.baseWorld.ice, Decimal(1E11)],
-            [this.iceResearch, Decimal(0)]], Decimal(4.5), [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.ice, Decimal(100))]));
+            [this.game.baseWorld.food, new Decimal(0.3)]
+        ], [], [], [], [[this.game.baseWorld.ice, new Decimal(1E11)],
+            [this.iceResearch, new Decimal(0)]], new Decimal(4.5), [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.ice, new Decimal(100))]));
     };
     return Frozen;
 }());
@@ -3528,11 +3538,11 @@ var Infestation = (function () {
         this.listInfestation.push(this.chemistBee);
         this.game.lists.push(new __WEBPACK_IMPORTED_MODULE_4__typeList__["a" /* TypeList */]("侵扰", this.listInfestation));
         //    Weedkiller
-        this.weedkillerRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("weedkillerRes", "除草剂", "除草剂会慢慢杀死有毒植物。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E4))], [this.weedkiller, this.chemistAnt], this.game);
+        this.weedkillerRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("weedkillerRes", "除草剂", "除草剂会慢慢杀死有毒植物。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.weedkiller, this.chemistAnt], this.game);
         //    Flame
-        this.flametrowerRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("flametrowerRes", "喷火器", "烧掉有毒植物。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E3))], [this.flametrowerAnt, this.flametrowerBeetle], this.game);
+        this.flametrowerRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("flametrowerRes", "喷火器", "烧掉有毒植物。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E3))], [this.flametrowerAnt, this.flametrowerBeetle], this.game);
         //    Disinfestation
-        this.basicDisinfestationRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("basicDisinfestationRes", "杀虫", "解锁基本灭虫单位。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(100))], [
+        this.basicDisinfestationRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("basicDisinfestationRes", "杀灭", "解锁基本的灭虫单位。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(100))], [
             this.disinfestationAnt, this.disinfestationBeetle,
             this.flametrowerRes, this.weedkillerRes
         ], this.game);
@@ -3540,74 +3550,74 @@ var Infestation = (function () {
     };
     Infestation.prototype.initStuff = function () {
         this.poisonousPlant.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.poisonousPlant2));
-        this.poisonousPlant.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.disinfestationAnt, Decimal(-10)));
-        this.poisonousPlant.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.disinfestationBeetle, Decimal(-12)));
-        this.poisonousPlant.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.flametrowerBeetle, Decimal(-100)));
-        this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.flametrowerBeetle, Decimal(-5)));
-        this.poisonousPlant.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.flametrowerAnt, Decimal(-120)));
-        this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.flametrowerAnt, Decimal(-5)));
-        this.poisonousPlant.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.weedkiller, Decimal(-0.01)));
-        this.game.baseWorld.fungus.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.weedkiller, Decimal(-0.01)));
-        this.game.baseWorld.fungus.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.chemistAnt, Decimal(-10)));
-        this.game.baseWorld.soil.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.chemistAnt, Decimal(-10)));
-        this.weedkiller.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.chemistAnt, Decimal(0.1)));
+        this.poisonousPlant.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.disinfestationAnt, new Decimal(-10)));
+        this.poisonousPlant.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.disinfestationBeetle, new Decimal(-12)));
+        this.poisonousPlant.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.flametrowerBeetle, new Decimal(-100)));
+        this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.flametrowerBeetle, new Decimal(-5)));
+        this.poisonousPlant.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.flametrowerAnt, new Decimal(-120)));
+        this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.flametrowerAnt, new Decimal(-5)));
+        this.poisonousPlant.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.weedkiller, new Decimal(-0.01)));
+        this.game.baseWorld.fungus.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.weedkiller, new Decimal(-0.01)));
+        this.game.baseWorld.fungus.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.chemistAnt, new Decimal(-10)));
+        this.game.baseWorld.soil.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.chemistAnt, new Decimal(-10)));
+        this.weedkiller.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.chemistAnt, new Decimal(0.1)));
         //  Disinfestation
         this.disinfestationAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.disinfestationAnt, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, Decimal(1), this.game.buyExpUnit),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(1000), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, Decimal(100), this.game.buyExp)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), this.game.buyExpUnit),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1000), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, new Decimal(100), this.game.buyExp)
         ]));
-        this.disinfestationAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.disinfestationAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.disinfestationAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.disinfestationAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.disinfestationAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.disinfestationAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.disinfestationAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.disinfestationAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         //  Flametrower
         this.flametrowerAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.flametrowerAnt, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, Decimal(1), this.game.buyExpUnit),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(12E3), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, Decimal(8E3), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, Decimal(4E3), this.game.buyExp)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), this.game.buyExpUnit),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(12E3), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(8E3), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, new Decimal(4E3), this.game.buyExp)
         ]));
-        this.flametrowerAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.flametrowerAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
-        this.flametrowerAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.flametrowerAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.flametrowerAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.flametrowerAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.flametrowerAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.flametrowerAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
         //  Chemist
         this.chemistAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.chemistAnt, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, Decimal(1), this.game.buyExpUnit),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(12E3), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, Decimal(1E5), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, Decimal(6E4), this.game.buyExp)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), this.game.buyExpUnit),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(12E3), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, new Decimal(1E5), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, new Decimal(6E4), this.game.buyExp)
         ]));
-        this.chemistAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.chemistAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
-        this.chemistAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.chemistAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
+        this.chemistAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.chemistAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
+        this.chemistAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.chemistAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
         //    Beetle
         this.disinfestationBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.disinfestationBeetle, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.forest.larva, Decimal(1), this.game.buyExpUnit),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, Decimal(300), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(3000), this.game.buyExp)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.forest.larva, new Decimal(1), this.game.buyExpUnit),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(300), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(3000), this.game.buyExp)
         ]));
-        this.disinfestationBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.disinfestationBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.disinfestationBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.disinfestationBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.disinfestationBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.disinfestationBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.disinfestationBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.disinfestationBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         this.disinfestationBeetle.avabileBaseWorld = false;
         //  Flametrower  Beetle
         this.flametrowerBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.flametrowerBeetle, [
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.forest.larva, Decimal(1), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, Decimal(15E3), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(5E3), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, Decimal(6E4), this.game.buyExp)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.forest.larva, new Decimal(1), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(15E3), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(5E3), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, new Decimal(6E4), this.game.buyExp)
         ]));
-        this.flametrowerBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* UpAction */](this.game, this.flametrowerBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.flametrowerBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* UpHire */](this.game, this.flametrowerBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.flametrowerBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.flametrowerBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.flametrowerBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.flametrowerBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         this.flametrowerBeetle.avabileBaseWorld = false;
     };
     Infestation.prototype.addWorld = function () {
         __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldPrefix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "被感染的", "", [], [], [], [], [], [
-            [this.poisonousPlant, Decimal(1E7)],
-            [this.poisonousPlant2, Decimal(1E3)],
-            [this.basicDisinfestationRes, Decimal(0)]
-        ], Decimal(5.5), [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.poisonousPlant, Decimal(5E3))]));
+            [this.poisonousPlant, new Decimal(1E7)],
+            [this.poisonousPlant2, new Decimal(1E3)],
+            [this.basicDisinfestationRes, new Decimal(0)]
+        ], new Decimal(5.5), [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.poisonousPlant, new Decimal(5E3))]));
         __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldSuffix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "为患", "", [this.basicDisinfestationRes], [], [], [], [], [
-            [this.poisonousPlant, Decimal(1E7)],
-            [this.poisonousPlant2, Decimal(1E3)],
-            [this.basicDisinfestationRes, Decimal(0)]
-        ], Decimal(5.5), [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.poisonousPlant, Decimal(5E3))]));
+            [this.poisonousPlant, new Decimal(1E7)],
+            [this.poisonousPlant2, new Decimal(1E3)],
+            [this.basicDisinfestationRes, new Decimal(0)]
+        ], new Decimal(5.5), [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.poisonousPlant, new Decimal(5E3))]));
     };
     return Infestation;
 }());
@@ -3637,11 +3647,11 @@ var Machine = (function () {
     function Machine(game) {
         this.game = game;
         this.listMachinery = new Array();
-        this.machineryProd = Decimal(500);
-        this.machineryCost = Decimal(-150);
-        this.price1 = Decimal(1E5);
-        this.price2 = Decimal(6E4);
-        this.price3 = Decimal(3E4);
+        this.machineryProd = new Decimal(500);
+        this.machineryCost = new Decimal(-150);
+        this.price1 = new Decimal(1E5);
+        this.price2 = new Decimal(6E4);
+        this.price3 = new Decimal(3E4);
     }
     Machine.prototype.declareStuff = function () {
         this.composterStation = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "composterStation", "堆肥站", "将木头转化为土壤。");
@@ -3781,19 +3791,19 @@ var Machine = (function () {
     };
     Machine.prototype.addWorld = function () {
         __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldPrefix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "机械化", "", [], [], [], [], [], [
-            [this.composterStation, Decimal(0.2)],
-            [this.refineryStation, Decimal(0.2)],
-            [this.laserStation, Decimal(0.2)],
-            [this.hydroFarm, Decimal(0.2)],
-            [this.plantingMachine, Decimal(0.2)]
-        ], Decimal(1)));
+            [this.composterStation, new Decimal(0.2)],
+            [this.refineryStation, new Decimal(0.2)],
+            [this.laserStation, new Decimal(0.2)],
+            [this.hydroFarm, new Decimal(0.2)],
+            [this.plantingMachine, new Decimal(0.2)]
+        ], new Decimal(1)));
         __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldSuffix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "机器", "", [], [], [], [], [], [
-            [this.composterStation, Decimal(0.2)],
-            [this.refineryStation, Decimal(0.2)],
-            [this.laserStation, Decimal(0.2)],
-            [this.hydroFarm, Decimal(0.2)],
-            [this.plantingMachine, Decimal(0.2)]
-        ], Decimal(1)));
+            [this.composterStation, new Decimal(0.2)],
+            [this.refineryStation, new Decimal(0.2)],
+            [this.laserStation, new Decimal(0.2)],
+            [this.hydroFarm, new Decimal(0.2)],
+            [this.plantingMachine, new Decimal(0.2)]
+        ], new Decimal(1)));
     };
     return Machine;
 }());
@@ -3827,6 +3837,7 @@ var Prestige = (function () {
         //  Efficiency
         this.effList = new Array();
         this.effListEng = new Array();
+        this.effListDep = new Array();
         //  Time
         this.timeList = new Array();
     }
@@ -3834,7 +3845,7 @@ var Prestige = (function () {
     };
     Prestige.prototype.initStuff = function () {
         var _this = this;
-        var expIncrement = Decimal(1.3);
+        var expIncrement = new Decimal(1.3);
         this.experience = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this.game, "exp", "经验", "经验。 改变世界的时候体验升级不复位。", true);
         this.expLists = new Array();
         this.expAnt = new Array();
@@ -3851,7 +3862,7 @@ var Prestige = (function () {
         this.expAnt.push(this.pAntFungus);
         this.expAnt.forEach(function (p) {
             _this.allPrestigeUp.push(p);
-            p.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, p, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, Decimal(15), expIncrement)]));
+            p.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, p, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(15), expIncrement)]));
             p.unlocked = true;
         });
         this.game.baseWorld.littleAnt.prestigeBonusProduction.push(this.pAntPower);
@@ -3872,7 +3883,7 @@ var Prestige = (function () {
             this.pFarmerNext, this.pCarpenterNext, this.pLumberjackNext];
         this.expFollower.forEach(function (n) {
             _this.allPrestigeUp.push(n);
-            n.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, n, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, Decimal(10), expIncrement)]));
+            n.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, n, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(10), expIncrement)]));
         });
         this.game.baseWorld.littleAnt.prestigeBonusStart = this.pAntNext;
         this.game.baseWorld.geologist.prestigeBonusStart = this.pGeologistNext;
@@ -3882,10 +3893,10 @@ var Prestige = (function () {
         this.game.baseWorld.lumberjack.prestigeBonusStart = this.pLumberjackNext;
         this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("蚂蚁关注者", this.expFollower));
         //#endregion
-        //#region  Machinery
+        //#region Machinery
         this.expMachinery = new Array();
         this.pMachineryPower = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this.game, "pMach", "机器能力", "机器的产量和消耗更多的30％的资源。", true);
-        this.pMachineryPower.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.pMachineryPower, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, Decimal(20), expIncrement)]));
+        this.pMachineryPower.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.pMachineryPower, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(20), expIncrement)]));
         this.expMachinery.push(this.pMachineryPower);
         this.game.machines.listMachinery.forEach(function (m) { return m.prestigeBonusProduction.push(_this.pMachineryPower); });
         this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("机器", this.expMachinery));
@@ -3903,7 +3914,7 @@ var Prestige = (function () {
         this.expTech.push(this.pHydro);
         this.expTech.push(this.pPlanter);
         this.expTech.forEach(function (p) {
-            p.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, p, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, Decimal(30), expIncrement)]));
+            p.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, p, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(30), expIncrement)]));
         });
         this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("技术", this.expTech));
         this.game.machines.composterStation.prestigeBonusProduction.push(this.pComposter);
@@ -3925,16 +3936,18 @@ var Prestige = (function () {
             this.game.baseWorld.wood,
             this.game.baseWorld.sand
         ];
-        supplyMaterials.forEach(function (sm) { return sm.prestigeBonusQuantityValue = Decimal(100); });
+        supplyMaterials.forEach(function (sm) { return sm.prestigeBonusQuantityValue = new Decimal(1000); });
         this.supplyList = supplyMaterials.map(function (sm) {
-            return new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](_this.game, "supp_" + sm.id, sm.name + "供给", "开始新的世界时，有100 " + sm.name + "。", true);
+            return new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](_this.game, "supp_" + sm.id, sm.name + " 供给", "开始新的世界时有1000 " + sm.name + "。", true);
         });
-        this.supplyList.forEach(function (n) {
-            _this.allPrestigeUp.push(n);
-            n.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, n, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, Decimal(12), expIncrement)]));
-        });
-        for (var i = 0; i < supplyMaterials.length; i++)
+        for (var i = 0; i < supplyMaterials.length; i++) {
+            var n = this.supplyList[i];
+            var resup = new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* Resupply */](this.game, supplyMaterials[i], n);
+            this.allPrestigeUp.push(n);
+            n.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["d" /* BuyAndUnlockAction */](this.game, n, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(12), expIncrement)], [resup]));
             supplyMaterials[i].prestigeBonusStart = this.supplyList[i];
+            supplyMaterials[i].actions.push(resup);
+        }
         this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("供给", this.supplyList));
         //#endregion
         //#region Efficiency
@@ -3961,15 +3974,15 @@ var Prestige = (function () {
         ];
         var _loop_1 = function (i) {
             var eff = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this_1.game, "eff" + names[i], names[i], names[i] + " 单位消耗的资源减少5％。 最大-50％。", true);
-            var ba = new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this_1.game, eff, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this_1.experience, Decimal(50), expIncrement)]);
-            ba.limit = Decimal(10);
+            var ba = new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this_1.game, eff, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this_1.experience, new Decimal(50), expIncrement)]);
+            ba.limit = new Decimal(10);
             eff.actions.push(ba);
             effMatrix[i].forEach(function (u) { return u.forEach(function (u2) { return u2.produces
                 .filter(function (p) { return p.efficiency.lessThanOrEqualTo(0); })
                 .forEach(function (prod) {
                 if (!prod.bonusList)
                     prod.bonusList = new Array();
-                prod.bonusList.push([eff, Decimal(-0.05)]);
+                prod.bonusList.push([eff, new Decimal(-0.05)]);
             }); }); });
             this_1.effList.push(eff);
         };
@@ -3983,18 +3996,35 @@ var Prestige = (function () {
         this.effListEng = new Array();
         this.game.engineers.listEnginer.forEach(function (eng) {
             var eff = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](_this.game, "effEng" + eng.id, eng.name, eng.name + " 资源消耗减少5％。 最多减少50％。", true);
-            var ba = new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, eff, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, Decimal(50), expIncrement)]);
-            ba.limit = Decimal(10);
+            var ba = new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, eff, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(50), expIncrement)]);
+            ba.limit = new Decimal(10);
             eff.actions.push(ba);
             eng.produces.filter(function (p) { return p.efficiency.lessThanOrEqualTo(0); })
                 .forEach(function (prod) {
                 if (!prod.bonusList)
                     prod.bonusList = new Array();
-                prod.bonusList.push([eff, Decimal(-0.05)]);
+                prod.bonusList.push([eff, new Decimal(-0.05)]);
             });
             _this.effListEng.push(eff);
         });
         this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("工程", this.effListEng));
+        //#endregion
+        //#region Efficiency 3
+        this.effListDep = new Array();
+        this.game.engineers.listDep.forEach(function (dep) {
+            var eff = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](_this.game, "effDep" + dep.id, dep.name, dep.name + " consume 5% less resources. Max -50%.", true);
+            var ba = new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, eff, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(60), expIncrement)]);
+            ba.limit = new Decimal(10);
+            eff.actions.push(ba);
+            dep.produces.filter(function (p) { return p.efficiency.lessThanOrEqualTo(0); })
+                .forEach(function (prod) {
+                if (!prod.bonusList)
+                    prod.bonusList = new Array();
+                prod.bonusList.push([eff, new Decimal(-0.05)]);
+            });
+            _this.effListDep.push(eff);
+        });
+        this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("部门", this.effListDep));
         //#endregion
         //#region Time
         this.time = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this.game, "ptime", "时间", "时间可以用来去未来。 一个时间单位对应于一秒钟。", true);
@@ -4002,14 +4032,14 @@ var Prestige = (function () {
         this.timeMaker.percentage = 100;
         this.timeMaker.alwaysOn = true;
         this.timeBank = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this.game, "ptimeBank", "时间银行", "时间银行将最长存储时间增加1小时。 基地储存4小时。", true);
-        this.timeMaker.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.timeMaker, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, Decimal(25), expIncrement)]));
-        this.timeBank.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.timeBank, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, Decimal(100), expIncrement)]));
-        this.game.actMin = new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* TimeWarp */](this.game, Decimal(60), "Minutes");
-        this.game.actHour = new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* TimeWarp */](this.game, Decimal(3600), "Hours");
+        this.timeMaker.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.timeMaker, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(25), expIncrement)]));
+        this.timeBank.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.timeBank, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(100), expIncrement)]));
+        this.game.actMin = new __WEBPACK_IMPORTED_MODULE_1__units_action__["e" /* TimeWarp */](this.game, new Decimal(60), "分钟");
+        this.game.actHour = new __WEBPACK_IMPORTED_MODULE_1__units_action__["e" /* TimeWarp */](this.game, new Decimal(3600), "小时");
         this.time.actions.push(this.game.actMin);
         this.time.actions.push(this.game.actHour);
-        this.time.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* TimeWarp */](this.game, Decimal(3600 * 24), "Days"));
-        // this.time.addProductor(new Production(this.timeMaker, Decimal(0.1)))
+        this.time.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["e" /* TimeWarp */](this.game, new Decimal(3600 * 24), "天"));
+        // this.time.addProductor(new Production(this.timeMaker, new Decimal(0.1)))
         this.timeList = [this.time, this.timeMaker, this.timeBank];
         this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("时间管理", this.timeList));
         //#endregion
@@ -4046,13 +4076,13 @@ var Researchs = (function () {
     Researchs.prototype.initStuff = function () {
         var _this = this;
         //    Bi
-        this.bi = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("biResea", "商业智能", "查看资源的生产者或消耗者。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(2E3))], [], this.game);
+        this.bi = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("biResea", "商业智能", "查看资源的生产者或消耗者。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(2E3))], [], this.game);
         // //   Devolution
         // this.devolution = new Research(
         //   "devoluti",
         //   "反进化",
         //   "还原进化的影响。",
-        //   [new Cost(this.game.baseWorld.science, Decimal(1))],
+        //   [new Cost(this.game.baseWorld.science, new Decimal(1))],
         //   [],
         //   this.game,
         //   () => {
@@ -4061,94 +4091,94 @@ var Researchs = (function () {
         //   }
         // )
         //    Evolution
-        this.evolution = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("evolution", "进化", "增加旅游到新世界的资源（x5），并增加你将获得的经验（x3）。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E10))], [], this.game, function () {
+        this.evolution = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("evolution", "进化", "增加旅行到新世界的资源（x5），并增加你将获得的经验（x3）。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E10))], [], this.game, function () {
             _this.game.world.toUnlock.forEach(function (t) { return t.basePrice = t.basePrice.times(5); });
             _this.game.world.experience = _this.game.world.experience.times(3);
         });
         //    Escape
-        this.escape = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("escapism", "逃避", "降低50％前往一个新的世界的资源需求。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(5E10))], [], this.game, function () {
+        this.escape = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("escapism", "逃避", "降低50％前往一个新的世界的资源需求。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E10))], [], this.game, function () {
             _this.game.world.toUnlock.forEach(function (t) { return t.basePrice = t.basePrice.div(2); });
             // this.game.world.toUnlockMax.forEach(t => t.basePrice = t.basePrice.times(4))
         });
         //    Adaptation
-        this.adaptation = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("adaptation", "适应", "降低50％前往一个新的世界的资源需求。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(5E8))], [this.escape], this.game, function () {
+        this.adaptation = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("adaptation", "适应", "降低50％前往一个新的世界的资源需求。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E8))], [this.escape], this.game, function () {
             _this.game.world.toUnlock.forEach(function (t) { return t.basePrice = t.basePrice.div(2); });
             //   this.game.world.toUnlockMax.forEach(t => t.basePrice = t.basePrice.times(4))
         });
         //  Time Warp
-        this.timeWarp = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("timeWarp", "时间扭曲", "4小时更新。 明智地使用它。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1))], [], this.game, function () {
+        this.timeWarp = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("timeWarp", "时间扭曲", "每4小时更新。 明智地使用它。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1))], [], this.game, function () {
             _this.game.longUpdate(3600 * 4000, true);
         });
         //    Here and Now
-        this.hereAndNow = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("hereAndNow", "此时此地", "获得10经验。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E9))], [this.timeWarp], this.game, function () {
+        this.hereAndNow = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("hereAndNow", "此时此地", "获得10经验。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E9))], [this.timeWarp], this.game, function () {
             _this.game.prestige.experience.quantity = _this.game.prestige.experience.quantity.plus(10);
             _this.game.maxLevel = _this.game.maxLevel.plus(10);
             _this.game.expTabAv = true;
         });
         //    University 4
-        this.depEduRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("depEduRes", "教育部门", "解锁教育部。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(3E10))], [this.game.science.depEdu], this.game);
+        this.depEduRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("depEduRes", "教育部门", "解锁教育部。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E10))], [this.game.science.depEdu], this.game);
         //    University 3
-        this.advancedLesson = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("advancedLesson", "高级课程", "大学也生产科学家。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(3E6))], [this.game.science.scientistProduction, this.depEduRes], this.game);
+        this.advancedLesson = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("advancedLesson", "高级课程", "大学也生产科学家", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E6))], [this.game.science.scientistProduction, this.depEduRes], this.game);
         //    University 2
-        this.publicLesson = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("publicLesson", "公共课", "大学还生产学生。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E5))], [this.game.science.studentProduction, this.advancedLesson], this.game);
+        this.publicLesson = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("publicLesson", "公共课", "大学还生产学生", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E5))], [this.game.science.studentProduction, this.advancedLesson], this.game);
         //    University
-        this.universityRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("University", "大学", "解锁大学。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(6E4))], [this.game.science.university, this.publicLesson], this.game);
+        this.universityRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("University", "大学", "解锁大学。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(6E4))], [this.game.science.university, this.publicLesson], this.game);
         //    Scientific Method
-        this.scientificMethod = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("scientificMethod", "科学方法", "科学生产 +100%", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(4E3))], [this.universityRes], this.game);
-        this.game.baseWorld.science.bonusProduction.push([this.scientificMethod, Decimal(1)]);
+        this.scientificMethod = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("scientificMethod", "科学方法", "科学生产 +100%", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(4E3))], [this.universityRes], this.game);
+        this.game.baseWorld.science.bonusProduction.push([this.scientificMethod, new Decimal(1)]);
         var deps = this.game.engineers.listDep;
-        this.departmentRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("departementsRes", "部门", "部门产生工程师。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E11))], deps, this.game);
+        this.departmentRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("departementsRes", "部门", "部门产生工程师。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E11))], deps, this.game);
         //    Engineer
         var eng = this.game.engineers.listEnginer;
         // //eng.push(this.stageRes)
-        this.engineerRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("engineerRes", "工程师", "工程师将慢慢建造机器。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(3E6))], eng.concat(this.departmentRes), this.game);
+        this.engineerRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("engineerRes", "工程师", "工程师将慢慢建造机器。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E6))], eng.concat(this.departmentRes), this.game);
         //    Planter
-        this.planterResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("planRes", "种植", "植树是移植树苗的过程。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E4))], [this.game.baseWorld.planterAnt], this.game);
+        this.planterResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("planRes", "种植", "植树是移植树苗的过程。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.planterAnt], this.game);
         //    Hydro
-        this.hydroResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("hydroRes", "水培", "水培是无土栽培植物的艺术。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E4))], [this.game.baseWorld.hydroAnt], this.game);
+        this.hydroResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("hydroRes", "水培", "水培是无土栽培植物的艺术。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.hydroAnt], this.game);
         //    Laser
-        this.laserResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("lasRes", "激光", "沙子可以融合成水晶。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E4))], [this.game.baseWorld.laserAnt], this.game);
+        this.laserResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("lasRes", "激光", "沙子可以融合成水晶。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.laserAnt], this.game);
         //    Refinery
-        this.refineryResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("refRes", "精炼厂", "土壤可以精制成沙子。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E4))], [this.game.baseWorld.refineryAnt], this.game);
+        this.refineryResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("refRes", "精炼厂", "土壤可以精制成沙子。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.refineryAnt], this.game);
         //    Compost
-        this.composterResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("compRes", "堆肥", "木材可以降解成肥沃的土壤。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E4))], [this.game.baseWorld.composterAnt], this.game);
+        this.composterResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("compRes", "堆肥", "木材可以降解成肥沃的土壤。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.composterAnt], this.game);
         //    Experiment
-        this.experimentResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("experimentRes", "实验", "解锁科学家蚂蚁", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(800))], [this.game.science.scientist, this.scientificMethod], this.game);
+        this.experimentResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("experimentRes", "实验", "解锁科学家蚂蚁", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(800))], [this.game.science.scientist, this.scientificMethod], this.game);
         //    Prestige
-        this.prestigeResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("prestigeRes", "旅行", "让你移动到新的世界", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E7))], [this.hereAndNow, this.adaptation, this.evolution], this.game, function () { _this.game.worldTabAv = true; });
+        this.prestigeResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("prestigeRes", "旅行", "让你移动到新的世界。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E7))], [this.hereAndNow, this.adaptation, this.evolution], this.game, function () { _this.game.worldTabAv = true; });
         //    Machinery
         var listM = new Array();
         listM = listM.concat(this.game.machines.listMachinery, [this.engineerRes]);
-        this.machineryRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("machiRes", "机器", "解锁功能强大的机器。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E6))], listM, this.game);
+        this.machineryRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("machiRes", "机器", "解锁功能强大的机器。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E6))], listM, this.game);
         //    Special
-        this.specialResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("speRes", "技术", "允许你研究新技术。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(3E3))], [this.composterResearch, this.refineryResearch, this.laserResearch, this.hydroResearch,
+        this.specialResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("speRes", "技术", "允许你研究新技术。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E3))], [this.composterResearch, this.refineryResearch, this.laserResearch, this.hydroResearch,
             this.planterResearch, this.experimentResearch,
             this.machineryRes, this.prestigeResearch,
             this.bi], this.game);
         //    Up Combined
-        this.upCombined = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("upComb", "综合加成", "这是最终的加成：单位的加成乘以每个雇用的加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1E10))], [], this.game);
+        this.upCombined = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("upComb", "综合加成", "这是最终的加成：单位的加成乘以每个雇用的加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E10))], [], this.game);
         //    Up Hire
         var allUpH = Array.from(this.game.unitMap.values()).filter(function (u) { return u.upHire; }).map(function (u) { return u.upHire; });
         allUpH.push(this.upCombined);
-        var r4 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R4", "双胞胎", "允许您以相同的价格获得更多的单位。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(7E3))], allUpH, this.game);
+        var r4 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R4", "双胞胎", "允许您以相同的价格获得更多的单位。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(7E3))], allUpH, this.game);
         //    Up 2
         var allUp = Array.from(this.game.unitMap.values()).filter(function (u) { return u.upAction; }).map(function (u) { return u.upAction; });
         allUp.push(r4);
-        var r2 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R2", "团队合作2", "升级您的单位生产加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(500))], allUp, this.game);
+        var r2 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R2", "团队合作2", "升级您的单位生产加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(500))], allUp, this.game);
         //    Up basic
-        this.up1 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("RUp1", "团队合作", "根据您购买单位的次数提供生产加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(50))], [r2], this.game);
+        this.up1 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("RUp1", "团队合作", "根据您购买单位的次数提供生产加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(50))], [r2], this.game);
         //    Hunter 2
-        var hunting2 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("HuntR2", "高级狩猎", "蚂蚁装备更好的武器。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(4000))], [this.game.baseWorld.advancedHunter], this.game);
+        var hunting2 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("HuntR2", "高级狩猎", "蚂蚁装备更好的武器。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(4000))], [this.game.baseWorld.advancedHunter], this.game);
         //    Hunter
-        var hunting = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("HuntR1", "狩猎", "用武器装备蚂蚁以获得食物。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(2000))], [this.game.baseWorld.hunter, hunting2, this.specialResearch], this.game);
+        var hunting = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("HuntR1", "狩猎", "用武器装备蚂蚁以获得食物。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(2000))], [this.game.baseWorld.hunter, hunting2, this.specialResearch], this.game);
         //    Wood
-        var woodcutting = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("WR1", "伐木", "允许您收集木材以备将来使用。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1000))], [this.game.baseWorld.lumberjack, hunting], this.game);
+        var woodcutting = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("WR1", "伐木", "允许您收集木材以备将来使用。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1000))], [this.game.baseWorld.lumberjack, hunting], this.game);
         //    Fungus up
-        var r3 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R3", "真菌实验", "允许你通过做实验来增加真菌的食物生产。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(1000))], [this.game.baseWorld.fungus.upSpecial], this.game);
+        var r3 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R3", "真菌实验", "允许你通过做实验来增加真菌的食物生产。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1000))], [this.game.baseWorld.fungus.upSpecial], this.game);
         //    Farming
-        var r1 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R1", "蚂蚁的真菌共生", "让你培养真菌。 真菌是食物的来源。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(100))], [this.game.baseWorld.farmer, r3, woodcutting], this.game);
+        var r1 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R1", "蚂蚁的真菌共生", "让你培养真菌。 真菌是食物的来源。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(100))], [this.game.baseWorld.farmer, r3, woodcutting], this.game);
         //    Soil
-        this.rDirt = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("RDirt", "土壤", "允许您收集土壤以备将来使用。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, Decimal(50))], [this.game.baseWorld.soil, this.game.baseWorld.carpenter, r1, this.up1], this.game);
+        this.rDirt = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("RDirt", "土壤", "允许您收集土壤以备将来使用", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(50))], [this.game.baseWorld.soil, this.game.baseWorld.carpenter, r1, this.up1], this.game);
     };
     Researchs.prototype.addWorld = function () {
     };
@@ -4189,40 +4219,40 @@ var Science = (function () {
         this.depEdu = new __WEBPACK_IMPORTED_MODULE_2__units_unit__["a" /* Unit */](this.game, "depEdu", "教育部门", "教育部门建立大学。");
         this.listScience = [this.student, this.scientist, this.university, this.depEdu];
         this.game.lists.push(new __WEBPACK_IMPORTED_MODULE_5__typeList__["a" /* TypeList */]("科学", this.listScience));
-        this.studentProduction = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.university, Decimal(0.2), false);
-        this.scientistProduction = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.university, Decimal(0.1), false);
-        this.science1Production = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.university, Decimal(450));
-        this.science2Production = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.university, Decimal(1000), false);
-        this.uniProduction = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.university, Decimal(0.1), false);
+        this.studentProduction = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.university, new Decimal(0.2), false);
+        this.scientistProduction = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.university, new Decimal(0.1), false);
+        this.science1Production = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.university, new Decimal(450));
+        this.science2Production = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.university, new Decimal(1000), false);
+        this.uniProduction = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.university, new Decimal(0.1), false);
     };
     Science.prototype.initStuff = function () {
         this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.student));
-        this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.student, Decimal(-0.5)));
-        this.university.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.depEdu, Decimal(0.1)));
-        this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.depEdu, Decimal(-1E5)));
-        var specialProduction = Decimal(15);
-        var specialCost = Decimal(-4);
-        var specialFood = Decimal(1E7);
-        var specialRes2 = Decimal(1E4);
+        this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.student, new Decimal(-0.5)));
+        this.university.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.depEdu, new Decimal(0.1)));
+        this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.depEdu, new Decimal(-1E5)));
+        var specialProduction = new Decimal(15);
+        var specialCost = new Decimal(-4);
+        var specialFood = new Decimal(1E7);
+        var specialRes2 = new Decimal(1E4);
         //    Student
-        this.student.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* BuyAndUnlockAction */](this.game, this.student, [
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, Decimal(1000), Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.crystal, Decimal(100), Decimal(this.game.buyExp)),
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, Decimal(1), Decimal(this.game.buyExpUnit))
+        this.student.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["d" /* BuyAndUnlockAction */](this.game, this.student, [
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1000), new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.crystal, new Decimal(100), new Decimal(this.game.buyExp)),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit))
         ], [this.game.baseWorld.science]));
-        this.student.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["d" /* UpAction */](this.game, this.student, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.student.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["e" /* UpHire */](this.game, this.student, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
+        this.student.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.student, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.student.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.student, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
         //  Scientist
         // this.scientist.types = [Type.Ant]
         this.scientist.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.scientist, [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, specialFood.div(5), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.crystal, specialRes2.div(5), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, Decimal(1), this.game.buyExpUnit)
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), this.game.buyExpUnit)
         ]));
         this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.scientist, specialProduction.times(2)));
         this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.scientist, specialCost));
-        this.scientist.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["d" /* UpAction */](this.game, this.scientist, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
-        this.scientist.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["e" /* UpHire */](this.game, this.scientist, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceHireExp)]));
+        this.scientist.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.scientist, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.scientist.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.scientist, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceHireExp)]));
         //  University
         this.university.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.university, [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.wood, this.game.machines.price1.times(2), this.game.buyExp),
@@ -4238,7 +4268,7 @@ var Science = (function () {
         ];
         //  Dep
         this.depEdu.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.depEdu, [
-            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.university, Decimal(100), this.game.buyExpUnit),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.university, new Decimal(100), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.wood, this.game.machines.price1.times(100), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.game.machines.price2.times(100), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.machines.price1.times(100), this.game.buyExp),
@@ -4322,7 +4352,7 @@ OptNavComponent = __decorate([
 /***/ "../../../../../src/app/options/options.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"content-area\">\n  <p>\n    游戏每3分钟自动保存。 您还可以手动保存，加载和导出保存游戏。 游戏存档存储在本地存储中，如果你没有备份存档，请不要清除浏览器缓存。\n  </p>\n  <strong>警告：重置按钮将会删除你的所有游戏记录，从零开始游戏！</strong>\n\n  <div class=\"form-group\">\n    <button class=\"btn btn-success\" (click)=\"save($event)\">保存</button>\n    <button class=\"btn btn-primary\" (click)=\"load($event)\">加载</button>\n    <button class=\"btn btn-danger\" (click)=\"clear($event)\">重置</button>\n  </div>\n  <div class=\"form-group\">\n    <h5>导出 / 导入存档</h5>\n    <label for=\"save\">保存</label>\n    <textarea ref-textarea class=\"form-control\" rows=\"6\" id=\"save\" [(ngModel)]=\"stringSave\"></textarea>\n    <button class=\"btn btn-success\" (click)=\"export($event)\">导出</button>\n    <button class=\"btn btn-primary\" (click)=\"import($event)\">导入</button>\n  </div>\n\n  <div class=\"toggle-switch\">\n    <input type=\"checkbox\" id=\"toggle_1\" [(ngModel)]=\"gameService.game.hideSaveNotification\">\n    <label for=\"toggle_1\">隐藏成功保存通知</label>\n  </div><br/>\n  <span>版本号: {{gameService.game.gameVersion}}</span>\n  <a href=\"http://likexia.gitee.io/idleant/changelog.html\" target=\"_blank\">更新日志</a>\n</div>\n"
+module.exports = "<div>\n  <p>\n    游戏每3分钟自动保存。 您还可以手动保存，加载和导出保存游戏。 游戏存档存储在本地存储中，如果你没有备份存档，请不要清除浏览器缓存。\n  </p>\n  <strong>警告：重置按钮将会删除你的所有游戏记录，从零开始游戏！</strong>\n\n  <div class=\"form-group\">\n    <button class=\"btn btn-success\" (click)=\"save($event)\">保存</button>\n    <button class=\"btn btn-primary\" (click)=\"load($event)\">加载</button>\n    <button class=\"btn btn-danger\" (click)=\"clear($event)\">重置</button>\n  </div>\n  <div class=\"form-group\">\n    <h5>导出 / 导入存档</h5>\n    <label for=\"save\">保存</label>\n    <textarea ref-textarea class=\"form-control\" rows=\"6\" id=\"save\" [(ngModel)]=\"stringSave\"></textarea>\n    <button class=\"btn btn-success\" (click)=\"export($event)\">导出</button>\n    <button class=\"btn btn-primary\" (click)=\"import($event)\">导入</button>\n  </div>\n\n  <div class=\"toggle-switch\">\n    <input type=\"checkbox\" id=\"toggle_1\" [(ngModel)]=\"gameService.game.hideSaveNotification\">\n    <label for=\"toggle_1\">隐藏成功保存通知</label>\n  </div>\n  <br/>\n  <span>版本号: {{gameService.game.gameVersion}}</span>\n  <a href=\"http://likexia.gitee.io/idleant/changelog.html\" target=\"_blank\">更新日志</a>\n</div>\n"
 
 /***/ }),
 
@@ -4404,7 +4434,7 @@ var _a;
 /***/ "../../../../../src/app/prestige/prestige.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"content-area\">\n  <h2>{{getTitle()}}</h2>\n  <div *ngIf=\"!travelAv(); else av_content\">\n    <div *ngIf=\"!this.gameService.game.research.prestigeResearch.owned()\">\n      <clr-alert [clrAlertType]=\"'alert-warning'\">\n        <div class=\"alert-item\">\n          <span class=\"alert-text\">\n           旅行研究未完成，你无法旅行！\n          </span>\n        </div>\n      </clr-alert>\n    </div>\n    <p> 您需要旅行研究： </p>\n    <table class=\"nowrap\" style=\"width:100%\">\n      <tbody>\n        <tr *ngFor=\"let cost of gameService.game.world.toUnlock\">\n          <td>\n            <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}}</span>\n          </td>\n          <td style=\"width:100%\">\n            <div class=\"progress labeled\" [ngClass]=\"{'success': cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice), 'danger': !cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice)}\">\n              <progress max=\"100\" [value]=\"cost.unit.quantity.times(100).div(cost.basePrice).toNumber()\" data-displayval=\"0%\">\n              </progress>\n              <span *ngIf=\"!cost.unit.quantity.greaterThan(cost.basePrice) ;else other_content\">\n                {{cost.unit.quantity.times(100).div(cost.basePrice) | format}}%\n              </span>\n              <ng-template #other_content>\n                <span> 100% </span>\n              </ng-template>\n\n            </div>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n      <div *ngIf=\"this.gameService.game.world.toUnlockMax.length >0\">\n        <p>你必须拥有少于：</p>\n        <table class=\"nowrap\" style=\"width:100%\">\n          <tbody>\n            <tr *ngFor=\"let cost of gameService.game.world.toUnlockMax\">\n              <td>\n                <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}}</span>\n              </td>\n              <td style=\"width:100%\">\n                <div class=\"progress labeled\" [ngClass]=\"{'success': !cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice), 'danger': cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice)}\">\n                  <progress max=\"100\" [value]=\"cost.unit.quantity.times(100).div(cost.basePrice).toNumber()\" data-displayval=\"0%\">\n                  </progress>\n                  <span *ngIf=\"!cost.unit.quantity.greaterThan(cost.basePrice)\">\n                    {{cost.unit.quantity.times(100).div(cost.basePrice) | format}}%\n                  </span>\n                  <span *ngIf=\"cost.unit.quantity.greaterThan(cost.basePrice)\">\n                    100%\n                  </span>\n                </div>\n              </td>\n            </tr>\n          </tbody>\n        </table>\n      </div>\n      <button class=\"btn btn-warning-outline\" (click)=\"skipWorld()\">跳过</button>\n      <p> 通过跳过你将能够改变世界，但你不会得到 {{gameService.game.getExperience()\n        | format}} 经验。</p>\n  </div>\n\n  <ng-template #av_content>\n    <div *ngIf=\"!skip\">\n      <p>离开你将获得 {{gameService.game.getExperience() | format}} 个经验。 高层次的世界将会产生更多的经验，但需要更多的资源。 </p>\n    </div>\n    <div *ngIf=\"skip\">\n      <p> 如果选择跳过这个世界，你将不会获得任何经验！ 如果你想改变主意，请切换到 “旅行” 之外的另一个选项卡。\n      </p>\n    </div>\n    <div>\n       旅行需要的资源:\n      <span *ngFor=\"let cost of gameService.game.world.toUnlock\">\n        <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}},</span>\n      </span>\n      <div *ngIf=\"this.gameService.game.world.toUnlockMax.length >0\">\n        并且要低于:\n        <span *ngFor=\"let cost of gameService.game.world.toUnlockMax\">\n          <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}},</span>\n        </span>\n      </div>\n    </div>\n    <div class=\"form-group\">\n      <button class=\"btn btn-secondary\" (click)=\"change()\">\n        <clr-icon shape=\"world\"></clr-icon>\n        改变世界\n      </button>\n\n      <label>最小等级:</label>\n      <input type=\"number\" placeholder=\"0\" [(ngModel)]=\"gameService.game.minUser\" class=\"numIn\" min=\"1\" [max]=\"gameService.game.maxUser\">\n      <label>最大等级 ({{gameService.game.maxMax}}):</label>\n      <input type=\"number\" [placeholder]=\"gameService.game.maxMax\" [(ngModel)]=\"gameService.game.maxUser\" class=\"numIn\"\n        [min]=\"gameService.game.minUser\" [max]=\"gameService.game.maxMax\">\n    </div>\n    <div class=\"card-columns card-columns-2\">\n      <div class=\"card\" *ngFor=\"let world of gameService.game.nextWorlds \">\n        <div class=\"card-header text-capitalize\"> {{world.name}} </div>\n        <div class=\"card-block\">\n          <div class=\"card-title\"> 等级: {{world.level}}\n            <br/> {{world.experience}} 经验 </div>\n          <div class=\"card-text\">\n            {{world.description}}\n            <ul class=\"list\">\n              <li *ngFor=\"let p of world.avaiableUnits\"> {{p.name}}: {{p.description }} </li>\n              <li *ngFor=\"let p of world.unlockedUnits\">\n                <span *ngIf=\"!p[1].greaterThan(0)\">\n                  {{p[0].name}}: {{p[0].description }}\n                </span>\n                <span *ngIf=\"p[1].greaterThan(0)\">\n                  开局拥有 {{p[1] | format }} {{p[0].name}}\n                </span>\n              </li>\n              <li *ngFor=\"let p of world.prodMod\">\n               生产加成 {{p[0].name}} x {{p[1] }}\n              </li>\n              <li *ngFor=\"let p of world.unitMod\">\n                {{p[0].name}} 生产和消耗 x{{p[1]}} 的资源\n                <!-- {{p[0].name}} production x {{p[1] }} -->\n              </li>\n              <li *ngFor=\"let p of world.unitPrice\"> {{p[0].name}} price x {{p[1] }} </li>\n            </ul>\n          </div>\n          <div class=\"card-footer\">\n            <button class=\"btn btn-primary\" (click)=\"goTo(world)\">前往</button>\n            <div class=\"toggle-switch\">\n              <input type=\"checkbox\" [id]=\"world.id\" [(ngModel)]=\"world.keep\">\n              <label [for]=\"world.id\">保留</label>\n            </div>\n\n          </div>\n        </div>\n      </div>\n    </div>\n  </ng-template>\n</div>\n"
+module.exports = "<div class=\"content-area\">\n  <h2>{{getTitle()}}</h2>\n  <div *ngIf=\"!travelAv(); else av_content\">\n    <div *ngIf=\"!this.gameService.game.research.prestigeResearch.owned()\">\n      <clr-alert [clrAlertType]=\"'alert-warning'\">\n        <div class=\"alert-item\">\n          <span class=\"alert-text\">\n           旅行研究未完成，你无法旅行！\n          </span>\n        </div>\n      </clr-alert>\n    </div>\n    <p> 您需要旅行研究： </p>\n    <table class=\"nowrap\" style=\"width:100%\">\n      <tbody>\n        <tr *ngFor=\"let cost of gameService.game.world.toUnlock\">\n          <td>\n            <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}}</span>\n          </td>\n          <td style=\"width:100%\">\n            <div class=\"progress labeled\" [ngClass]=\"{'success': cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice), 'danger': !cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice)}\">\n              <progress max=\"100\" [value]=\"cost.unit.quantity.times(100).div(cost.basePrice).toNumber()\" data-displayval=\"0%\">\n              </progress>\n              <span *ngIf=\"!cost.unit.quantity.greaterThan(cost.basePrice) ;else other_content\">\n                {{cost.unit.quantity.times(100).div(cost.basePrice) | format}}%\n              </span>\n              <ng-template #other_content>\n                <span> 100% </span>\n              </ng-template>\n\n            </div>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n      <div *ngIf=\"this.gameService.game.world.toUnlockMax.length >0\">\n        <p>你必须拥有少于：</p>\n        <table class=\"nowrap\" style=\"width:100%\">\n          <tbody>\n            <tr *ngFor=\"let cost of gameService.game.world.toUnlockMax\">\n              <td>\n                <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}}</span>\n              </td>\n              <td style=\"width:100%\">\n                <div class=\"progress labeled\" [ngClass]=\"{'success': !cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice), 'danger': cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice)}\">\n                  <progress max=\"100\" [value]=\"cost.unit.quantity.times(100).div(cost.basePrice).toNumber()\" data-displayval=\"0%\">\n                  </progress>\n                  <span *ngIf=\"!cost.unit.quantity.greaterThan(cost.basePrice)\">\n                    {{cost.unit.quantity.times(100).div(cost.basePrice) | format}}%\n                  </span>\n                  <span *ngIf=\"cost.unit.quantity.greaterThan(cost.basePrice)\">\n                    100%\n                  </span>\n                </div>\n              </td>\n            </tr>\n          </tbody>\n        </table>\n      </div>\n      <button class=\"btn btn-warning-outline\" (click)=\"skipWorld()\">跳过</button>\n      <p> 通过跳过你将能够改变世界，但你不会得到 {{gameService.game.getExperience()\n        | format}} 经验。</p>\n  </div>\n\n  <ng-template #av_content>\n    <div *ngIf=\"!gameService.game.skip; else skip_content\">\n      <p> 离开你将获得 {{gameService.game.getExperience() | format}} 经验。 高层次的世界将会产生更多的经验，但需要更多的资源。 </p>\n    </div>\n    <ng-template #skip_content>\n      <div *ngIf=\"gameService.game.skip\">\n        <p>\n          如果选择跳过这个世界，你将不会获得任何经验！ 如果你想改变主意，请切换到 “旅行” 之外的另一个选项卡。\n        </p>\n      </div>\n    </ng-template>\n    <div>\n       旅行需要的资源:\n      <span *ngFor=\"let cost of gameService.game.world.toUnlock\">\n        <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}},</span>\n      </span>\n      <div *ngIf=\"this.gameService.game.world.toUnlockMax.length >0\">\n        并且要低于:\n        <span *ngFor=\"let cost of gameService.game.world.toUnlockMax\">\n          <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}},</span>\n        </span>\n      </div>\n    </div>\n    <div class=\"form-group\">\n      <button class=\"btn btn-secondary\" (click)=\"change()\">\n        <clr-icon shape=\"world\"></clr-icon>\n        改变世界\n      </button>\n\n      <label>最小等级:</label>\n      <input type=\"number\" placeholder=\"0\" [(ngModel)]=\"gameService.game.minUser\" class=\"numIn\" min=\"1\" [max]=\"gameService.game.maxUser\">\n      <label>最大等级 ({{gameService.game.maxMax}}):</label>\n      <input type=\"number\" [placeholder]=\"gameService.game.maxMax\" [(ngModel)]=\"gameService.game.maxUser\" class=\"numIn\"\n        [min]=\"gameService.game.minUser\" [max]=\"gameService.game.maxMax\" >\n\n      <a class=\"btn btn-success-outline\" routerLink=\"/world-build\">\n        <clr-icon shape=\"world\"></clr-icon>\n        生成\n      </a>\n\n    </div>\n    <div class=\"card-columns card-columns-2\">\n\n\n      <app-world *ngFor=\"let world of gameService.game.nextWorlds \" [world]=\"world\"></app-world>\n\n    </div>\n  </ng-template>\n</div>\n"
 
 /***/ }),
 
@@ -4416,7 +4446,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".numIn {\n  width: 30px; }\n", ""]);
+exports.push([module.i, ".numIn {\n  width: 40px; }\n", ""]);
 
 // exports
 
@@ -4451,16 +4481,16 @@ var PrestigeComponent = (function () {
         this.gameService = gameService;
         this.router = router;
         this.className = 'content-container';
-        this.skip = false;
+        this.gameService.game.skip = false;
         gameService.game.setMaxLevel();
     }
     PrestigeComponent.prototype.ngOnInit = function () {
         preventScroll();
     };
-    PrestigeComponent.prototype.skipWorld = function () { this.skip = true; };
+    PrestigeComponent.prototype.skipWorld = function () { this.gameService.game.skip = true; };
     PrestigeComponent.prototype.getTitle = function () {
-        if (this.skip)
-            return "你正在跳过这个世界！";
+        if (this.gameService.game.skip)
+            return "你正在跳过这个世界!";
         else {
             if (!this.travelAv())
                 return "你还不能去到一个新的世界";
@@ -4469,7 +4499,7 @@ var PrestigeComponent = (function () {
         }
     };
     PrestigeComponent.prototype.travelAv = function () {
-        if (this.skip)
+        if (this.gameService.game.skip)
             return true;
         if (!this.gameService.game.research.prestigeResearch.owned())
             return false;
@@ -4490,7 +4520,8 @@ var PrestigeComponent = (function () {
         return true;
     };
     PrestigeComponent.prototype.goTo = function (world) {
-        world.goTo(this.skip);
+        world.goTo(this.gameService.game.skip);
+        this.gameService.game.skip = false;
         this.router.navigateByUrl('/');
     };
     PrestigeComponent.prototype.change = function () {
@@ -4508,7 +4539,7 @@ PrestigeComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/prestige/prestige.component.html"),
         styles: [__webpack_require__("../../../../../src/app/prestige/prestige.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__game_service__["a" /* GameService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__game_service__["a" /* GameService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_router__["c" /* Router */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__game_service__["a" /* GameService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__game_service__["a" /* GameService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */]) === "function" && _b || Object])
 ], PrestigeComponent);
 
 var _a, _b;
@@ -4802,7 +4833,7 @@ UnitComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/unit/unit.component.html"),
         styles: [__webpack_require__("../../../../../src/app/unit/unit.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__game_service__["a" /* GameService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__game_service__["a" /* GameService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* ActivatedRoute */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* Router */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__game_service__["a" /* GameService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__game_service__["a" /* GameService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* ActivatedRoute */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _d || Object])
 ], UnitComponent);
 
 var FilterUnlocked = (function () {
@@ -4831,6 +4862,183 @@ FilterActive = __decorate([
 
 var _a, _b, _c, _d;
 //# sourceMappingURL=unit.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/world-builder/world-builder.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\">\n  <div class=\"col-xs-6 col-md-6 col-lg-6 col-xl-6\">\n    <form>\n\n      <form>\n        <section class=\"form-block\">\n          <label>Generate your world</label>\n          <div class=\"form-group\">\n            <label for=\"aForm_1\">This is a form field</label>\n            <input type=\"number\" name=\"level\" [placeholder]=\"gameService.game.maxMax\" [(ngModel)]=\"level\" [min]=\"gameService.game.minUser\"\n              [max]=\"gameService.game.maxMax\" (change)=\"generate($event)\">\n          </div>\n\n          <div class=\"form-group\">\n            <label for=\"aForm_pre\">Prefix</label>\n            <div class=\"select\">\n              <select id=\"aForm_pre\" name=\"pre\" [(ngModel)]=\"preName\" (change)=\"setPre($event)\">\n                <option *ngFor=\"let pre of World.worldPrefix\" >\n                  {{pre.name}}\n              </option>\n              </select>\n            </div>\n          </div>\n\n          <div class=\"form-group\">\n            <label for=\"aForm_type\">Type</label>\n            <div class=\"select\">\n              <select id=\"aForm_type\" name=\"type\" [(ngModel)]=\"typeName\" (change)=\"setType($event)\">\n                <option *ngFor=\"let pre of World.worldTypes\" >\n                  {{pre.name}}\n              </option>\n              </select>\n            </div>\n          </div>\n\n          <div class=\"form-group\">\n            <label for=\"aForm_suff\">Suffix</label>\n            <div class=\"select\">\n              <select id=\"aForm_suff\" name=\"suff\" [(ngModel)]=\"suffName\" (change)=\"setSuff($event)\">\n                <option *ngFor=\"let pre of World.worldSuffix\" >\n                  {{pre.name}}\n              </option>\n              </select>\n            </div>\n          </div>\n\n          <!-- <button type=\"submit\" class=\"btn btn-primary\">Button</button> -->\n        </section>\n      </form>\n\n    </form>\n  </div>\n  <div class=\"col-xs-6 col-md-6 col-lg-6 col-xl-6\">\n    <app-world [world]=\"world\"></app-world>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/world-builder/world-builder.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/world-builder/world-builder.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__model_world__ = __webpack_require__("../../../../../src/app/model/world.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__game_service__ = __webpack_require__("../../../../../src/app/game.service.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WorldBuilderComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var WorldBuilderComponent = (function () {
+    function WorldBuilderComponent(gameService) {
+        this.gameService = gameService;
+        this.className = 'content-area';
+        this.level = 0;
+        this.World = __WEBPACK_IMPORTED_MODULE_1__model_world__["a" /* World */];
+        gameService.game.setMaxLevel();
+        this.world = __WEBPACK_IMPORTED_MODULE_1__model_world__["a" /* World */].getRandomWorld(this.gameService.game);
+    }
+    WorldBuilderComponent.prototype.ngOnInit = function () {
+    };
+    WorldBuilderComponent.prototype.generate = function () {
+        this.world = __WEBPACK_IMPORTED_MODULE_1__model_world__["a" /* World */].getRandomWorld(this.gameService.game, this.pre, this.type, this.suff, this.level);
+    };
+    WorldBuilderComponent.prototype.setPre = function () {
+        var _this = this;
+        this.pre = __WEBPACK_IMPORTED_MODULE_1__model_world__["a" /* World */].worldPrefix.find(function (w) { return w.name === _this.preName; });
+        this.generate();
+    };
+    WorldBuilderComponent.prototype.setType = function () {
+        var _this = this;
+        this.type = __WEBPACK_IMPORTED_MODULE_1__model_world__["a" /* World */].worldTypes.find(function (w) { return w.name === _this.typeName; });
+        this.generate();
+    };
+    WorldBuilderComponent.prototype.setSuff = function () {
+        var _this = this;
+        this.suff = __WEBPACK_IMPORTED_MODULE_1__model_world__["a" /* World */].worldSuffix.find(function (w) { return w.name === _this.suffName; });
+        this.generate();
+    };
+    return WorldBuilderComponent;
+}());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostBinding"])('class.content-area'),
+    __metadata("design:type", Object)
+], WorldBuilderComponent.prototype, "className", void 0);
+WorldBuilderComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-world-builder',
+        template: __webpack_require__("../../../../../src/app/world-builder/world-builder.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/world-builder/world-builder.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__game_service__["a" /* GameService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__game_service__["a" /* GameService */]) === "function" && _a || Object])
+], WorldBuilderComponent);
+
+var _a;
+//# sourceMappingURL=world-builder.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/world/world.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"card-header text-capitalize\"> {{world.name}} </div>\n<div class=\"card-block\">\n  <div class=\"card-title\"> 等级: {{world.level}}\n    <br/> {{world.experience | format}} 经验 </div>\n  <div class=\"card-text\">\n    {{world.description}}\n    <ul class=\"list\">\n      <li *ngFor=\"let p of world.avaiableUnits\"> {{p.name}}: {{p.description }} </li>\n      <li *ngFor=\"let p of world.unlockedUnits\">\n        <span *ngIf=\"!p[1].greaterThan(0)\">\n          {{p[0].name}}: {{p[0].description }}\n        </span>\n        <span *ngIf=\"p[1].greaterThan(0)\">\n          开局拥有 {{p[1] | format }} {{p[0].name}}\n        </span>\n      </li>\n      <li *ngFor=\"let p of world.prodMod\">\n        生产加成 {{p[0].name}} x {{p[1] }}\n      </li>\n      <li *ngFor=\"let p of world.unitMod\">\n        {{p[0].name}} 生产和消耗 x{{p[1]}} 的资源\n        <!-- {{p[0].name}} production x {{p[1] }} -->\n      </li>\n      <li *ngFor=\"let p of world.unitPrice\"> {{p[0].name}} price x {{p[1] }} </li>\n    </ul>\n  </div>\n  <div class=\"card-footer\">\n    <button class=\"btn btn-primary\" (click)=\"goTo(world)\">前往</button>\n\n    <div class=\"toggle-switch\">\n      <input type=\"checkbox\" [id]=\"world.id\" [(ngModel)]=\"world.keep\">\n      <label [for]=\"world.id\">保留</label>\n    </div>\n\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/world/world.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/world/world.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__model_world__ = __webpack_require__("../../../../../src/app/model/world.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__game_service__ = __webpack_require__("../../../../../src/app/game.service.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WorldComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var WorldComponent = (function () {
+    function WorldComponent(gameService, router) {
+        this.gameService = gameService;
+        this.router = router;
+        this.card = 'card';
+    }
+    WorldComponent.prototype.ngOnInit = function () {
+    };
+    WorldComponent.prototype.goTo = function (world) {
+        world.goTo(this.gameService.game.skip);
+        this.router.navigateByUrl('/');
+    };
+    return WorldComponent;
+}());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostBinding"])('class.card'),
+    __metadata("design:type", Object)
+], WorldComponent.prototype, "card", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__model_world__["a" /* World */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__model_world__["a" /* World */]) === "function" && _a || Object)
+], WorldComponent.prototype, "world", void 0);
+WorldComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-world',
+        template: __webpack_require__("../../../../../src/app/world/world.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/world/world.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__game_service__["a" /* GameService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__game_service__["a" /* GameService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _c || Object])
+], WorldComponent);
+
+var _a, _b, _c;
+//# sourceMappingURL=world.component.js.map
 
 /***/ }),
 
