@@ -1641,7 +1641,7 @@ Checkbox.decorators = [
                  * which allows us to use [(ngModel)] directly on our component,
                  * with all the automatic features wiring that come with it.
                  */
-                providers: [{ provide: __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* NG_VALUE_ACCESSOR */], useExisting: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return Checkbox; }), multi: true }]
+                providers: [{ provide: __WEBPACK_IMPORTED_MODULE_3__angular_forms__["NG_VALUE_ACCESSOR"], useExisting: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return Checkbox; }), multi: true }]
             },] },
 ];
 /**
@@ -7199,7 +7199,7 @@ var ClrDatagridModule = (function () {
 ClrDatagridModule.decorators = [
     { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"], args: [{
                 imports: [
-                    __WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"], ClrIconModule, ClrFormsModule, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormsModule */], ClrCommonPopoverModule, ClrLoadingModule,
+                    __WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"], ClrIconModule, ClrFormsModule, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["FormsModule"], ClrCommonPopoverModule, ClrLoadingModule,
                     ClrOutsideClickModule
                 ],
                 declarations: [
@@ -7542,7 +7542,7 @@ var ClrStackViewModule = (function () {
     return ClrStackViewModule;
 }());
 ClrStackViewModule.decorators = [
-    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"], args: [{ imports: [__WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"], __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormsModule */]], declarations: [STACK_VIEW_DIRECTIVES], exports: [STACK_VIEW_DIRECTIVES] },] },
+    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"], args: [{ imports: [__WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"], __WEBPACK_IMPORTED_MODULE_3__angular_forms__["FormsModule"]], declarations: [STACK_VIEW_DIRECTIVES], exports: [STACK_VIEW_DIRECTIVES] },] },
 ];
 /**
  * @nocollapse
@@ -7947,7 +7947,7 @@ var ClrTreeViewModule = (function () {
 }());
 ClrTreeViewModule.decorators = [
     { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"], args: [{
-                imports: [__WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"], ClrIconModule, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormsModule */], ClrFormsModule],
+                imports: [__WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"], ClrIconModule, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["FormsModule"], ClrFormsModule],
                 declarations: [TREE_VIEW_DIRECTIVES],
                 exports: [TREE_VIEW_DIRECTIVES, ClrIfExpandModule]
             },] },
@@ -37598,6 +37598,718 @@ exports.ToastModule = ToastModule;
 
 /***/ }),
 
+/***/ "../../../../primeng/components/dom/domhandler.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("../../../core/@angular/core.es5.js");
+var DomHandler = (function () {
+    function DomHandler() {
+        this.calculatedScrollbarWidth = null;
+    }
+    DomHandler.prototype.addClass = function (element, className) {
+        if (element.classList)
+            element.classList.add(className);
+        else
+            element.className += ' ' + className;
+    };
+    DomHandler.prototype.addMultipleClasses = function (element, className) {
+        if (element.classList) {
+            var styles = className.split(' ');
+            for (var i = 0; i < styles.length; i++) {
+                element.classList.add(styles[i]);
+            }
+        }
+        else {
+            var styles = className.split(' ');
+            for (var i = 0; i < styles.length; i++) {
+                element.className += ' ' + styles[i];
+            }
+        }
+    };
+    DomHandler.prototype.removeClass = function (element, className) {
+        if (element.classList)
+            element.classList.remove(className);
+        else
+            element.className = element.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+    };
+    DomHandler.prototype.hasClass = function (element, className) {
+        if (element.classList)
+            return element.classList.contains(className);
+        else
+            return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className);
+    };
+    DomHandler.prototype.siblings = function (element) {
+        return Array.prototype.filter.call(element.parentNode.children, function (child) {
+            return child !== element;
+        });
+    };
+    DomHandler.prototype.find = function (element, selector) {
+        return element.querySelectorAll(selector);
+    };
+    DomHandler.prototype.findSingle = function (element, selector) {
+        return element.querySelector(selector);
+    };
+    DomHandler.prototype.index = function (element) {
+        var children = element.parentNode.childNodes;
+        var num = 0;
+        for (var i = 0; i < children.length; i++) {
+            if (children[i] == element)
+                return num;
+            if (children[i].nodeType == 1)
+                num++;
+        }
+        return -1;
+    };
+    DomHandler.prototype.relativePosition = function (element, target) {
+        var elementDimensions = element.offsetParent ? { width: element.offsetWidth, height: element.offsetHeight } : this.getHiddenElementDimensions(element);
+        var targetHeight = target.offsetHeight;
+        var targetWidth = target.offsetWidth;
+        var targetOffset = target.getBoundingClientRect();
+        var windowScrollTop = this.getWindowScrollTop();
+        var viewport = this.getViewport();
+        var top, left;
+        if ((targetOffset.top + targetHeight + elementDimensions.height) > viewport.height) {
+            top = -1 * (elementDimensions.height);
+            if (targetOffset.top + top < 0) {
+                top = 0;
+            }
+        }
+        else {
+            top = targetHeight;
+        }
+        if ((targetOffset.left + elementDimensions.width) > viewport.width)
+            left = targetWidth - elementDimensions.width;
+        else
+            left = 0;
+        element.style.top = top + 'px';
+        element.style.left = left + 'px';
+    };
+    DomHandler.prototype.absolutePosition = function (element, target) {
+        var elementDimensions = element.offsetParent ? { width: element.offsetWidth, height: element.offsetHeight } : this.getHiddenElementDimensions(element);
+        var elementOuterHeight = elementDimensions.height;
+        var elementOuterWidth = elementDimensions.width;
+        var targetOuterHeight = target.offsetHeight;
+        var targetOuterWidth = target.offsetWidth;
+        var targetOffset = target.getBoundingClientRect();
+        var windowScrollTop = this.getWindowScrollTop();
+        var windowScrollLeft = this.getWindowScrollLeft();
+        var viewport = this.getViewport();
+        var top, left;
+        if (targetOffset.top + targetOuterHeight + elementOuterHeight > viewport.height) {
+            top = targetOffset.top + windowScrollTop - elementOuterHeight;
+            if (top < 0) {
+                top = 0 + windowScrollTop;
+            }
+        }
+        else {
+            top = targetOuterHeight + targetOffset.top + windowScrollTop;
+        }
+        if (targetOffset.left + targetOuterWidth + elementOuterWidth > viewport.width)
+            left = targetOffset.left + windowScrollLeft + targetOuterWidth - elementOuterWidth;
+        else
+            left = targetOffset.left + windowScrollLeft;
+        element.style.top = top + 'px';
+        element.style.left = left + 'px';
+    };
+    DomHandler.prototype.getHiddenElementOuterHeight = function (element) {
+        element.style.visibility = 'hidden';
+        element.style.display = 'block';
+        var elementHeight = element.offsetHeight;
+        element.style.display = 'none';
+        element.style.visibility = 'visible';
+        return elementHeight;
+    };
+    DomHandler.prototype.getHiddenElementOuterWidth = function (element) {
+        element.style.visibility = 'hidden';
+        element.style.display = 'block';
+        var elementWidth = element.offsetWidth;
+        element.style.display = 'none';
+        element.style.visibility = 'visible';
+        return elementWidth;
+    };
+    DomHandler.prototype.getHiddenElementDimensions = function (element) {
+        var dimensions = {};
+        element.style.visibility = 'hidden';
+        element.style.display = 'block';
+        dimensions.width = element.offsetWidth;
+        dimensions.height = element.offsetHeight;
+        element.style.display = 'none';
+        element.style.visibility = 'visible';
+        return dimensions;
+    };
+    DomHandler.prototype.scrollInView = function (container, item) {
+        var borderTopValue = getComputedStyle(container).getPropertyValue('borderTopWidth');
+        var borderTop = borderTopValue ? parseFloat(borderTopValue) : 0;
+        var paddingTopValue = getComputedStyle(container).getPropertyValue('paddingTop');
+        var paddingTop = paddingTopValue ? parseFloat(paddingTopValue) : 0;
+        var containerRect = container.getBoundingClientRect();
+        var itemRect = item.getBoundingClientRect();
+        var offset = (itemRect.top + document.body.scrollTop) - (containerRect.top + document.body.scrollTop) - borderTop - paddingTop;
+        var scroll = container.scrollTop;
+        var elementHeight = container.clientHeight;
+        var itemHeight = this.getOuterHeight(item);
+        if (offset < 0) {
+            container.scrollTop = scroll + offset;
+        }
+        else if ((offset + itemHeight) > elementHeight) {
+            container.scrollTop = scroll + offset - elementHeight + itemHeight;
+        }
+    };
+    DomHandler.prototype.fadeIn = function (element, duration) {
+        element.style.opacity = 0;
+        var last = +new Date();
+        var opacity = 0;
+        var tick = function () {
+            opacity = +element.style.opacity + (new Date().getTime() - last) / duration;
+            element.style.opacity = opacity;
+            last = +new Date();
+            if (+opacity < 1) {
+                (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+            }
+        };
+        tick();
+    };
+    DomHandler.prototype.fadeOut = function (element, ms) {
+        var opacity = 1, interval = 50, duration = ms, gap = interval / duration;
+        var fading = setInterval(function () {
+            opacity = opacity - gap;
+            if (opacity <= 0) {
+                opacity = 0;
+                clearInterval(fading);
+            }
+            element.style.opacity = opacity;
+        }, interval);
+    };
+    DomHandler.prototype.getWindowScrollTop = function () {
+        var doc = document.documentElement;
+        return (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+    };
+    DomHandler.prototype.getWindowScrollLeft = function () {
+        var doc = document.documentElement;
+        return (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+    };
+    DomHandler.prototype.matches = function (element, selector) {
+        var p = Element.prototype;
+        var f = p['matches'] || p.webkitMatchesSelector || p['mozMatchesSelector'] || p.msMatchesSelector || function (s) {
+            return [].indexOf.call(document.querySelectorAll(s), this) !== -1;
+        };
+        return f.call(element, selector);
+    };
+    DomHandler.prototype.getOuterWidth = function (el, margin) {
+        var width = el.offsetWidth;
+        if (margin) {
+            var style = getComputedStyle(el);
+            width += parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+        }
+        return width;
+    };
+    DomHandler.prototype.getHorizontalPadding = function (el) {
+        var style = getComputedStyle(el);
+        return parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+    };
+    DomHandler.prototype.getHorizontalMargin = function (el) {
+        var style = getComputedStyle(el);
+        return parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+    };
+    DomHandler.prototype.innerWidth = function (el) {
+        var width = el.offsetWidth;
+        var style = getComputedStyle(el);
+        width += parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+        return width;
+    };
+    DomHandler.prototype.width = function (el) {
+        var width = el.offsetWidth;
+        var style = getComputedStyle(el);
+        width -= parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+        return width;
+    };
+    DomHandler.prototype.getInnerHeight = function (el) {
+        var height = el.offsetHeight;
+        var style = getComputedStyle(el);
+        height += parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+        return height;
+    };
+    DomHandler.prototype.getOuterHeight = function (el, margin) {
+        var height = el.offsetHeight;
+        if (margin) {
+            var style = getComputedStyle(el);
+            height += parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+        }
+        return height;
+    };
+    DomHandler.prototype.getHeight = function (el) {
+        var height = el.offsetHeight;
+        var style = getComputedStyle(el);
+        height -= parseFloat(style.paddingTop) + parseFloat(style.paddingBottom) + parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+        return height;
+    };
+    DomHandler.prototype.getWidth = function (el) {
+        var width = el.offsetWidth;
+        var style = getComputedStyle(el);
+        width -= parseFloat(style.paddingLeft) + parseFloat(style.paddingRight) + parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth);
+        return width;
+    };
+    DomHandler.prototype.getViewport = function () {
+        var win = window, d = document, e = d.documentElement, g = d.getElementsByTagName('body')[0], w = win.innerWidth || e.clientWidth || g.clientWidth, h = win.innerHeight || e.clientHeight || g.clientHeight;
+        return { width: w, height: h };
+    };
+    DomHandler.prototype.getOffset = function (el) {
+        var rect = el.getBoundingClientRect();
+        return {
+            top: rect.top + document.body.scrollTop,
+            left: rect.left + document.body.scrollLeft
+        };
+    };
+    DomHandler.prototype.getUserAgent = function () {
+        return navigator.userAgent;
+    };
+    DomHandler.prototype.isIE = function () {
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf('MSIE ');
+        if (msie > 0) {
+            // IE 10 or older => return version number
+            return true;
+        }
+        var trident = ua.indexOf('Trident/');
+        if (trident > 0) {
+            // IE 11 => return version number
+            var rv = ua.indexOf('rv:');
+            return true;
+        }
+        var edge = ua.indexOf('Edge/');
+        if (edge > 0) {
+            // Edge (IE 12+) => return version number
+            return true;
+        }
+        // other browser
+        return false;
+    };
+    DomHandler.prototype.appendChild = function (element, target) {
+        if (this.isElement(target))
+            target.appendChild(element);
+        else if (target.el && target.el.nativeElement)
+            target.el.nativeElement.appendChild(element);
+        else
+            throw 'Cannot append ' + target + ' to ' + element;
+    };
+    DomHandler.prototype.removeChild = function (element, target) {
+        if (this.isElement(target))
+            target.removeChild(element);
+        else if (target.el && target.el.nativeElement)
+            target.el.nativeElement.removeChild(element);
+        else
+            throw 'Cannot remove ' + element + ' from ' + target;
+    };
+    DomHandler.prototype.isElement = function (obj) {
+        return (typeof HTMLElement === "object" ? obj instanceof HTMLElement :
+            obj && typeof obj === "object" && obj !== null && obj.nodeType === 1 && typeof obj.nodeName === "string");
+    };
+    DomHandler.prototype.calculateScrollbarWidth = function () {
+        if (this.calculatedScrollbarWidth !== null)
+            return this.calculatedScrollbarWidth;
+        var scrollDiv = document.createElement("div");
+        scrollDiv.className = "ui-scrollbar-measure";
+        document.body.appendChild(scrollDiv);
+        var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+        document.body.removeChild(scrollDiv);
+        this.calculatedScrollbarWidth = scrollbarWidth;
+        return scrollbarWidth;
+    };
+    DomHandler.prototype.invokeElementMethod = function (element, methodName, args) {
+        element[methodName].apply(element, args);
+    };
+    DomHandler.prototype.clearSelection = function () {
+        if (window.getSelection) {
+            if (window.getSelection().empty) {
+                window.getSelection().empty();
+            }
+            else if (window.getSelection().removeAllRanges && window.getSelection().rangeCount > 0 && window.getSelection().getRangeAt(0).getClientRects().length > 0) {
+                window.getSelection().removeAllRanges();
+            }
+        }
+        else if (document['selection'] && document['selection'].empty) {
+            try {
+                document['selection'].empty();
+            }
+            catch (error) {
+                //ignore IE bug
+            }
+        }
+    };
+    return DomHandler;
+}());
+DomHandler.zindex = 1000;
+DomHandler = __decorate([
+    core_1.Injectable()
+], DomHandler);
+exports.DomHandler = DomHandler;
+//# sourceMappingURL=domhandler.js.map
+
+/***/ }),
+
+/***/ "../../../../primeng/components/slider/slider.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("../../../core/@angular/core.es5.js");
+var common_1 = __webpack_require__("../../../common/@angular/common.es5.js");
+var domhandler_1 = __webpack_require__("../../../../primeng/components/dom/domhandler.js");
+var forms_1 = __webpack_require__("../../../forms/@angular/forms.es5.js");
+exports.SLIDER_VALUE_ACCESSOR = {
+    provide: forms_1.NG_VALUE_ACCESSOR,
+    useExisting: core_1.forwardRef(function () { return Slider; }),
+    multi: true
+};
+var Slider = (function () {
+    function Slider(el, domHandler, renderer, ngZone) {
+        this.el = el;
+        this.domHandler = domHandler;
+        this.renderer = renderer;
+        this.ngZone = ngZone;
+        this.min = 0;
+        this.max = 100;
+        this.orientation = 'horizontal';
+        this.onChange = new core_1.EventEmitter();
+        this.onSlideEnd = new core_1.EventEmitter();
+        this.handleValues = [];
+        this.onModelChange = function () { };
+        this.onModelTouched = function () { };
+        this.handleIndex = 0;
+    }
+    Slider.prototype.onMouseDown = function (event, index) {
+        if (this.disabled) {
+            return;
+        }
+        this.dragging = true;
+        this.updateDomData();
+        this.sliderHandleClick = true;
+        this.handleIndex = index;
+        this.bindDragListeners();
+        event.preventDefault();
+    };
+    Slider.prototype.onTouchStart = function (event, index) {
+        var touchobj = event.changedTouches[0];
+        this.startHandleValue = (this.range) ? this.handleValues[index] : this.handleValue;
+        this.dragging = true;
+        this.handleIndex = index;
+        if (this.orientation === 'horizontal') {
+            this.startx = parseInt(touchobj.clientX, 10);
+            this.barWidth = this.el.nativeElement.children[0].offsetWidth;
+        }
+        else {
+            this.starty = parseInt(touchobj.clientY, 10);
+            this.barHeight = this.el.nativeElement.children[0].offsetHeight;
+        }
+        event.preventDefault();
+    };
+    Slider.prototype.onTouchMove = function (event, index) {
+        var touchobj = event.changedTouches[0], handleValue = 0;
+        if (this.orientation === 'horizontal') {
+            handleValue = Math.floor(((parseInt(touchobj.clientX, 10) - this.startx) * 100) / (this.barWidth)) + this.startHandleValue;
+        }
+        else {
+            handleValue = Math.floor(((this.starty - parseInt(touchobj.clientY, 10)) * 100) / (this.barHeight)) + this.startHandleValue;
+        }
+        this.setValueFromHandle(event, handleValue);
+        event.preventDefault();
+    };
+    Slider.prototype.onBarClick = function (event) {
+        if (this.disabled) {
+            return;
+        }
+        if (!this.sliderHandleClick) {
+            this.updateDomData();
+            this.handleChange(event);
+        }
+        this.sliderHandleClick = false;
+    };
+    Slider.prototype.handleChange = function (event) {
+        var handleValue = this.calculateHandleValue(event);
+        this.setValueFromHandle(event, handleValue);
+    };
+    Slider.prototype.bindDragListeners = function () {
+        var _this = this;
+        this.ngZone.runOutsideAngular(function () {
+            if (!_this.dragListener) {
+                _this.dragListener = _this.renderer.listen('document', 'mousemove', function (event) {
+                    if (_this.dragging) {
+                        _this.ngZone.run(function () {
+                            _this.handleChange(event);
+                        });
+                    }
+                });
+            }
+            if (!_this.mouseupListener) {
+                _this.mouseupListener = _this.renderer.listen('document', 'mouseup', function (event) {
+                    if (_this.dragging) {
+                        _this.dragging = false;
+                        _this.ngZone.run(function () {
+                            if (_this.range) {
+                                _this.onSlideEnd.emit({ originalEvent: event, values: _this.values });
+                            }
+                            else {
+                                _this.onSlideEnd.emit({ originalEvent: event, value: _this.value });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+    Slider.prototype.unbindDragListeners = function () {
+        if (this.dragListener) {
+            this.dragListener();
+        }
+        if (this.mouseupListener) {
+            this.mouseupListener();
+        }
+    };
+    Slider.prototype.setValueFromHandle = function (event, handleValue) {
+        var newValue = this.getValueFromHandle(handleValue);
+        if (this.range) {
+            if (this.step) {
+                this.handleStepChange(newValue, this.values[this.handleIndex]);
+            }
+            else {
+                this.handleValues[this.handleIndex] = handleValue;
+                this.updateValue(newValue, event);
+            }
+        }
+        else {
+            if (this.step) {
+                this.handleStepChange(newValue, this.value);
+            }
+            else {
+                this.handleValue = handleValue;
+                this.updateValue(newValue, event);
+            }
+        }
+    };
+    Slider.prototype.handleStepChange = function (newValue, oldValue) {
+        var diff = (newValue - oldValue);
+        var val = oldValue;
+        if (diff < 0) {
+            val = oldValue + Math.ceil((newValue - oldValue) / this.step) * this.step;
+        }
+        else if (diff > 0) {
+            val = oldValue + Math.floor((newValue - oldValue) / this.step) * this.step;
+        }
+        this.updateValue(val);
+        this.updateHandleValue();
+    };
+    Slider.prototype.writeValue = function (value) {
+        if (this.range)
+            this.values = value || [0, 0];
+        else
+            this.value = value || 0;
+        this.updateHandleValue();
+    };
+    Slider.prototype.registerOnChange = function (fn) {
+        this.onModelChange = fn;
+    };
+    Slider.prototype.registerOnTouched = function (fn) {
+        this.onModelTouched = fn;
+    };
+    Slider.prototype.setDisabledState = function (val) {
+        this.disabled = val;
+    };
+    Object.defineProperty(Slider.prototype, "rangeStartLeft", {
+        get: function () {
+            return this.isVertical() ? 'auto' : this.handleValues[0] + '%';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Slider.prototype, "rangeStartBottom", {
+        get: function () {
+            return this.isVertical() ? this.handleValues[0] + '%' : 'auto';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Slider.prototype, "rangeEndLeft", {
+        get: function () {
+            return this.isVertical() ? 'auto' : this.handleValues[1] + '%';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Slider.prototype, "rangeEndBottom", {
+        get: function () {
+            return this.isVertical() ? this.handleValues[1] + '%' : 'auto';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Slider.prototype.isVertical = function () {
+        return this.orientation === 'vertical';
+    };
+    Slider.prototype.updateDomData = function () {
+        var rect = this.el.nativeElement.children[0].getBoundingClientRect();
+        this.initX = rect.left + this.domHandler.getWindowScrollLeft();
+        this.initY = rect.top + this.domHandler.getWindowScrollTop();
+        this.barWidth = this.el.nativeElement.children[0].offsetWidth;
+        this.barHeight = this.el.nativeElement.children[0].offsetHeight;
+    };
+    Slider.prototype.calculateHandleValue = function (event) {
+        if (this.orientation === 'horizontal')
+            return ((event.pageX - this.initX) * 100) / (this.barWidth);
+        else
+            return (((this.initY + this.barHeight) - event.pageY) * 100) / (this.barHeight);
+    };
+    Slider.prototype.updateHandleValue = function () {
+        if (this.range) {
+            this.handleValues[0] = (this.values[0] < this.min ? 0 : this.values[0] - this.min) * 100 / (this.max - this.min);
+            this.handleValues[1] = (this.values[1] > this.max ? 100 : this.values[1] - this.min) * 100 / (this.max - this.min);
+        }
+        else {
+            if (this.value < this.min)
+                this.handleValue = 0;
+            else if (this.value > this.max)
+                this.handleValue = 100;
+            else
+                this.handleValue = (this.value - this.min) * 100 / (this.max - this.min);
+        }
+    };
+    Slider.prototype.updateValue = function (val, event) {
+        if (this.range) {
+            var value = val;
+            if (this.handleIndex == 0) {
+                if (value < this.min) {
+                    value = this.min;
+                    this.handleValues[0] = 0;
+                }
+                else if (value > this.values[1]) {
+                    value = this.values[1];
+                    this.handleValues[0] = this.handleValues[1];
+                }
+            }
+            else {
+                if (value > this.max) {
+                    value = this.max;
+                    this.handleValues[1] = 100;
+                }
+                else if (value < this.values[0]) {
+                    value = this.values[0];
+                    this.handleValues[1] = this.handleValues[0];
+                }
+            }
+            this.values[this.handleIndex] = Math.floor(value);
+            this.onModelChange(this.values);
+            this.onChange.emit({ event: event, values: this.values });
+        }
+        else {
+            if (val < this.min) {
+                val = this.min;
+                this.handleValue = 0;
+            }
+            else if (val > this.max) {
+                val = this.max;
+                this.handleValue = 100;
+            }
+            this.value = Math.floor(val);
+            this.onModelChange(this.value);
+            this.onChange.emit({ event: event, value: this.value });
+        }
+    };
+    Slider.prototype.getValueFromHandle = function (handleValue) {
+        return (this.max - this.min) * (handleValue / 100) + this.min;
+    };
+    Slider.prototype.ngOnDestroy = function () {
+        this.unbindDragListeners();
+    };
+    return Slider;
+}());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean)
+], Slider.prototype, "animate", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean)
+], Slider.prototype, "disabled", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Number)
+], Slider.prototype, "min", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Number)
+], Slider.prototype, "max", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], Slider.prototype, "orientation", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Number)
+], Slider.prototype, "step", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean)
+], Slider.prototype, "range", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], Slider.prototype, "style", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], Slider.prototype, "styleClass", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
+], Slider.prototype, "onChange", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
+], Slider.prototype, "onSlideEnd", void 0);
+Slider = __decorate([
+    core_1.Component({
+        selector: 'p-slider',
+        template: "\n        <div [ngStyle]=\"style\" [class]=\"styleClass\" [ngClass]=\"{'ui-slider ui-widget ui-widget-content ui-corner-all':true,'ui-state-disabled':disabled,\n            'ui-slider-horizontal':orientation == 'horizontal','ui-slider-vertical':orientation == 'vertical','ui-slider-animate':animate}\"\n            (click)=\"onBarClick($event)\">\n            <span *ngIf=\"range && orientation == 'horizontal'\" class=\"ui-slider-range ui-widget-header ui-corner-all\" [ngStyle]=\"{'left':handleValues[0] + '%',width: (handleValues[1] - handleValues[0] + '%')}\"></span>\n            <span *ngIf=\"range && orientation == 'vertical'\" class=\"ui-slider-range ui-widget-header ui-corner-all\" [ngStyle]=\"{'bottom':handleValues[0] + '%',height: (handleValues[1] - handleValues[0] + '%')}\"></span>\n            <span *ngIf=\"!range && orientation=='vertical'\" class=\"ui-slider-range ui-slider-range-min ui-widget-header ui-corner-all\" [ngStyle]=\"{'height': handleValue + '%'}\"></span>\n            <span *ngIf=\"!range\" class=\"ui-slider-handle ui-state-default ui-corner-all ui-clickable\" (mousedown)=\"onMouseDown($event)\" (touchstart)=\"onTouchStart($event)\" (touchmove)=\"onTouchMove($event)\" (touchend)=\"dragging=false\"\n                [style.transition]=\"dragging ? 'none': null\" [ngStyle]=\"{'left': orientation == 'horizontal' ? handleValue + '%' : null,'bottom': orientation == 'vertical' ? handleValue + '%' : null}\"></span>\n            <span *ngIf=\"range\" (mousedown)=\"onMouseDown($event,0)\" (touchstart)=\"onTouchStart($event,0)\" (touchmove)=\"onTouchMove($event,0)\" (touchend)=\"dragging=false\" [style.transition]=\"dragging ? 'none': null\" class=\"ui-slider-handle ui-state-default ui-corner-all ui-clickable\" \n                [ngStyle]=\"{'left': rangeStartLeft, 'bottom': rangeStartBottom}\" [ngClass]=\"{'ui-slider-handle-active':handleIndex==0}\"></span>\n            <span *ngIf=\"range\" (mousedown)=\"onMouseDown($event,1)\" (touchstart)=\"onTouchStart($event,1)\" (touchmove)=\"onTouchMove($event,1)\" (touchend)=\"dragging=false\" [style.transition]=\"dragging ? 'none': null\" class=\"ui-slider-handle ui-state-default ui-corner-all ui-clickable\" \n                [ngStyle]=\"{'left': rangeEndLeft, 'bottom': rangeEndBottom}\" [ngClass]=\"{'ui-slider-handle-active':handleIndex==1}\"></span>\n        </div>\n    ",
+        providers: [exports.SLIDER_VALUE_ACCESSOR, domhandler_1.DomHandler]
+    }),
+    __metadata("design:paramtypes", [core_1.ElementRef, domhandler_1.DomHandler, core_1.Renderer2, core_1.NgZone])
+], Slider);
+exports.Slider = Slider;
+var SliderModule = (function () {
+    function SliderModule() {
+    }
+    return SliderModule;
+}());
+SliderModule = __decorate([
+    core_1.NgModule({
+        imports: [common_1.CommonModule],
+        exports: [Slider],
+        declarations: [Slider]
+    })
+], SliderModule);
+exports.SliderModule = SliderModule;
+//# sourceMappingURL=slider.js.map
+
+/***/ }),
+
 /***/ "../../../../process/browser.js":
 /***/ (function(module, exports) {
 
@@ -44035,6 +44747,15 @@ var log10 = function () {
   };
 }();
 
+// Math.floor() to a specified number of sigfigs for native JS numbers.
+// Like Decimal.floor(sigfigs).
+// Based on http://blog.magnetiq.com/post/497605344/rounding-to-a-certain-significant-figures-in
+function floorSigfigs(n, sig) {
+  if (!sig) return n;
+  if (n < 0) return -floorSigfigs(-n, sig);
+  var mult = Math.pow(10, sig - Math.floor(Math.log(n) / Math.LN10) - 1);
+  return Math.floor(n * mult) / mult;
+}
 var backends = {
   'native': {
     normalize: function normalize(val) {
@@ -44054,38 +44775,46 @@ var backends = {
       var sigfigs = _ref.sigfigs;
 
       // `sigfigs||undefined` supports sigfigs=[null|0], #15
-      return (val / Math.pow(1000, index)).toPrecision(sigfigs || undefined);
+      return floorSigfigs(val / Math.pow(1000, index), sigfigs).toPrecision(sigfigs || undefined);
     }
   },
   'decimal.js': {
     // api docs: https://mikemcl.github.io/decimal.js/
     _requireDecimal: function _requireDecimal(config) {
-      if (!__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__decimal__["a" /* requireDecimal */])(config)) throw new Error('requireDecimal() failed');
-      return new __WEBPACK_IMPORTED_MODULE_2__decimal__["a" /* requireDecimal */](config)(0).constructor.clone(config);
+      var Decimal = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__decimal__["a" /* requireDecimal */])(config);
+      if (!Decimal) throw new Error('requireDecimal() failed');
+      //return Decimal.clone(config)
+      return Decimal.clone ? Decimal.clone(config) : Decimal;
     },
-    normalize: function normalize(val, _ref2) {
-      var rounding = _ref2.rounding;
-
-      var Decimal = this._requireDecimal({ rounding: rounding });
+    normalize: function normalize(val, config) {
+      var Decimal = this._requireDecimal(config);
       return new Decimal(val);
     },
-    index: function index(val) {
-      var Decimal = this._requireDecimal();
+    index: function index(val, config) {
+      var Decimal = this._requireDecimal(config);
       // index = val.log10().dividedToIntegerBy(Decimal.log 1000)
       // Decimal.log() is too slow for large numbers. Docs say performance degrades exponentially as # digits increases, boo.
       // Lucky me, the length is used by decimal.js internally: num.e
       // this is in the docs, so I think it's stable enough to use...
+      // Actually, not quite. decimal.js, decimal.js-light, and break_infinity
+      // are all slightly different here. Not worth separate adapters yet.
       val = new Decimal(val);
-      return Math.floor(val.e / 3);
+      var e = val.exponent ? typeof val.exponent === 'function'
+      // decimal.js-light
+      ? val.exponent()
+      // break_infinity.js
+      : val.exponent
+      // decimal.js
+      : val.e;
+      return Math.floor(e / 3);
     },
-    prefix: function prefix(val, index, _ref3) {
-      var sigfigs = _ref3.sigfigs,
-          rounding = _ref3.rounding;
+    prefix: function prefix(val, index, config) {
+      var sigfigs = config.sigfigs;
 
-      var Decimal = this._requireDecimal({ rounding: rounding });
+      var Decimal = this._requireDecimal(config);
       var div = new Decimal(1000).pow(index);
       // `sigfigs||undefined` supports sigfigs=[null|0], #15
-      return new Decimal(val).dividedBy(div).toPrecision(sigfigs || undefined);
+      return new Decimal(val).dividedBy(div).toPrecision(sigfigs || undefined, Decimal.ROUND_DOWN);
     }
   }
 };
@@ -44094,7 +44823,7 @@ var backends = {
 function _format(val, opts) {
   var backend = validate(backends[opts.backend], 'not a backend: ' + opts.backend);
   val = backend.normalize(val, opts);
-  var index = backend.index(val);
+  var index = backend.index(val, opts);
   var suffix = opts.suffixFn(index);
   // `{sigfigs: undefined|null|0}` for automatic sigfigs is supported.
   var sigfigs = opts.sigfigs || undefined;
@@ -44187,6 +44916,7 @@ var Formatter = function () {
    * @param {number} [opts.sigfigs=5]
    * @param {number} [opts.format='standard'] 'standard', 'hybrid', 'scientific', 'longScale'.
    * @param {Object} [opts.formats] Specify your own custom formats.
+   * @param {Function} [opts.Decimal] With the decimal.js backend, use this custom decimal.js constructor, like decimal.js-light or break_infinity.js. By default, we'll try to import decimal.js.
    */
   function Formatter() {
     var _this = this;
@@ -44239,7 +44969,7 @@ var Formatter = function () {
 
   Formatter.prototype.index = function index(val, opts) {
     opts = this._normalizeOpts(opts);
-    return backends[opts.backend].index(val);
+    return backends[opts.backend].index(val, opts);
   };
   /**
    * @param {number} val
@@ -44256,7 +44986,7 @@ var Formatter = function () {
 
   Formatter.prototype.suffix = function suffix(val, opts) {
     opts = this._normalizeOpts(opts);
-    var index = backends[opts.backend].index(val);
+    var index = backends[opts.backend].index(val, opts);
     return opts.suffixFn(index);
   };
   /**
@@ -44448,18 +45178,21 @@ var backends = {
   },
   'decimal.js': {
     parseInt: function parseInt(text, config) {
-      if ('default' in config) {
-        try {
-          var val = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__decimal_js__["a" /* requireDecimal */])(config)(text).ceil();
-          return this.isValid(val) ? val : config['default'];
-        } catch (e) {
-          return config.default;
-        }
+      try {
+        var Decimal = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__decimal_js__["a" /* requireDecimal */])(config);
+        var val0 = new Decimal(text);
+        // decimal.js-light doesn't have ceil; use the more general rounding fn.
+        // Not yet worth a separate adapter.
+        var val = val0.ceil ? val0.ceil() : val0.toDecimalPlaces(0, Decimal.ROUND_UP);
+        return this.isValid(val) ? val : config['default'];
+      } catch (e) {
+        if ('default' in config) return config.default;
+        throw e;
       }
-      return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__decimal_js__["a" /* requireDecimal */])(config)(text).ceil();
     },
     isValid: function isValid(val) {
-      return val && !val.isNaN();
+      // decimal.js-light doesn't have isNaN(), it just throws. Test for isNaN only if it exists.
+      return val && (!val.isNaN || !val.isNaN());
     }
   }
 };
@@ -98103,6 +98836,7 @@ function transition$$1(stateChangeExpr, steps) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tslib__ = __webpack_require__("../../../../tslib/tslib.es6.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_observable_forkJoin__ = __webpack_require__("../../../../rxjs/observable/forkJoin.js");
@@ -98112,77 +98846,77 @@ function transition$$1(stateChangeExpr, steps) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__ = __webpack_require__("../../../../rxjs/operator/map.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
-/* unused harmony export AbstractControlDirective */
-/* unused harmony export AbstractFormGroupDirective */
-/* unused harmony export CheckboxControlValueAccessor */
-/* unused harmony export ControlContainer */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return NG_VALUE_ACCESSOR; });
-/* unused harmony export COMPOSITION_BUFFER_MODE */
-/* unused harmony export DefaultValueAccessor */
-/* unused harmony export NgControl */
-/* unused harmony export NgControlStatus */
-/* unused harmony export NgControlStatusGroup */
-/* unused harmony export NgForm */
-/* unused harmony export NgModel */
-/* unused harmony export NgModelGroup */
-/* unused harmony export RadioControlValueAccessor */
-/* unused harmony export FormControlDirective */
-/* unused harmony export FormControlName */
-/* unused harmony export FormGroupDirective */
-/* unused harmony export FormArrayName */
-/* unused harmony export FormGroupName */
-/* unused harmony export NgSelectOption */
-/* unused harmony export SelectControlValueAccessor */
-/* unused harmony export SelectMultipleControlValueAccessor */
-/* unused harmony export CheckboxRequiredValidator */
-/* unused harmony export EmailValidator */
-/* unused harmony export MaxLengthValidator */
-/* unused harmony export MinLengthValidator */
-/* unused harmony export PatternValidator */
-/* unused harmony export RequiredValidator */
-/* unused harmony export FormBuilder */
-/* unused harmony export AbstractControl */
-/* unused harmony export FormArray */
-/* unused harmony export FormControl */
-/* unused harmony export FormGroup */
-/* unused harmony export NG_ASYNC_VALIDATORS */
-/* unused harmony export NG_VALIDATORS */
-/* unused harmony export Validators */
-/* unused harmony export VERSION */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FormsModule; });
-/* unused harmony export ReactiveFormsModule */
-/* unused harmony export ɵba */
-/* unused harmony export ɵz */
-/* unused harmony export ɵx */
-/* unused harmony export ɵy */
-/* unused harmony export ɵa */
-/* unused harmony export ɵb */
-/* unused harmony export ɵc */
-/* unused harmony export ɵd */
-/* unused harmony export ɵe */
-/* unused harmony export ɵf */
-/* unused harmony export ɵg */
-/* unused harmony export ɵbf */
-/* unused harmony export ɵbb */
-/* unused harmony export ɵbc */
-/* unused harmony export ɵh */
-/* unused harmony export ɵi */
-/* unused harmony export ɵbd */
-/* unused harmony export ɵbe */
-/* unused harmony export ɵj */
-/* unused harmony export ɵk */
-/* unused harmony export ɵl */
-/* unused harmony export ɵn */
-/* unused harmony export ɵm */
-/* unused harmony export ɵo */
-/* unused harmony export ɵq */
-/* unused harmony export ɵp */
-/* unused harmony export ɵs */
-/* unused harmony export ɵt */
-/* unused harmony export ɵv */
-/* unused harmony export ɵu */
-/* unused harmony export ɵw */
-/* unused harmony export ɵr */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AbstractControlDirective", function() { return AbstractControlDirective; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AbstractFormGroupDirective", function() { return AbstractFormGroupDirective; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CheckboxControlValueAccessor", function() { return CheckboxControlValueAccessor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ControlContainer", function() { return ControlContainer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NG_VALUE_ACCESSOR", function() { return NG_VALUE_ACCESSOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "COMPOSITION_BUFFER_MODE", function() { return COMPOSITION_BUFFER_MODE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DefaultValueAccessor", function() { return DefaultValueAccessor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgControl", function() { return NgControl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgControlStatus", function() { return NgControlStatus; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgControlStatusGroup", function() { return NgControlStatusGroup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgForm", function() { return NgForm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgModel", function() { return NgModel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgModelGroup", function() { return NgModelGroup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RadioControlValueAccessor", function() { return RadioControlValueAccessor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormControlDirective", function() { return FormControlDirective; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormControlName", function() { return FormControlName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormGroupDirective", function() { return FormGroupDirective; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormArrayName", function() { return FormArrayName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormGroupName", function() { return FormGroupName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgSelectOption", function() { return NgSelectOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectControlValueAccessor", function() { return SelectControlValueAccessor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectMultipleControlValueAccessor", function() { return SelectMultipleControlValueAccessor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CheckboxRequiredValidator", function() { return CheckboxRequiredValidator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EmailValidator", function() { return EmailValidator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MaxLengthValidator", function() { return MaxLengthValidator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MinLengthValidator", function() { return MinLengthValidator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PatternValidator", function() { return PatternValidator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RequiredValidator", function() { return RequiredValidator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormBuilder", function() { return FormBuilder; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AbstractControl", function() { return AbstractControl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormArray", function() { return FormArray; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormControl", function() { return FormControl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormGroup", function() { return FormGroup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NG_ASYNC_VALIDATORS", function() { return NG_ASYNC_VALIDATORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NG_VALIDATORS", function() { return NG_VALIDATORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Validators", function() { return Validators; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VERSION", function() { return VERSION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormsModule", function() { return FormsModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReactiveFormsModule", function() { return ReactiveFormsModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵba", function() { return InternalFormsSharedModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵz", function() { return REACTIVE_DRIVEN_DIRECTIVES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵx", function() { return SHARED_FORM_DIRECTIVES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵy", function() { return TEMPLATE_DRIVEN_DIRECTIVES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵa", function() { return CHECKBOX_VALUE_ACCESSOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵb", function() { return DEFAULT_VALUE_ACCESSOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵc", function() { return AbstractControlStatus; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵd", function() { return ngControlStatusHost; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵe", function() { return formDirectiveProvider; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵf", function() { return formControlBinding; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵg", function() { return modelGroupProvider; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵbf", function() { return NgNoValidate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵbb", function() { return NUMBER_VALUE_ACCESSOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵbc", function() { return NumberValueAccessor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵh", function() { return RADIO_VALUE_ACCESSOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵi", function() { return RadioControlRegistry; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵbd", function() { return RANGE_VALUE_ACCESSOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵbe", function() { return RangeValueAccessor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵj", function() { return formControlBinding$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵk", function() { return controlNameBinding; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵl", function() { return formDirectiveProvider$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵn", function() { return formArrayNameProvider; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵm", function() { return formGroupNameProvider; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵo", function() { return SELECT_VALUE_ACCESSOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵq", function() { return NgSelectMultipleOption; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵp", function() { return SELECT_MULTIPLE_VALUE_ACCESSOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵs", function() { return CHECKBOX_REQUIRED_VALIDATOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵt", function() { return EMAIL_VALIDATOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵv", function() { return MAX_LENGTH_VALIDATOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵu", function() { return MIN_LENGTH_VALIDATOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵw", function() { return PATTERN_VALIDATOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵr", function() { return REQUIRED_VALIDATOR; });
 
 /**
  * @license Angular v4.4.6

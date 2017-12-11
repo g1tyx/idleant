@@ -141,7 +141,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".nowrap {\n  white-space: nowrap;\n  overflow: hidden; }\n\n:host /deep/ .content-area {\n  padding: 10px 24px 24px 24px !important; }\n\n.matTab {\n  width: 10% !important;\n  max-width: 110px !important;\n  margin-left: 5px !important; }\n\n.matLink {\n  width: 100% !important;\n  line-height: 24px !important;\n  border-style: solid !important;\n  border-width: 0px 1px 0px 0px !important; }\n\n.navMat {\n  padding-left: 5px !important;\n  height: 48px !important; }\n\n.perSecTab {\n  float: right; }\n\n.main-container .subnav {\n  -webkit-box-flex: 0;\n      -ms-flex: 0 0 48px;\n          flex: 0 0 48px; }\n\n.red {\n  color: #F52F22 !important; }\n\n.small {\n  font-size: 13px; }\n\n.actMinH {\n  min-height: 400px; }\n\n:host /deep/ clr-tree-node {\n  overflow-y: visible !important; }\n\n.multiBuy {\n  border: none;\n  background: none;\n  color: #fafafa;\n  padding: 0;\n  vertical-align: middle;\n  max-width: 2.5rem; }\n\n#multiLabel:before {\n  display: none; }\n\n.branding {\n  min-width: auto !important; }\n", ""]);
+exports.push([module.i, ".nowrap {\n  white-space: nowrap;\n  overflow: hidden; }\n\n:host /deep/ .content-area {\n  padding: 10px 24px 24px 24px !important; }\n\n.matTab {\n  width: 10% !important;\n  max-width: 110px !important;\n  margin-left: 5px !important; }\n\n.matLink {\n  width: 100% !important;\n  line-height: 24px !important;\n  border-style: solid !important;\n  border-width: 0px 1px 0px 0px !important; }\n\n.navMat {\n  padding-left: 5px !important;\n  height: 48px !important; }\n\n.perSecTab {\n  float: right; }\n\n.main-container .subnav {\n  -webkit-box-flex: 0;\n      -ms-flex: 0 0 48px;\n          flex: 0 0 48px; }\n\n.red {\n  color: #F52F22 !important; }\n\n.small {\n  font-size: 13px; }\n\n.actMinH {\n  min-height: 400px; }\n\n:host /deep/ clr-tree-node {\n  overflow-y: visible !important; }\n\n.multiBuy {\n  border: none;\n  background: none;\n  color: #fafafa;\n  padding: 0;\n  vertical-align: middle;\n  max-width: 2.5rem; }\n\n#multiLabel:before {\n  display: none; }\n\n.branding {\n  min-width: auto !important; }\n\n:host /deep/ .nav-content {\n  padding-bottom: 25px; }\n", ""]);
 
 // exports
 
@@ -256,6 +256,8 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__world_world_component__ = __webpack_require__("../../../../../src/app/world/world.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__world_builder_world_builder_component__ = __webpack_require__("../../../../../src/app/world-builder/world-builder.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__prestige_nav_prestige_nav_component__ = __webpack_require__("../../../../../src/app/prestige-nav/prestige-nav.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26_primeng_components_slider_slider__ = __webpack_require__("../../../../primeng/components/slider/slider.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26_primeng_components_slider_slider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_26_primeng_components_slider_slider__);
 /* unused harmony export Format */
 /* unused harmony export FilterListNotEmpty */
 /* unused harmony export FilterMax */
@@ -277,6 +279,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -429,17 +432,20 @@ AppModule = __decorate([
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__["BrowserModule"],
-            __WEBPACK_IMPORTED_MODULE_10__angular_forms__["a" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_10__angular_forms__["FormsModule"],
             __WEBPACK_IMPORTED_MODULE_5_clarity_angular__["a" /* ClarityModule */].forRoot(),
             [__WEBPACK_IMPORTED_MODULE_8__angular_router__["a" /* RouterModule */]],
-            __WEBPACK_IMPORTED_MODULE_8__angular_router__["a" /* RouterModule */].forRoot(appRoutes),
+            __WEBPACK_IMPORTED_MODULE_8__angular_router__["a" /* RouterModule */].forRoot(appRoutes, { useHash: true }),
             __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__["BrowserModule"],
             __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
-            __WEBPACK_IMPORTED_MODULE_18_ng2_toastr_ng2_toastr__["ToastModule"].forRoot()
+            __WEBPACK_IMPORTED_MODULE_18_ng2_toastr_ng2_toastr__["ToastModule"].forRoot(),
+            __WEBPACK_IMPORTED_MODULE_26_primeng_components_slider_slider__["SliderModule"]
         ],
         providers: [{ provide: __WEBPACK_IMPORTED_MODULE_19_ng2_toastr_src_toast_options__["ToastOptions"], useClass: CustomOptions }],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */]],
-        exports: [__WEBPACK_IMPORTED_MODULE_11__action_action_component__["a" /* ActionComponent */]]
+        exports: [
+            __WEBPACK_IMPORTED_MODULE_11__action_action_component__["a" /* ActionComponent */],
+        ]
     })
 ], AppModule);
 
@@ -450,7 +456,7 @@ AppModule = __decorate([
 /***/ "../../../../../src/app/credit/credit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  积分页面开发中...\n</p>\n"
+module.exports = "<h1>关于</h1>\n<p>\n  蚂蚁放置是一款关于蚂蚁的增量游戏。\n  <br/> 游戏使用 Angular 4, Clarity Design System, swam-numberformat, break_infinity.js, lz-string 和\n  <a target =\"_blank\" href=\"https://github.com/scorzy/IdleAnt/blob/master/package.json\">一些其他库</a>.\n</p>\n\n<ul lass=\"list\">\n  <li>游戏源码:\n    <a target =\"_blank\" href=\"https://github.com/scorzy/IdleAnt\">https://github.com/scorzy/IdleAnt</a>\n  </li>\n  <li>论坛:\n    <a target =\"_blank\" href=\"https://www.reddit.com/r/IdleAnts/\">https://www.reddit.com/r/IdleAnts/</a>\n  </li>\n</ul>\n"
 
 /***/ }),
 
@@ -490,11 +496,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var CreditComponent = (function () {
     function CreditComponent() {
+        this.className = 'content-area';
     }
     CreditComponent.prototype.ngOnInit = function () {
     };
     return CreditComponent;
 }());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostBinding"])('class.content-area'),
+    __metadata("design:type", Object)
+], CreditComponent.prototype, "className", void 0);
 CreditComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-credit',
@@ -594,8 +605,10 @@ var GameService = (function () {
             this.game.reloadUpIcons();
     };
     GameService.prototype.clear = function () {
+        this.game = null;
         localStorage.clear();
         this.game = new __WEBPACK_IMPORTED_MODULE_0__model_gameModel__["a" /* GameModel */]();
+        window.location.reload();
     };
     GameService.prototype.save = function (timer) {
         if (timer === void 0) { timer = true; }
@@ -605,10 +618,10 @@ var GameService = (function () {
                 localStorage.setItem('save', save);
                 console.log("Saved");
                 if (!timer || !this.game.hideSaveNotification)
-                    this.toastr.success("", 'Game Saved');
+                    this.toastr.success("", '游戏已保存');
             }
             else {
-                this.toastr.warning("Canot access local storage", "Not saved");
+                this.toastr.warning("无法访问本地存储", "保存失败");
             }
         }
         catch (ex) {
@@ -1012,7 +1025,7 @@ var GameModel = (function () {
     function GameModel() {
         this.isChanged = true;
         this.timeToEnd = Number.POSITIVE_INFINITY;
-        this.gameVersion = "0.2.0";
+        this.gameVersion = "0.2.1";
         this.hideSaveNotification = false;
         this.options = new __WEBPACK_IMPORTED_MODULE_18__options__["a" /* Options */]();
         this.buyMulti = 1;
@@ -1156,6 +1169,7 @@ var GameModel = (function () {
         if (this.infestation.poisonousPlant.unlocked && this.infestation.poisonousPlant.quantity.lessThan(1))
             this.infestation.poisonousPlant2.quantity = new Decimal(0);
         this.all.forEach(function (u) { return u.produces.forEach(function (p) { return p.reload(); }); });
+        this.isChanged = true;
         // console.log(this.timeToEnd + " " + dif)
         if (this.isChanged || dif > this.timeToEnd || dif > 1000) {
             //  reload max time
@@ -1438,6 +1452,14 @@ var GameModel = (function () {
             this.unitLists.splice(0, this.unitLists.length);
             this.reloadLists();
             this.unl = this.all.filter(function (u) { return u.unlocked; });
+            if (this.research.r2.owned())
+                this.unlockUnits(this.research.r2.toUnlock)();
+            if (this.research.r4.owned()) {
+                this.unlockUnits(this.research.r4.toUnlock)();
+                this.research.r4.unlocked = false;
+                if (this.research.upCombined.quantity.greaterThan(0))
+                    this.research.upCombined.unlocked = false;
+            }
             return save.last;
         }
         return null;
@@ -2837,7 +2859,7 @@ var BaseWorld = (function () {
             [this.game.baseWorld.wood, new Decimal(0.8)],
             [this.game.baseWorld.fungus, new Decimal(0.8)]
         ], []));
-        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldPrefix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "", "", [], [], []), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "炎热", "", [], [[this.game.baseWorld.food, new Decimal(2)]], [], [], [], [], new Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "干旱", "", [], [[this.game.baseWorld.fungus, new Decimal(0.5)]], [], [], [], [], new Decimal(3)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "树木繁茂", "", [this.game.engineers.woodEnginer, this.game.machines.loggingMachine], [[this.game.baseWorld.wood, new Decimal(2)]], [], [], [], [], new Decimal(1.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "结晶", "", [this.game.machines.mine, this.game.engineers.mineEnginer], [
+        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldPrefix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "", "", [], [], []), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "炎热", "", [], [[this.game.baseWorld.food, new Decimal(2)]], [], [], [], [], new Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "干旱", "", [], [[this.game.baseWorld.fungus, new Decimal(0.5)]], [], [], [], [], new Decimal(3.2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "树木繁茂", "", [this.game.engineers.woodEnginer, this.game.machines.loggingMachine], [[this.game.baseWorld.wood, new Decimal(2)]], [], [], [], [], new Decimal(2.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "结晶", "", [this.game.machines.mine, this.game.engineers.mineEnginer], [
             [this.game.baseWorld.crystal, new Decimal(1.5)],
             [this.game.baseWorld.food, new Decimal(0.4)],
             [this.game.baseWorld.fungus, new Decimal(0.4)]
@@ -2847,18 +2869,18 @@ var BaseWorld = (function () {
             [this.wood, new Decimal(0.5)],
             [this.honey, new Decimal(0.5)],
             [this.nectar, new Decimal(0.5)]
-        ], [], [], [], [], new Decimal(4.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "多雨的", "", [], [
+        ], [], [], [], [], new Decimal(3.2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "多雨的", "", [], [
             [this.wood, new Decimal(1.5)],
             [this.fungus, new Decimal(1.5)]
-        ], [], [], [], [], new Decimal(1.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "有雾", "", [], [
+        ], [], [], [], [], new Decimal(2.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "有雾", "", [], [
             [this.wood, new Decimal(0.7)],
             [this.fungus, new Decimal(0.7)]
-        ], [], [], [], [], new Decimal(3)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "技术", "", [], [
+        ], [], [], [], [], new Decimal(3.2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "技术", "", [], [
             [this.science, new Decimal(1.5)]
-        ], [], [], [], [], new Decimal(1.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "饥饿", "", [], [
+        ], [], [], [], [], new Decimal(2.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "饥饿", "", [], [
             [this.food, new Decimal(0.3)]
-        ], [], [], [], [], new Decimal(3.5)));
-        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldSuffix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "", "", [], [], []), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的真菌", "", [], [[this.game.baseWorld.fungus, new Decimal(2)]], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, new Decimal(1E7))], [], [], [], new Decimal(3.5)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的蚂蚁", "", [], [], [], [[this.littleAnt, new Decimal(2)]], [], [], new Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的科学家", "", [], [], [], [[this.game.science.scientist, new Decimal(2)]], [], [], new Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的农民", "", [], [], [], [[this.farmer, new Decimal(2)]], [], [], new Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的水晶", "", [this.game.machines.mine, this.game.engineers.mineEnginer], [[this.crystal, new Decimal(2)]], [], [], [], [], new Decimal(2)));
+        ], [], [], [], [], new Decimal(3.2)));
+        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldSuffix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "", "", [], [], []), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的真菌", "", [], [[this.game.baseWorld.fungus, new Decimal(2)]], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, new Decimal(1E7))], [], [], [], new Decimal(3)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的蚂蚁", "", [], [], [], [[this.littleAnt, new Decimal(2)]], [], [], new Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的科学家", "", [], [], [], [[this.game.science.scientist, new Decimal(2)]], [], [], new Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的农民", "", [], [], [], [[this.farmer, new Decimal(2)]], [], [], new Decimal(2)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "的水晶", "", [this.game.machines.mine, this.game.engineers.mineEnginer], [[this.crystal, new Decimal(2)]], [], [], [], [], new Decimal(2)));
     };
     return BaseWorld;
 }());
@@ -2910,9 +2932,9 @@ var Beach = (function () {
         this.beachList.push(this.shark2);
         this.beachList.push(this.shark);
         //    Shark 2
-        this.sharkRes2 = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("sharkRes2", "大鲨鱼", "解锁大鲨鱼", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E11))], [this.shark2], this.game);
+        this.sharkRes2 = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("sharkRes2", "大鲨鱼", "解锁大鲨鱼。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E9))], [this.shark2], this.game);
         //    Shark
-        this.sharkRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("sharkRes", "鲨鱼", "解锁鲨鱼", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E9))], [this.shark, this.sharkRes2], this.game);
+        this.sharkRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("sharkRes", "鲨鱼", "解锁鲨鱼", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E6))], [this.shark, this.sharkRes2], this.game);
         //    lobster
         this.lobsterRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("lobsterRes", "龙虾", "解锁龙虾。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E5))], [this.lobster, this.sharkRes], this.game);
         //    shrimp
@@ -2991,10 +3013,10 @@ var Beach = (function () {
         // Shark
         this.shark.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.shark, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.machines.price1.times(50000), this.game.buyExp),
-            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.game.machines.price1.times(10), this.game.buyExp)
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.game.machines.price1.times(5), this.game.buyExp)
         ]));
-        this.shark.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.shark, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
-        this.shark.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.shark, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceHireExp)]));
+        this.shark.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.shark, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
+        this.shark.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.shark, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceHireExp)]));
         this.game.baseWorld.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.shark, this.game.machines.machineryProd.times(100)));
         this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.shark, this.game.machines.machineryProd.times(50)));
         // Shark 2
@@ -3002,13 +3024,17 @@ var Beach = (function () {
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.machines.price1.times(500000), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.shark, new Decimal(100), this.game.buyExpUnit)
         ]));
-        this.shark2.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.shark2, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
-        this.shark2.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.shark2, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceHireExp)]));
+        this.shark2.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.shark2, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4.times(5), this.game.upgradeScienceExp)]));
+        this.shark2.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.shark2, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4.times(5), this.game.upgradeScienceHireExp)]));
         this.shark.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.shark2));
     };
     Beach.prototype.addWorld = function () {
         __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldTypes.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "海滩", "一个海滩", [this.game.machines.sandDigger, this.game.engineers.sandEnginer], [], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.beach.crabNest, new Decimal(50))], [], [], [[this.game.beach.seaRes, new Decimal(0)]], new Decimal(3)));
-        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldPrefix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "海岸", "", [this.game.machines.sandDigger, this.game.engineers.sandEnginer], [[this.game.baseWorld.sand, new Decimal(1.5)], [this.game.baseWorld.fungus, new Decimal(0.7)]], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.beach.crabNest, new Decimal(50))], [[this.game.baseWorld.fungus, new Decimal(0.7)]], [], [[this.game.beach.seaRes, new Decimal(0)]], new Decimal(3.5)));
+        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldPrefix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "海岸", "", [this.game.machines.sandDigger, this.game.engineers.sandEnginer], [[this.game.baseWorld.sand, new Decimal(1.5)], [this.game.baseWorld.fungus, new Decimal(0.7)]], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.beach.crabNest, new Decimal(50))], [[this.game.baseWorld.fungus, new Decimal(0.7)]], [], [[this.game.beach.seaRes, new Decimal(0)]], new Decimal(3)));
+        __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldSuffix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "鲨鱼", "", [], [], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.beach.shark2, new Decimal(50))], [
+            [this.game.beach.shark, new Decimal(3)],
+            [this.game.beach.shark2, new Decimal(2)]
+        ], [], [[this.game.beach.seaRes, new Decimal(0)]], new Decimal(3)));
     };
     return Beach;
 }());
@@ -3048,7 +3074,9 @@ var Bee = (function () {
         this.workerBee = new __WEBPACK_IMPORTED_MODULE_2__units_unit__["a" /* Unit */](this.game, "worBee", "工蜂", "工蜜蜂将花蜜转成蜂蜜。");
         this.scientistBee = new __WEBPACK_IMPORTED_MODULE_2__units_unit__["a" /* Unit */](this.game, "scBee", "科学家蜜蜂", "科学家蜜蜂研究蜂蜜属性。");
         this.foodBee = new __WEBPACK_IMPORTED_MODULE_2__units_unit__["a" /* Unit */](this.game, "foodBee", "食品蜜蜂", "将蜂蜜转化为食物。");
-        this.universityBee = new __WEBPACK_IMPORTED_MODULE_2__units_unit__["a" /* Unit */](this.game, "universityBee", "蜜蜂大学", "指导新的科学家蜜蜂");
+        this.universityBee = new __WEBPACK_IMPORTED_MODULE_2__units_unit__["a" /* Unit */](this.game, "universityBee", "蜜蜂大学", "指导新的科学家蜜蜂。");
+        this.bear = new __WEBPACK_IMPORTED_MODULE_2__units_unit__["a" /* Unit */](this.game, "bear", "熊", "熊为了蜂蜜可以做任何事情。");
+        this.panda = new __WEBPACK_IMPORTED_MODULE_2__units_unit__["a" /* Unit */](this.game, "panda", "熊猫", "熊猫是伟大的科学家。");
         this.listBee.push(this.hiveBee);
         this.listBee.push(this.queenBee);
         this.listBee.push(this.foragingBee);
@@ -3056,8 +3084,12 @@ var Bee = (function () {
         this.listBee.push(this.universityBee);
         this.listBee.push(this.scientistBee);
         this.listBee.push(this.foodBee);
+        this.listBee.push(this.bear);
+        this.listBee.push(this.panda);
         this.game.lists.push(new __WEBPACK_IMPORTED_MODULE_5__typeList__["a" /* TypeList */]("蜜蜂", this.listBee));
         this.engineersProd = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.universityBee, new Decimal(0.1), false);
+        this.bearCrystalProduction = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.bear, this.game.machines.machineryProd.times(30), false);
+        this.bearSoilProduction = new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.bear, this.game.machines.machineryProd.times(40), false);
     };
     Bee.prototype.initStuff = function () {
         var beeTeamUp = this.game.upgradeScienceExp.times(0.8);
@@ -3134,12 +3166,38 @@ var Bee = (function () {
         this.scientistBee.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.universityBee, new Decimal(0.01)));
         this.game.engineers.beeEnginer.addProductor(this.engineersProd);
         this.universityBee.togableProductions = [new __WEBPACK_IMPORTED_MODULE_0__units_togableProductions__["a" /* TogableProduction */]("产生蜜蜂工程师", [this.engineersProd])];
-        //  Research
+        //  Bear
+        this.bear.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.bear, [
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.machines.price1.times(50000), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, this.game.machines.price1.times(5), this.game.buyExp)
+        ]));
+        this.bear.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.bear, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.bear.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.bear, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceHireExp)]));
+        this.game.baseWorld.honey.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.bear, this.game.machines.machineryCost));
+        this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.bear, this.game.machines.machineryProd.times(50)));
+        this.game.baseWorld.soil.addProductor(this.bearSoilProduction);
+        this.game.baseWorld.crystal.addProductor(this.bearCrystalProduction);
+        //  Panda
+        this.panda.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.panda, [
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.machines.price1.times(50000), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, this.game.machines.price1.times(5), this.game.buyExp)
+        ]));
+        this.panda.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.panda, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.div(5), this.game.upgradeScienceExp)]));
+        this.panda.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.panda, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.div(5), this.game.upgradeScienceHireExp)]));
+        this.game.baseWorld.honey.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.panda, this.game.machines.machineryCost));
+        this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.panda, this.game.machines.machineryProd.times(50)));
+        //  Bears crystall
+        this.bear3Res = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("bg3Res", "采矿熊", "熊也产生水晶。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E8))], [this.bearCrystalProduction], this.game);
+        //  Bears soil
+        this.bear2Res = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("bg2Res", "木匠熊", "熊也会产生土壤。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E6))], [this.bearSoilProduction, this.bear3Res], this.game);
+        //  Bears
+        this.bearRes = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("bgRes", "熊", "熊喜欢蜂蜜。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E5))], [this.bear, this.panda, this.bear2Res], this.game);
+        //  Dep of bee
         this.universityResBee2 = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("uniResBee2", "蜜蜂工程系", "蜜蜂大学还产生蜜蜂工程师。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(7E7))], [this.engineersProd], this.game);
         //  Research
         this.universityResBee = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("universityResBee", "蜜蜂大学", "获得一所蜜蜂大学。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(6E6))], [this.universityBee, this.universityResBee2], this.game);
         //  Research
-        this.advancedBee = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("advBee", "高级蜜蜂", "蜜蜂更多的工作种类。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E3))], [this.scientistBee, this.foodBee, this.universityResBee], this.game);
+        this.advancedBee = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("advBee", "高级蜜蜂", "蜜蜂更多的工作种类。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E3))], [this.scientistBee, this.foodBee, this.universityResBee, this.bearRes], this.game);
         //    Bee
         this.beeResearch = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("beeRes", "蜜蜂", "解锁蜜蜂 !", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(0))], [this.game.baseWorld.nectar, this.foragingBee, this.workerBee, this.game.baseWorld.honey, this.advancedBee], this.game);
         this.beeResearch.avabileBaseWorld = false;
@@ -3152,7 +3210,13 @@ var Bee = (function () {
         __WEBPACK_IMPORTED_MODULE_6__world__["a" /* World */].worldSuffix.push(new __WEBPACK_IMPORTED_MODULE_6__world__["a" /* World */](this.game, "蜜蜂", "", [this.game.machines.honeyMaker, this.game.engineers.beeEnginer], [], [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.hiveBee, new Decimal(25)),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, this.game.baseWorld.prestigeFood)
-        ], [[this.foragingBee, new Decimal(2)]], [], [[this.beeResearch, new Decimal(0)]], new Decimal(3)));
+        ], [[this.foragingBee, new Decimal(2)]], [], [[this.beeResearch, new Decimal(0)]], new Decimal(3)), new __WEBPACK_IMPORTED_MODULE_6__world__["a" /* World */](this.game, "熊", "", [this.game.machines.honeyMaker, this.game.engineers.beeEnginer], [], [
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.bear, new Decimal(250)),
+            new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, this.game.baseWorld.prestigeFood)
+        ], [
+            [this.bear, new Decimal(3)],
+            [this.panda, new Decimal(3)]
+        ], [], [[this.beeResearch, new Decimal(0)]], new Decimal(3)));
     };
     return Bee;
 }());
@@ -3334,6 +3398,8 @@ var Forest = (function () {
         this.ladybird = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "ladybird", "瓢虫", "瓢虫生产科学。");
         this.beetleColony = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "beetleColony", "甲虫殖民地", "甲壳虫殖民地生产虫巢。");
         this.powderpostBeetle = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "powder", "粉虱甲虫", "粉虱甲虫是一群木材甲虫。");
+        this.mole = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "mole", "鼹鼠", "鼹鼠产生土壤。");
+        this.moleNest = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "moleN", "鼹鼠窝", "鼹鼠窝产生鼹鼠。");
         this.listForest.push(this.beetleColony);
         this.listForest.push(this.beetleNest);
         this.listForest.push(this.beetle);
@@ -3341,14 +3407,20 @@ var Forest = (function () {
         this.listForest.push(this.powderpostBeetle);
         this.listForest.push(this.ambrosiaBeetle);
         this.listForest.push(this.ladybird);
+        this.listForest.push(this.moleNest);
+        this.listForest.push(this.mole);
         this.game.lists.push(new __WEBPACK_IMPORTED_MODULE_4__typeList__["a" /* TypeList */]("甲虫", this.listForest));
         this.beetleWoodProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetle, new Decimal(0.4), false);
         this.beetleSoilProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetle, new Decimal(0.2), false);
         this.beetleCrystalProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetle, new Decimal(0.1), false);
+        this.moleScienceProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.mole, this.game.machines.machineryProd.times(45), false);
+        var moleRes2 = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("mo2Res", "鼹鼠窝", "解锁鼹鼠窝", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E7))], [this.moleNest], this.game);
+        var moleSciRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("moleRes", "科学家鼹鼠", "鼹鼠也产生科学", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E6))], [this.moleScienceProduction], this.game);
+        var moleRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("moleRes", "鼹鼠", "解锁鼹鼠", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E5))], [this.mole, moleSciRes, moleRes2], this.game);
         var beetleWood = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleWood", "伐木训练", "甲虫也生产木材", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(500))], [this.beetleWoodProduction], this.game);
         var beetleSoil = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleSoil", "土壤训练", "甲虫也生产土壤", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E4))], [this.beetleSoilProduction], this.game);
         var beetleCrystal = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleCrystal", "采矿培训", "甲虫也产生水晶", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E6))], [this.beetleCrystalProduction], this.game);
-        var advancedBeetle = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("advBeetle", "高级甲虫作业", "更多的甲虫工作", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E3))], [this.ambrosiaBeetle, this.ladybird], this.game);
+        var advancedBeetle = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("advBeetle", "高级甲虫作业", "更多的甲虫工作", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E3))], [this.ambrosiaBeetle, this.ladybird, moleRes], this.game);
         this.beetleResearch = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleRes", "甲虫", "解锁甲壳虫", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(600))], [this.larva, advancedBeetle, beetleWood, beetleSoil, beetleCrystal], this.game);
         this.beetleResearch.avabileBaseWorld = false;
     };
@@ -3366,6 +3438,7 @@ var Forest = (function () {
         this.beetleNest.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetleColony, new Decimal(0.1)));
         this.game.baseWorld.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.powderpostBeetle));
         this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.powderpostBeetle));
+        this.game.baseWorld.science.addProductor(this.moleScienceProduction);
         //    Larva
         this.larva.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.larva, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(10), this.game.buyExp)], [this.beetle, this.powderpostBeetle]));
         this.larva.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.larva, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, this.game.upgradeScienceExp)]));
@@ -3421,17 +3494,38 @@ var Forest = (function () {
         ]));
         this.powderpostBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.powderpostBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         this.powderpostBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.powderpostBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        //    Mole
+        this.mole.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.mole, [
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.machines.price1.times(1000), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, this.game.machines.price1.times(2), this.game.buyExp)
+        ]));
+        this.mole.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.mole, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.div(10), this.game.upgradeScienceExp)]));
+        this.mole.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.mole, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.div(10), this.game.upgradeScienceExp)]));
+        this.game.baseWorld.soil.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.mole, this.game.machines.machineryProd.times(50)));
+        //    Mole Nest
+        this.moleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.moleNest, [
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, this.game.machines.price1.times(500), this.game.buyExp),
+            new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.mole, new Decimal(100), this.game.buyExpUnit)
+        ]));
+        this.moleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.moleNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4.div(10), this.game.upgradeScienceExp)]));
+        this.moleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.moleNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4.div(10), this.game.upgradeScienceExp)]));
+        this.mole.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.moleNest));
     };
     Forest.prototype.addWorld = function () {
         __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldTypes.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "森林", "一片森林", [
             this.game.engineers.woodEnginer, this.game.machines.loggingMachine,
             this.game.infestation.disinfestationBeetle, this.game.infestation.flametrowerBeetle
-        ], [[this.game.baseWorld.wood, new Decimal(2)]], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.beetleColony, new Decimal(50))], [], [], [[this.beetleResearch, new Decimal(0)]], new Decimal(3.5)));
+        ], [[this.game.baseWorld.wood, new Decimal(2)]], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.beetleColony, new Decimal(50))], [], [], [[this.beetleResearch, new Decimal(0)]], new Decimal(3)));
         __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldSuffix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "甲虫", "", [
             this.game.infestation.disinfestationBeetle, this.game.infestation.flametrowerBeetle
         ], [
             [this.larva, new Decimal(2)]
-        ], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.beetleColony, new Decimal(50))], [], [], [[this.beetleResearch, new Decimal(0)]], new Decimal(4)));
+        ], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.beetleColony, new Decimal(50))], [], [], [[this.beetleResearch, new Decimal(0)]], new Decimal(3)), new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "鼹鼠", "", [
+            this.game.infestation.disinfestationBeetle, this.game.infestation.flametrowerBeetle
+        ], [
+            [this.mole, new Decimal(3)],
+            [this.moleNest, new Decimal(2)]
+        ], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.moleNest, new Decimal(50))], [], [], [[this.beetleResearch, new Decimal(0)]], new Decimal(3)));
     };
     return Forest;
 }());
@@ -4084,32 +4178,33 @@ var Prestige = (function () {
         //#region Other
         this.otherList = new Array();
         var otherLists = [
-            [this.game.bee.listBee, "Bee"],
-            [this.game.beach.beachList, "Sea"],
-            [this.game.forest.listForest, "Beetle"]
+            [this.game.bee.listBee, "蜜蜂"],
+            [this.game.beach.beachList, "海洋"],
+            [this.game.forest.listForest, "甲虫"]
         ];
         this.otherList = otherLists.map(function (ol) {
-            var u = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](_this.game, "otherL" + ol[1], ol[1] + " efficienty.", ol[1] + " units yield 100% more.");
+            var u = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](_this.game, "otherL" + ol[1], ol[1] + " 效率", ol[1] + " 单位生产加成 100% 。");
             var ul = ol[0];
             ul.forEach(function (unit) {
                 unit.produces.filter(function (p) { return p.efficiency.greaterThan(0); })
                     .forEach(function (prod) {
-                    prod.bonusList.push([u, new Decimal(100)]);
+                    prod.bonusList.push([u, new Decimal(1)]);
                 });
             });
             u.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, u, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(12), expIncrement)]));
             return u;
         });
-        this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("Non Ant", this.otherList));
+        this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("非蚂蚁", this.otherList));
         //#endregion
         //#region World
-        this.worldBuilder = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this.game, "worldBuilder", "World Builder", "Unlock the world builder ! (one time purchase)");
+        this.worldBuilder = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this.game, "worldBuilder", "世界建造者", "解锁世界建造者！ （一次性购买）");
         this.worldBuilder.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.worldBuilder, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(1E3), expIncrement)]));
-        this.worldBuilder.buyAction.oneTime = true;
-        this.worldBetter = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this.game, "worldBetter", "World Adaption", "Increase positive effects of new worlds. +50% 'production of.. ' and 'yields and consume'");
+        // this.worldBuilder.buyAction.oneTime = true
+        this.worldBuilder.buyAction.limit = new Decimal(1);
+        this.worldBetter = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this.game, "worldBetter", "世界适应", "增加新世界的积极影响。 + 50％'的生产'和'产量和消费'");
         this.worldBetter.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.worldBetter, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(10), expIncrement)]));
         this.worldList = [this.worldBuilder, this.worldBetter];
-        this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("World", this.worldList));
+        this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("世界", this.worldList));
         //#endregion
         this.expLists.map(function (l) { return l.list; }).forEach(function (al) { return al.forEach(function (l) {
             l.unlocked = true;
@@ -4145,19 +4240,6 @@ var Researchs = (function () {
         var _this = this;
         //    Bi
         this.bi = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("biResea", "商业智能", "查看资源的生产者或消耗者。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(2E3))], [], this.game);
-        // //   Devolution
-        // this.devolution = new Research(
-        //   "devoluti",
-        //   "反进化",
-        //   "还原进化的影响。",
-        //   [new Cost(this.game.baseWorld.science, new Decimal(1))],
-        //   [],
-        //   this.game,
-        //   () => {
-        //     this.game.world.toUnlock.forEach(t => t.basePrice = t.basePrice.div(5))
-        //     this.game.world.experience = this.game.world.experience.div(3)
-        //   }
-        // )
         //    Evolution
         this.evolution = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("evolution", "进化", "增加旅行到新世界的资源（x5），并增加你将获得的经验（x3）。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E10))], [], this.game, function () {
             _this.game.world.toUnlock.forEach(function (t) { return t.basePrice = t.basePrice.times(5); });
@@ -4177,8 +4259,15 @@ var Researchs = (function () {
         this.timeWarp = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("timeWarp", "时间扭曲", "每4小时更新。 明智地使用它。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1))], [], this.game, function () {
             _this.game.longUpdate(3600 * 4000, true);
         });
+        //    Here and Now 2
+        this.hereAndNow2 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("han2Res", "此时此地2", "获得50％的世界经验。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E10))], [], this.game, function () {
+            var expToAdd = _this.game.world.experience.div(2);
+            _this.game.prestige.experience.quantity = _this.game.prestige.experience.quantity.plus(expToAdd);
+            _this.game.maxLevel = _this.game.maxLevel.plus(expToAdd);
+            _this.game.expTabAv = true;
+        });
         //    Here and Now
-        this.hereAndNow = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("hereAndNow", "此时此地", "获得10经验。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E9))], [this.timeWarp], this.game, function () {
+        this.hereAndNow = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("hereAndNow", "此时此地", "获得10经验。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E9))], [this.timeWarp, this.hereAndNow2], this.game, function () {
             _this.game.prestige.experience.quantity = _this.game.prestige.experience.quantity.plus(10);
             _this.game.maxLevel = _this.game.maxLevel.plus(10);
             _this.game.expTabAv = true;
@@ -4199,7 +4288,6 @@ var Researchs = (function () {
         this.departmentRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("departementsRes", "部门", "部门产生工程师。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E11))], deps, this.game);
         //    Engineer
         var eng = this.game.engineers.listEnginer;
-        // //eng.push(this.stageRes)
         this.engineerRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("engineerRes", "工程师", "工程师将慢慢建造机器。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E6))], eng.concat(this.departmentRes), this.game);
         //    Planter
         this.planterResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("planRes", "种植", "植树是移植树苗的过程。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.planterAnt], this.game);
@@ -4229,13 +4317,13 @@ var Researchs = (function () {
         //    Up Hire
         var allUpH = Array.from(this.game.unitMap.values()).filter(function (u) { return u.upHire; }).map(function (u) { return u.upHire; });
         allUpH.push(this.upCombined);
-        var r4 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R4", "双胞胎", "允许您以相同的价格获得更多的单位。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(7E3))], allUpH, this.game);
+        this.r4 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R4", "双胞胎", "允许您以相同的价格获得更多的单位。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(7E3))], allUpH, this.game);
         //    Up 2
         var allUp = Array.from(this.game.unitMap.values()).filter(function (u) { return u.upAction; }).map(function (u) { return u.upAction; });
-        allUp.push(r4);
-        var r2 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R2", "团队合作2", "升级您的单位生产加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(500))], allUp, this.game);
+        allUp.push(this.r4);
+        this.r2 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R2", "团队合作2", "升级您的单位生产加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(500))], allUp, this.game);
         //    Up basic
-        this.up1 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("RUp1", "团队合作", "根据您购买单位的次数提供生产加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(50))], [r2], this.game);
+        this.up1 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("RUp1", "团队合作", "根据您购买单位的次数提供生产加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(50))], [this.r2], this.game);
         //    Hunter 2
         var hunting2 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("HuntR2", "高级狩猎", "蚂蚁装备更好的武器。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(4000))], [this.game.baseWorld.advancedHunter], this.game);
         //    Hunter
@@ -4355,7 +4443,7 @@ var Science = (function () {
 /***/ "../../../../../src/app/opt-nav/opt-nav.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"content-area\">\n  <router-outlet></router-outlet>\n</div>\n<clr-vertical-nav>\n  <a clrVerticalNavLink routerLink=\"./save\" routerLinkActive=\"active\">\n    <clr-icon clrVerticalNavIcon shape=\"floppy\"></clr-icon>\n    保存\n  </a>\n  <a clrVerticalNavLink routerLink=\"./ui\" routerLinkActive=\"active\">\n    <clr-icon clrVerticalNavIcon shape=\"ruler-pencil\"></clr-icon>\n    界面\n  </a>\n  <a clrVerticalNavLink routerLink=\"./credit\" routerLinkActive=\"active\">\n    <clr-icon clrVerticalNavIcon shape=\"certificate\"></clr-icon>\n    积分\n  </a>\n</clr-vertical-nav>\n"
+module.exports = "<div class=\"content-area\">\n  <router-outlet></router-outlet>\n</div>\n<clr-vertical-nav>\n  <a clrVerticalNavLink routerLink=\"./save\" routerLinkActive=\"active\">\n    <clr-icon clrVerticalNavIcon shape=\"floppy\"></clr-icon>\n    保存\n  </a>\n  <a clrVerticalNavLink routerLink=\"./ui\" routerLinkActive=\"active\">\n    <clr-icon clrVerticalNavIcon shape=\"ruler-pencil\"></clr-icon>\n    界面\n  </a>\n  <a clrVerticalNavLink routerLink=\"./credit\" routerLinkActive=\"active\">\n    <clr-icon clrVerticalNavIcon shape=\"certificate\"></clr-icon>\n    关于\n  </a>\n</clr-vertical-nav>\n"
 
 /***/ }),
 
@@ -4421,7 +4509,7 @@ OptNavComponent = __decorate([
 /***/ "../../../../../src/app/options/options.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <p>\n    游戏每3分钟自动保存。 您还可以手动保存，加载和导出保存游戏。 游戏存档存储在本地存储中，如果你没有备份存档，请不要清除浏览器缓存。\n  </p>\n  <strong>警告：重置按钮将会删除你的所有游戏记录，从零开始游戏！</strong>\n\n  <div class=\"form-group\">\n    <button class=\"btn btn-success\" (click)=\"save($event)\">保存</button>\n    <button class=\"btn btn-primary\" (click)=\"load($event)\">加载</button>\n    <button class=\"btn btn-danger\" (click)=\"clear($event)\">重置</button>\n  </div>\n  <div class=\"form-group\">\n    <h5>导出 / 导入存档</h5>\n    <label for=\"save\">保存</label>\n    <textarea ref-textarea class=\"form-control\" rows=\"6\" id=\"save\" [(ngModel)]=\"stringSave\"></textarea>\n    <button class=\"btn btn-success\" (click)=\"export($event)\">导出</button>\n    <button class=\"btn btn-primary\" (click)=\"import($event)\">导入</button>\n  </div>\n\n  <div class=\"toggle-switch\">\n    <input type=\"checkbox\" id=\"toggle_1\" [(ngModel)]=\"gameService.game.hideSaveNotification\">\n    <label for=\"toggle_1\">隐藏成功保存通知</label>\n  </div>\n  <br/>\n  <span>版本号: {{gameService.game.gameVersion}}</span>\n  <a href=\"http://likexia.gitee.io/idleant/changelog.html\" target=\"_blank\">更新日志</a>\n</div>\n"
+module.exports = "<h1>保存</h1>\n<div>\n  <p>\n    游戏每3分钟自动保存。 您还可以手动保存，加载和导出保存游戏。 游戏存档存储在本地存储中，如果你没有备份存档，请不要清除浏览器缓存。\n  </p>\n  <strong>警告：重置按钮将会删除你的所有游戏记录，从零开始游戏！</strong>\n\n  <div class=\"form-group\">\n    <button class=\"btn btn-success\" (click)=\"save($event)\">保存</button>\n    <button class=\"btn btn-primary\" (click)=\"load($event)\">加载</button>\n    <button class=\"btn btn-danger\" (click)=\"clear($event)\">重置</button>\n  </div>\n  <div class=\"form-group\">\n    <h5>导出 / 导入存档</h5>\n    <label for=\"save\">保存</label>\n    <textarea ref-textarea class=\"form-control\" rows=\"6\" id=\"save\" [(ngModel)]=\"stringSave\"></textarea>\n    <button class=\"btn btn-success\" (click)=\"export($event)\">导出</button>\n    <button class=\"btn btn-primary\" (click)=\"import($event)\">导入</button>\n  </div>\n\n  <div class=\"toggle-switch\">\n    <input type=\"checkbox\" id=\"toggle_1\" [(ngModel)]=\"gameService.game.hideSaveNotification\">\n    <label for=\"toggle_1\">隐藏成功保存通知</label>\n  </div>\n  <br/>\n  <span>版本号: {{gameService.game.gameVersion}}</span>\n  <a href=\"http://likexia.gitee.io/idleant/changelog.html\" target=\"_blank\">更新日志</a>\n</div>\n"
 
 /***/ }),
 
@@ -4464,7 +4552,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var OptionsComponent = (function () {
     function OptionsComponent(gameService) {
         this.gameService = gameService;
-        this.className = 'content-container';
+        this.className = 'content-area';
         this.stringSave = "";
     }
     OptionsComponent.prototype.ngOnInit = function () {
@@ -4482,7 +4570,7 @@ var OptionsComponent = (function () {
     return OptionsComponent;
 }());
 __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostBinding"])('class.content-container'),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostBinding"])('class.content-area'),
     __metadata("design:type", Object)
 ], OptionsComponent.prototype, "className", void 0);
 OptionsComponent = __decorate([
@@ -4615,7 +4703,7 @@ var _a, _b, _c, _d;
 /***/ "../../../../../src/app/prestige/prestige.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"content-area\">\n  <h2>{{getTitle()}}</h2>\n  <div *ngIf=\"!travelAv(); else av_content\">\n    <div *ngIf=\"!this.gameService.game.research.prestigeResearch.owned()\">\n      <clr-alert [clrAlertType]=\"'alert-warning'\">\n        <div class=\"alert-item\">\n          <span class=\"alert-text\">\n           旅行研究未完成，你无法旅行！\n          </span>\n        </div>\n      </clr-alert>\n    </div>\n    <p> 您需要旅行研究： </p>\n    <table class=\"nowrap\" style=\"width:100%\">\n      <tbody>\n        <tr *ngFor=\"let cost of gameService.game.world.toUnlock\">\n          <td>\n            <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}}</span>\n          </td>\n          <td style=\"width:100%\">\n            <div class=\"progress labeled\" [ngClass]=\"{'success': cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice), 'danger': !cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice)}\">\n              <progress max=\"100\" [value]=\"cost.unit.quantity.times(100).div(cost.basePrice).toNumber()\" data-displayval=\"0%\">\n              </progress>\n              <span *ngIf=\"!cost.unit.quantity.greaterThan(cost.basePrice) ;else other_content\">\n                {{cost.unit.quantity.times(100).div(cost.basePrice) | format}}%\n              </span>\n              <ng-template #other_content>\n                <span> 100% </span>\n              </ng-template>\n\n            </div>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n      <div *ngIf=\"this.gameService.game.world.toUnlockMax.length >0\">\n        <p>你必须拥有少于：</p>\n        <table class=\"nowrap\" style=\"width:100%\">\n          <tbody>\n            <tr *ngFor=\"let cost of gameService.game.world.toUnlockMax\">\n              <td>\n                <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}}</span>\n              </td>\n              <td style=\"width:100%\">\n                <div class=\"progress labeled\" [ngClass]=\"{'success': !cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice), 'danger': cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice)}\">\n                  <progress max=\"100\" [value]=\"cost.unit.quantity.times(100).div(cost.basePrice).toNumber()\" data-displayval=\"0%\">\n                  </progress>\n                  <span *ngIf=\"!cost.unit.quantity.greaterThan(cost.basePrice)\">\n                    {{cost.unit.quantity.times(100).div(cost.basePrice) | format}}%\n                  </span>\n                  <span *ngIf=\"cost.unit.quantity.greaterThan(cost.basePrice)\">\n                    100%\n                  </span>\n                </div>\n              </td>\n            </tr>\n          </tbody>\n        </table>\n      </div>\n      <button class=\"btn btn-warning-outline\" (click)=\"skipWorld()\">跳过</button>\n      <p> 通过跳过你将能够改变世界，但你不会得到 {{gameService.game.getExperience()\n        | format}} 经验。</p>\n  </div>\n\n  <ng-template #av_content>\n    <div *ngIf=\"!gameService.game.skip; else skip_content\">\n      <p> 离开你将获得 {{gameService.game.getExperience() | format}} 经验。 高层次的世界将会产生更多的经验，但需要更多的资源。 </p>\n    </div>\n    <ng-template #skip_content>\n      <div *ngIf=\"gameService.game.skip\">\n        <p>\n          如果选择跳过这个世界，你将不会获得任何经验！ 如果你想改变主意，请切换到 “旅行” 之外的另一个选项卡。\n        </p>\n      </div>\n    </ng-template>\n    <div>\n       旅行需要的资源:\n      <span *ngFor=\"let cost of gameService.game.world.toUnlock\">\n        <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}},</span>\n      </span>\n      <div *ngIf=\"this.gameService.game.world.toUnlockMax.length >0\">\n        并且要低于:\n        <span *ngFor=\"let cost of gameService.game.world.toUnlockMax\">\n          <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}},</span>\n        </span>\n      </div>\n    </div>\n    <div class=\"form-group\">\n      <a class=\"btn btn-success-outline\" routerLink=\"/world-build\" *ngIf=\"this.gameService.game.prestige.worldBuilder.buyAction.owned()\">\n        <clr-icon shape=\"world\"></clr-icon>\n        生成\n      </a>\n      <button class=\"btn btn-secondary\" (click)=\"change()\">\n        <clr-icon shape=\"world\"></clr-icon>\n        改变世界\n      </button>\n\n      <label>最小等级:</label>\n      <input type=\"number\" placeholder=\"0\" [(ngModel)]=\"gameService.game.minUser\" class=\"numIn\" min=\"1\" [max]=\"gameService.game.maxUser\">\n      <label>最大等级 ({{gameService.game.maxMax}}):</label>\n      <input type=\"number\" [placeholder]=\"gameService.game.maxMax\" [(ngModel)]=\"gameService.game.maxUser\" class=\"numIn\"\n        [min]=\"gameService.game.minUser\" [max]=\"gameService.game.maxMax\">\n\n    </div>\n    <div class=\"card-columns card-columns-2\">\n\n      <app-world *ngFor=\"let world of gameService.game.nextWorlds \" [world]=\"world\" [showKeep]=\"true\"></app-world>\n\n    </div>\n  </ng-template>\n</div>\n"
+module.exports = "<div class=\"content-area\">\n  <h2>{{getTitle()}}</h2>\n  <div *ngIf=\"!travelAv(); else av_content\">\n    <div *ngIf=\"!this.gameService.game.research.prestigeResearch.owned()\">\n      <clr-alert [clrAlertType]=\"'alert-warning'\">\n        <div class=\"alert-item\">\n          <span class=\"alert-text\">\n           旅行研究未完成，你无法旅行！\n          </span>\n        </div>\n      </clr-alert>\n    </div>\n    <p> 您需要旅行研究： </p>\n    <table class=\"nowrap\" style=\"width:100%\">\n      <tbody>\n        <tr *ngFor=\"let cost of gameService.game.world.toUnlock\">\n          <td style=\"width:150px;\">\n            <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}}</span>\n          </td>\n          <td style=\"width:100%\">\n            <div class=\"progress labeled\" [ngClass]=\"{'success': cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice), 'danger': !cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice)}\">\n              <progress max=\"100\" [value]=\"cost.unit.quantity.times(100).div(cost.basePrice).toNumber()\" data-displayval=\"0%\">\n              </progress>\n              <span *ngIf=\"!cost.unit.quantity.greaterThan(cost.basePrice) ;else other_content\">\n                {{cost.unit.quantity.times(100).div(cost.basePrice) | format}}%\n              </span>\n              <ng-template #other_content>\n                <span> 100% </span>\n              </ng-template>\n\n            </div>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n      <div *ngIf=\"this.gameService.game.world.toUnlockMax.length >0\">\n        <p>你必须拥有少于：</p>\n        <table class=\"nowrap\" style=\"width:100%\">\n          <tbody>\n            <tr *ngFor=\"let cost of gameService.game.world.toUnlockMax\">\n              <td>\n                <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}}</span>\n              </td>\n              <td style=\"width:100%\">\n                <div class=\"progress labeled\" [ngClass]=\"{'success': !cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice), 'danger': cost.unit.quantity.greaterThanOrEqualTo(cost.basePrice)}\">\n                  <progress max=\"100\" [value]=\"cost.unit.quantity.times(100).div(cost.basePrice).toNumber()\" data-displayval=\"0%\">\n                  </progress>\n                  <span *ngIf=\"!cost.unit.quantity.greaterThan(cost.basePrice)\">\n                    {{cost.unit.quantity.times(100).div(cost.basePrice) | format}}%\n                  </span>\n                  <span *ngIf=\"cost.unit.quantity.greaterThan(cost.basePrice)\">\n                    100%\n                  </span>\n                </div>\n              </td>\n            </tr>\n          </tbody>\n        </table>\n      </div>\n      <button class=\"btn btn-warning-outline\" (click)=\"skipWorld()\">跳过</button>\n      <p> 通过跳过你将能够改变世界，但你不会得到 {{gameService.game.getExperience()\n        | format}} 经验。</p>\n  </div>\n\n  <ng-template #av_content>\n    <div *ngIf=\"!gameService.game.skip; else skip_content\">\n      <p> 离开你将获得 {{gameService.game.getExperience() | format}} 经验。 高层次的世界将会产生更多的经验，但需要更多的资源。 </p>\n    </div>\n    <ng-template #skip_content>\n      <div *ngIf=\"gameService.game.skip\">\n        <p>\n          如果选择跳过这个世界，你将不会获得任何经验！ 如果你想改变主意，请切换到 “旅行” 之外的另一个选项卡。\n        </p>\n      </div>\n    </ng-template>\n    <div>\n       旅行需要的资源:\n      <span *ngFor=\"let cost of gameService.game.world.toUnlock\">\n        <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}},</span>\n      </span>\n      <div *ngIf=\"this.gameService.game.world.toUnlockMax.length >0\">\n        并且要低于:\n        <span *ngFor=\"let cost of gameService.game.world.toUnlockMax\">\n          <span class=\"nowrap\">{{cost.basePrice | format}}&nbsp;{{cost.unit.name}},</span>\n        </span>\n      </div>\n    </div>\n    <div class=\"form-group\">\n      <a class=\"btn btn-success-outline\" routerLink=\"/world-build\" *ngIf=\"this.gameService.game.prestige.worldBuilder.buyAction.owned()\">\n        <clr-icon shape=\"network-settings\"></clr-icon>\n        生成\n      </a>\n      <button class=\"btn btn-secondary\" (click)=\"change()\">\n        <clr-icon shape=\"world\"></clr-icon>\n        改变世界\n      </button>\n\n      <label>最小等级:</label>\n      <input type=\"number\" placeholder=\"0\" [(ngModel)]=\"gameService.game.minUser\" class=\"numIn\" min=\"1\" [max]=\"gameService.game.maxUser\">\n      <label>最大等级 ({{gameService.game.maxMax}}):</label>\n      <input type=\"number\" [placeholder]=\"gameService.game.maxMax\" [(ngModel)]=\"gameService.game.maxUser\" class=\"numIn\"\n        [min]=\"gameService.game.minUser\" [max]=\"gameService.game.maxMax\">\n\n    </div>\n    <div class=\"card-columns card-columns-2\">\n\n      <app-world *ngFor=\"let world of gameService.game.nextWorlds \" [world]=\"world\" [showKeep]=\"true\"></app-world>\n\n    </div>\n  </ng-template>\n</div>\n"
 
 /***/ }),
 
@@ -4910,7 +4998,7 @@ var _a;
 /***/ "../../../../../src/app/unit/unit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n\n  <div class=\"col-xs-12 col-md-12 col-lg-6 col-xl-6\">\n    <h1 class=\"text-capitalize no-mg-top\">{{gen.name}}\n        <small> {{gen.quantity | format}}</small>\n    </h1>\n\n    <div *ngIf=\"gen.isEnding()\">\n      <clr-alert [clrAlertType]=\"'alert-warning'\">\n        <div class=\"alert-item\">\n          <span class=\"alert-text\">\n            将在 {{endTime()}} 结束\n          </span>\n        </div>\n      </clr-alert>\n    </div>\n\n    <p>{{gen.description}}</p>\n    <!-- <span>拥有: {{gen.quantity | format}}</span> -->\n\n\n    <div *ngIf=\"gen.produces.length >0\">\n      <p *ngIf=\"gen.buyAction\">你购买了 {{gen.buyAction.quantity | format}} 次\n        <span *ngIf=\"gameService.game.research.up1.owned()\"> 获得奖励 +{{gen.getBoost().times(100) | format}}% 生产</span>\n      </p>\n      <div *ngIf=\"!gen.alwaysOn\">\n        <input type=\"range\" min=\"0\" max=\"100\" [(ngModel)]=\"gen.percentage\" (change)=\"onChange($event.target.value)\">\n        <span>{{gen.percentage}} % 操作</span>\n      </div>\n    </div>\n\n    <div class=\"row\" *ngIf=\"gen.togableProductions\">\n      <div class=\"col-xs-12 col-md-12 col-lg-12 col-xl-12\">\n        <section class=\"form-block\">\n          <div class=\"form-group\">\n            <ul class=\"list-unstyled\">\n              <li *ngFor=\"let tp of gen.togableProductions | prodToglePipe\">\n                <div class=\"toggle-switch\">\n                  <input type=\"checkbox\" [(ngModel)]=\"tp.uiModel\" [id]=\"tp.description\" (ngModelChange)=\"tp.turnOnOff()\"\n                    (change)=\"onChange($event.target.value)\">\n                  <label [for]=\"tp.description\">{{tp.description}}</label>\n                </div>\n              </li>\n            </ul>\n          </div>\n        </section>\n      </div>\n    </div>\n\n    <div *ngIf=\"gen.showTables\">\n\n      <div class=\"row\">\n        <div *ngIf=\"gen.produces.length >0\" class=\"col-xs-12 col-md-12 col-lg-12 col-xl-12\">\n          <h5>\n            <span class=\"text-capitalize\">{{gen.name}}</span> 产生:</h5>\n          <table class=\"table table-compact\">\n            <thead>\n              <tr>\n                <th class=\"w-33\">产物</th>\n                <th class=\"w-33\">1个</th>\n                <th class=\"w-33\">全部</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr *ngFor=\"let item of gen.produces | filterActive\"\n              [ngClass]=\"{'alert alert-warning no-alert': item.efficiency.lessThan(0)}\">\n                <td class=\"w-33 text-capitalize\">\n                  <a [routerLink]=\"['/main/unit/unit/'+item.product.id]\">{{item.product.name}}</a>\n                </td>\n                <td class=\"w-33\">{{item.prodPerSecNoEff | format}}</td>\n                <td class=\"w-33\">{{item.prodPerSec.times(gen.quantity) | format}}</td>\n              </tr>\n            </tbody>\n          </table>\n        </div>\n\n        <div class=\"col-xs-12 col-md-12 col-lg-12 col-xl-12\" *ngIf=\"gameService.game.research.bi.owned()\">\n          <div *ngIf=\"showProducers()\">\n            <h5>\n              <span class=\"text-capitalize\">{{gen.name}}</span> 是由:</h5>\n            <table class=\"table  table-compact\">\n              <thead>\n                <tr>\n                  <th class=\"w-25\">个体</th>\n                  <th class=\"w-25\">数量</th>\n                  <th class=\"w-25\">总计</th>\n                  <th class=\"w-25\">%</th>\n                </tr>\n              </thead>\n              <tfoot>\n                  <!-- class=\"bg-info text-white\" -->\n                <tr class=\"alert alert-info no-alert\">\n                  <td>总计</td>\n                  <td>{{gen.totalProducers | format}}</td>\n                  <td>{{gen.totalPerSec | format}}</td>\n                  <td></td>\n                </tr>\n              </tfoot>\n              <tbody>\n                <tr *ngFor=\"let item of gen.producedBy | filterActive; trackBy:getUnitId\"\n                [ngClass]=\"{'alert alert-warning no-alert': item.efficiency.lessThan(0)}\">\n                  <td class=\"text-capitalize\">\n                    <a [routerLink]=\"['/main/unit/unit/'+item.unit.id]\">{{item.unit.name}}</a>\n                  </td>\n                  <td>{{item.unit.quantity | format}}</td>\n                  <td>{{item.prodPerSec.times(item.unit.quantity) | format}}</td>\n                  <td>{{item.prodPerSec.times(item.unit.quantity).div(gen.totalPerSec).times(100) | format}}</td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n      </div>\n\n    </div>\n\n  </div>\n  <div class=\"col-xs-12 col-md-12 col-lg-6 col-xl-6 no-card-top\">\n    <div class=\"row\">\n      <!-- <div class=\"card-columns\"> -->\n      <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">\n        <app-action [action]=\"act\" *ngFor=\"let act of gen.actions| filterMax; trackBy:getUnitId\"></app-action>\n      </div>\n    </div>\n  </div>\n\n</div>\n"
+module.exports = "<div class=\"row\">\n\n  <div class=\"col-xs-12 col-md-12 col-lg-6 col-xl-6\">\n    <h1 class=\"text-capitalize no-mg-top\">{{gen.name}}\n      <small> {{gen.quantity | format}}</small>\n    </h1>\n\n    <div *ngIf=\"gen.isEnding()\">\n      <clr-alert [clrAlertType]=\"'alert-warning'\">\n        <div class=\"alert-item\">\n          <span class=\"alert-text\">\n            将在 {{endTime()}} 结束\n          </span>\n        </div>\n      </clr-alert>\n    </div>\n\n    <p>{{gen.description}}</p>\n    <!-- <span>拥有: {{gen.quantity | format}}</span> -->\n\n\n    <div *ngIf=\"gen.produces.length >0\">\n      <p *ngIf=\"gen.buyAction\">你购买了 {{gen.buyAction.quantity | format}} 次\n        <span *ngIf=\"gameService.game.research.up1.owned()\"> 获得奖励 +{{gen.getBoost().times(100) | format}}% 生产</span>\n      </p>\n      <div *ngIf=\"!gen.alwaysOn\">\n\n        <p-slider [(ngModel)]=\"gen.percentage\" [step]=\"0.1\" [min]=\"0\" [max]=\"100\" (change)=\"onChange($event.target.value)\"></p-slider>\n\n        <!-- <input type=\"range\" min=\"0\" max=\"100\" [(ngModel)]=\"gen.percentage\" (change)=\"onChange($event.target.value)\"> -->\n        <span>{{gen.percentage}} % 操作</span>\n\n      </div>\n    </div>\n\n    <div class=\"row\" *ngIf=\"gen.togableProductions\">\n      <div class=\"col-xs-12 col-md-12 col-lg-12 col-xl-12\">\n        <section class=\"form-block\">\n          <div class=\"form-group\">\n            <ul class=\"list-unstyled\">\n              <li *ngFor=\"let tp of gen.togableProductions | prodToglePipe\">\n                <div class=\"toggle-switch\">\n                  <input type=\"checkbox\" [(ngModel)]=\"tp.uiModel\" [id]=\"tp.description\" (ngModelChange)=\"tp.turnOnOff()\"\n                    (change)=\"onChange($event.target.value)\">\n                  <label [for]=\"tp.description\">{{tp.description}}</label>\n                </div>\n              </li>\n            </ul>\n          </div>\n        </section>\n      </div>\n    </div>\n\n    <div *ngIf=\"gen.showTables\">\n\n      <div class=\"row\">\n        <div *ngIf=\"gen.produces.length >0\" class=\"col-xs-12 col-md-12 col-lg-12 col-xl-12\">\n          <h5>\n            <span class=\"text-capitalize\">{{gen.name}}</span> 产生:</h5>\n          <table class=\"table table-compact\">\n            <thead>\n              <tr>\n                <th class=\"w-33\">产物</th>\n                <th class=\"w-33\">1个</th>\n                <th class=\"w-33\">全部</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr *ngFor=\"let item of gen.produces | filterActive\" [ngClass]=\"{'alert alert-warning no-alert': item.efficiency.lessThan(0)}\">\n                <td class=\"w-33 text-capitalize\">\n                  <a [routerLink]=\"['/main/unit/unit/'+item.product.id]\">{{item.product.name}}</a>\n                </td>\n                <td class=\"w-33\">{{item.prodPerSecNoEff | format}}</td>\n                <td class=\"w-33\">{{item.prodPerSec.times(gen.quantity) | format}}</td>\n              </tr>\n            </tbody>\n          </table>\n        </div>\n\n        <div class=\"col-xs-12 col-md-12 col-lg-12 col-xl-12\" *ngIf=\"gameService.game.research.bi.owned()\">\n          <div *ngIf=\"showProducers()\">\n            <h5>\n              <span class=\"text-capitalize\">{{gen.name}}</span> 是由:</h5>\n            <table class=\"table  table-compact\">\n              <thead>\n                <tr>\n                  <th class=\"w-25\">个体</th>\n                  <th class=\"w-25\">数量</th>\n                  <th class=\"w-25\">总计</th>\n                  <th class=\"w-25\">%</th>\n                </tr>\n              </thead>\n              <tfoot>\n                <!-- class=\"bg-info text-white\" -->\n                <tr class=\"alert alert-info no-alert\">\n                  <td>总计</td>\n                  <td>{{gen.totalProducers | format}}</td>\n                  <td>{{gen.totalPerSec | format}}</td>\n                  <td></td>\n                </tr>\n              </tfoot>\n              <tbody>\n                <tr *ngFor=\"let item of gen.producedBy | filterActive; trackBy:getUnitId\" [ngClass]=\"{'alert alert-warning no-alert': item.efficiency.lessThan(0)}\">\n                  <td class=\"text-capitalize\">\n                    <a [routerLink]=\"['/main/unit/unit/'+item.unit.id]\">{{item.unit.name}}</a>\n                  </td>\n                  <td>{{item.unit.quantity | format}}</td>\n                  <td>{{item.prodPerSec.times(item.unit.quantity) | format}}</td>\n                  <td>\n                    <span *ngIf=\"gen.totalPerSec.abs().greaterThan(0)\">\n                      {{item.prodPerSec.times(item.unit.quantity).div(gen.totalPerSec).times(100) | format}}\n                    </span>\n                  </td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n      </div>\n\n    </div>\n\n  </div>\n  <div class=\"col-xs-12 col-md-12 col-lg-6 col-xl-6 no-card-top\">\n    <div class=\"row\">\n      <!-- <div class=\"card-columns\"> -->\n      <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">\n        <app-action [action]=\"act\" *ngFor=\"let act of gen.actions| filterMax; trackBy:getUnitId\"></app-action>\n      </div>\n    </div>\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -4922,7 +5010,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "table {\n  margin-top: 12px; }\n\n.w-33 {\n  width: 33%; }\n\n.w-25 {\n  width: 25%; }\n\n.no-mg-top {\n  margin-top: 0px !important; }\n\n.no-card-top {\n  margin-top: -12px !important; }\n\n.card {\n  margin-top: 12px !important; }\n\n.no-alert {\n  font-size: .54167rem;\n  letter-spacing: normal;\n  line-height: .75rem;\n  position: relative;\n  box-sizing: border-box;\n  display: table-row;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: row;\n  flex-direction: row;\n  width: auto;\n  border-radius: 0px;\n  margin-top: auto; }\n\nsmall {\n  margin-left: 2em; }\n", ""]);
+exports.push([module.i, "table {\n  margin-top: 12px; }\n\n.w-33 {\n  width: 33%; }\n\n.w-25 {\n  width: 25%; }\n\n.no-mg-top {\n  margin-top: 0px !important; }\n\n.no-card-top {\n  margin-top: -12px !important; }\n\n.card {\n  margin-top: 12px !important; }\n\n.no-alert {\n  font-size: .54167rem;\n  letter-spacing: normal;\n  line-height: .75rem;\n  position: relative;\n  box-sizing: border-box;\n  display: table-row;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n  -ms-flex-direction: row;\n  flex-direction: row;\n  width: auto;\n  border-radius: 0px;\n  margin-top: auto; }\n\nsmall {\n  margin-left: 2em; }\n\np {\n  margin-top: 6px; }\n", ""]);
 
 // exports
 
