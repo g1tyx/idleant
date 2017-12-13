@@ -110,7 +110,7 @@ __decorate([
 ], ActionComponent.prototype, "card", void 0);
 __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Input"])(),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__model_units_action__["i" /* Action */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__model_units_action__["i" /* Action */]) === "function" && _a || Object)
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__model_units_action__["a" /* Action */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__model_units_action__["a" /* Action */]) === "function" && _a || Object)
 ], ActionComponent.prototype, "action", void 0);
 ActionComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
@@ -141,7 +141,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".nowrap {\n  white-space: nowrap;\n  overflow: hidden; }\n\n:host /deep/ .content-area {\n  padding: 10px 24px 24px 24px !important; }\n\n.matTab {\n  width: 10% !important;\n  max-width: 110px !important;\n  margin-left: 5px !important; }\n\n.matLink {\n  width: 100% !important;\n  line-height: 24px !important;\n  border-style: solid !important;\n  border-width: 0px 1px 0px 0px !important; }\n\n.navMat {\n  padding-left: 5px !important;\n  height: 48px !important; }\n\n.perSecTab {\n  float: right; }\n\n.main-container .subnav {\n  -webkit-box-flex: 0;\n      -ms-flex: 0 0 48px;\n          flex: 0 0 48px; }\n\n.red {\n  color: #F52F22 !important; }\n\n.small {\n  font-size: 13px; }\n\n.actMinH {\n  min-height: 400px; }\n\n:host /deep/ clr-tree-node {\n  overflow-y: visible !important; }\n\n.multiBuy {\n  border: none;\n  background: none;\n  color: #fafafa;\n  padding: 0;\n  vertical-align: middle;\n  max-width: 2.5rem; }\n\n#multiLabel:before {\n  display: none; }\n\n.branding {\n  min-width: auto !important; }\n\n:host /deep/ .nav-content {\n  padding-bottom: 25px; }\n", ""]);
+exports.push([module.i, ".nowrap {\n  white-space: nowrap;\n  overflow: hidden; }\n\n:host /deep/ .content-area {\n  padding: 10px 24px 24px 24px !important; }\n\n.matTab {\n  width: 10% !important;\n  max-width: 110px !important;\n  margin-left: 5px !important; }\n\n.matLink {\n  width: 100% !important;\n  line-height: 24px !important;\n  border-style: solid !important;\n  border-width: 0px 1px 0px 0px !important; }\n\n.navMat {\n  padding-left: 5px !important;\n  height: 48px !important; }\n\n.perSecTab {\n  float: right; }\n\n.main-container .subnav {\n  -webkit-box-flex: 0;\n      -ms-flex: 0 0 48px;\n          flex: 0 0 48px; }\n\n.red {\n  color: #F52F22 !important; }\n\n.small {\n  font-size: 13px; }\n\n.actMinH {\n  min-height: 400px; }\n\n:host /deep/ clr-tree-node {\n  overflow-y: visible !important; }\n\n.multiBuy {\n  border: none;\n  background: none;\n  color: #fafafa;\n  padding: 0;\n  vertical-align: middle;\n  max-width: 2.5rem; }\n\n#multiLabel:before {\n  display: none; }\n\n.branding {\n  min-width: auto !important; }\n\n:host /deep/ .nav-content {\n  padding-bottom: 25px; }\n\n:host /deep/ .darkFix {\n  background: #1b2a32; }\n", ""]);
 
 // exports
 
@@ -258,6 +258,7 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__prestige_nav_prestige_nav_component__ = __webpack_require__("../../../../../src/app/prestige-nav/prestige-nav.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26_primeng_components_slider_slider__ = __webpack_require__("../../../../primeng/components/slider/slider.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26_primeng_components_slider_slider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_26_primeng_components_slider_slider__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__game_service__ = __webpack_require__("../../../../../src/app/game.service.ts");
 /* unused harmony export Format */
 /* unused harmony export FilterListNotEmpty */
 /* unused harmony export FilterMax */
@@ -279,6 +280,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
 
 
 
@@ -346,17 +351,22 @@ var appRoutes = [
     }
 ];
 var Format = (function () {
-    function Format() {
+    function Format(gameService) {
+        this.gameService = gameService;
     }
     Format.prototype.transform = function (value, short) {
-        return value.abs().lessThan(10) ? value.toNumber().toFixed(2).replace(/\.0+$/, '').replace(".", ",") :
+        return this.gameService.game.options.usaFormat ?
+            (value.abs().lessThan(10) ? value.toNumber().toFixed(2).replace(/\.0+$/, '') :
+                value.abs().lessThan(100) ? value.toNumber().toFixed(1).replace(/\.0+$/, '') :
+                    (value.greaterThanOrEqualTo(0) ? "" : "-") + __WEBPACK_IMPORTED_MODULE_9_swarm_numberformat__["formatShort"](value.abs())) : (value.abs().lessThan(10) ? value.toNumber().toFixed(2).replace(/\.0+$/, '').replace(".", ",") :
             value.abs().lessThan(100) ? value.toNumber().toFixed(1).replace(/\.0+$/, '').replace(".", ",") :
-                (value.greaterThanOrEqualTo(0) ? "" : "-") + __WEBPACK_IMPORTED_MODULE_9_swarm_numberformat__["formatShort"](value.abs());
+                (value.greaterThanOrEqualTo(0) ? "" : "-") + __WEBPACK_IMPORTED_MODULE_9_swarm_numberformat__["formatShort"](value.abs()).replace(".", ","));
     };
     return Format;
 }());
 Format = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__angular_core__["Pipe"])({ name: 'format' })
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__angular_core__["Pipe"])({ name: 'format' }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_27__game_service__["a" /* GameService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_27__game_service__["a" /* GameService */]) === "function" && _a || Object])
 ], Format);
 
 var FilterListNotEmpty = (function () {
@@ -449,6 +459,7 @@ AppModule = __decorate([
     })
 ], AppModule);
 
+var _a;
 //# sourceMappingURL=app.module.js.map
 
 /***/ }),
@@ -838,7 +849,7 @@ var _a;
 /***/ "../../../../../src/app/main-nav/main-nav.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<clr-vertical-nav [clrVerticalNavCollapsible]=\"false\" [clr-nav-level]=\"2\">\n\n  <clr-tree-node *ngFor=\"let list of gameService.game.uiLists; trackBy:getListId\">\n    <span class=\"font-weight-bold\">\n      <clr-icon class=\"alert-icon is-error\" shape=\"exclamation-triangle\" *ngIf=\"list.isEnding\"></clr-icon>\n      {{list.type}}\n    </span>\n\n    <ng-template [(clrIfExpanded)]=\"list.isCollapsed\">\n\n      <div class=\"unit-group\">\n        <clr-tree-node *ngFor=\"let g of list.uiList; trackBy:getUnitId\">\n          <a [routerLink]=\"['./unit/'+g.id]\" class=\"clr-treenode-link\" routerLinkActive=\"active\">\n            <span class=\"resName\">\n              <clr-icon class=\"is-info\" shape=\"angle-double\" *ngIf=\"g.showUp\"></clr-icon>\n              <clr-icon class=\"alert-icon is-error\" shape=\"exclamation-triangle\" *ngIf=\"g.isEnding()\"></clr-icon>\n              <clr-icon class=\"is-warning is-solid\" shape=\"pause\" *ngIf=\"g.isStopped()\"></clr-icon>\n\n              {{g.name}}</span>\n            <span class=\"perSec\">\n              <span *ngIf=\"g.totalPerSec.abs().greaterThan(0.001)\">\n                {{g.totalPerSec | format:true}}/s\n              </span>\n            </span>\n            <span>{{g.quantity | format:true}}</span>\n            <!-- <span *ngIf=\"g.buyAction && g.buyAction.quantity.greaterThan(0)\"> / {{g.buyAction.quantity | format:true}}</span> -->\n          </a>\n        </clr-tree-node>\n      </div>\n\n    </ng-template>\n  </clr-tree-node>\n\n</clr-vertical-nav>\n<router-outlet></router-outlet>\n"
+module.exports = "<clr-vertical-nav [clrVerticalNavCollapsible]=\"false\" [clr-nav-level]=\"2\">\n\n  <clr-tree-node *ngFor=\"let list of gameService.game.uiLists; trackBy:getListId\">\n    <span class=\"font-weight-bold\">\n      <clr-icon class=\"alert-icon is-error\" shape=\"exclamation-triangle\" *ngIf=\"list.isEnding\"></clr-icon>\n      {{list.type}}\n    </span>\n\n    <ng-template [(clrIfExpanded)]=\"list.isCollapsed\">\n\n      <div class=\"unit-group\">\n        <clr-tree-node *ngFor=\"let g of list.uiList; trackBy:getUnitId\">\n          <a [routerLink]=\"['./unit/'+g.id]\" class=\"clr-treenode-link\" routerLinkActive=\"active\">\n            <span class=\"resName\">\n              <clr-icon class=\"is-info\" shape=\"angle-double\" *ngIf=\"g.showUp\"></clr-icon>\n              <clr-icon class=\"alert-icon is-error\" shape=\"exclamation-triangle\" *ngIf=\"g.isEnding()\"></clr-icon>\n              <clr-icon class=\"is-warning is-solid\" shape=\"pause\" *ngIf=\"g.isStopped()\"\n               (click)=\"g.percentage = 100\"></clr-icon>\n\n              {{g.name}}</span>\n            <span class=\"perSec\">\n              <span *ngIf=\"g.totalPerSec.abs().greaterThan(0.001)\">\n                {{g.totalPerSec | format:true}}/s\n              </span>\n            </span>\n            <span>{{g.quantity | format:true}}</span>\n            <!-- <span *ngIf=\"g.buyAction && g.buyAction.quantity.greaterThan(0)\"> / {{g.buyAction.quantity | format:true}}</span> -->\n          </a>\n        </clr-tree-node>\n      </div>\n\n    </ng-template>\n  </clr-tree-node>\n\n</clr-vertical-nav>\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -1056,8 +1067,8 @@ var GameModel = (function () {
         this.expTabAv = false;
         this.homeTabAv = false;
         this.minUser = 0;
-        this.maxUser = 1000;
-        this.maxMax = 1000;
+        this.maxUser = 1;
+        this.maxMax = 1;
         // ui stuff
         this.isLab = false;
         this.pause = false;
@@ -1210,7 +1221,7 @@ var GameModel = (function () {
                     || res.b.lessThan(0)
                     || res.c.lessThan(0)
                     || d.lessThan(0)) {
-                    var solution = __WEBPACK_IMPORTED_MODULE_2__utils__["a" /* Utils */].solveCubic(res.a, res.b, res.c, d).filter(function (s) { return s.greaterThan(0); });
+                    var solution = __WEBPACK_IMPORTED_MODULE_2__utils__["b" /* Utils */].solveCubic(res.a, res.b, res.c, d).filter(function (s) { return s.greaterThan(0); });
                     if (d.lessThan(Number.EPSILON)) {
                         res.quantity = new Decimal(0);
                     }
@@ -1420,7 +1431,7 @@ var GameModel = (function () {
             //  Fixes for older savegame, corrupted...
             this.science.science1Production.unlocked = true;
             this.resList.filter(function (r) { return r.owned(); }).forEach(function (r) {
-                return r.toUnlock.filter(function (t) { return t instanceof __WEBPACK_IMPORTED_MODULE_4__units_action__["a" /* Research */] && !t.owned(); })
+                return r.toUnlock.filter(function (t) { return t instanceof __WEBPACK_IMPORTED_MODULE_4__units_action__["b" /* Research */] && !t.owned(); })
                     .forEach(function (t2) { return t2.unlocked = true; });
             });
             this.unitWithUp = this.all.filter(function (u) { return u.unlocked && (u.upHire || u.upSpecial || u.upAction); });
@@ -1504,6 +1515,7 @@ var Options = (function () {
     function Options() {
         this.header = 5;
         this.dark = false;
+        this.usaFormat = false;
     }
     Options.prototype.apply = function () {
         setCss(this.dark);
@@ -1513,6 +1525,8 @@ var Options = (function () {
             this.header = data.header;
         if (data.dark)
             this.dark = data.dark;
+        if (data.usaFormat)
+            this.usaFormat = data.usaFormat;
     };
     return Options;
 }());
@@ -1586,7 +1600,7 @@ var Production = (function (_super) {
         this.prodPerSecNoEff = this.getprodPerSec(false);
     };
     return Production;
-}(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* Unlocable */]));
+}(__WEBPACK_IMPORTED_MODULE_0__utils__["a" /* Unlocable */]));
 
 //# sourceMappingURL=production.js.map
 
@@ -1630,16 +1644,16 @@ var TypeList = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base__ = __webpack_require__("../../../../../src/app/model/units/base.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__cost__ = __webpack_require__("../../../../../src/app/model/cost.ts");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return Action; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return BuyAction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return BuyAndUnlockAction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Research; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return UpAction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return UpSpecial; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return UpHire; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Action; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return BuyAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return BuyAndUnlockAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Research; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return UpAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return UpSpecial; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return UpHire; });
 /* unused harmony export UnlockProd */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return TimeWarp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Resupply; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return TimeWarp; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Resupply; });
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -1734,7 +1748,7 @@ var Action = (function (_super) {
         if (this.oneTime && max.greaterThanOrEqualTo(1))
             return new Decimal(1);
         if (this.limit)
-            max = Decimal.min(max, this.limit.minus(this.quantity));
+            max = Decimal.min(max, this.limit.minus(this.quantity).plus(1));
         return max;
     };
     Action.prototype.owned = function () {
@@ -2022,7 +2036,7 @@ var Base = (function (_super) {
         return this.id;
     };
     return Base;
-}(__WEBPACK_IMPORTED_MODULE_0__utils__["b" /* Unlocable */]));
+}(__WEBPACK_IMPORTED_MODULE_0__utils__["a" /* Unlocable */]));
 
 //# sourceMappingURL=base.js.map
 
@@ -2231,8 +2245,8 @@ var Unit = (function (_super) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Utils; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Unlocable; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Utils; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Unlocable; });
 var Utils = (function () {
     function Utils() {
     }
@@ -2689,7 +2703,7 @@ var BaseWorld = (function () {
         this.ice = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "ice", "冰", "冰");
         this.listMaterial.push(this.ice);
         //    Fungus
-        this.fungus.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpSpecial */](this.game, this.fungus));
+        this.fungus.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["i" /* UpSpecial */](this.game, this.fungus));
     };
     BaseWorld.prototype.declareGenerators = function () {
         this.littleAnt = new __WEBPACK_IMPORTED_MODULE_1__units_unit__["a" /* Unit */](this.game, "G1", "蚂蚁", "蚂蚁是最低级的工人。 他们不断收集食物。");
@@ -2722,12 +2736,12 @@ var BaseWorld = (function () {
         this.list.push(this.littleAnt, this.queenAnt, this.nestAnt);
         // this.list.forEach(ant => ant.types = [Type.Ant, Type.Generator])
         this.littleAnt.unlocked = true;
-        this.littleAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.littleAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, new Decimal(15), new Decimal(this.game.buyExp))], [this.queenAnt]));
-        this.queenAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.queenAnt, [
+        this.littleAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* BuyAndUnlockAction */](this.game, this.littleAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, new Decimal(15), new Decimal(this.game.buyExp))], [this.queenAnt]));
+        this.queenAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* BuyAndUnlockAction */](this.game, this.queenAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, new Decimal(8E2), new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(20), new Decimal(this.game.buyExpUnit))
         ], [this.nestAnt, this.geologist]));
-        this.nestAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.nestAnt, [
+        this.nestAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.nestAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.prestigeFood, new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.soil, this.prestigeOther1, new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.wood, this.prestigeOther2, new Decimal(this.game.buyExp)),
@@ -2736,8 +2750,8 @@ var BaseWorld = (function () {
         for (var i = 0; i < this.list.length - 1; i++)
             this.list[i].addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.list[i + 1]));
         for (var i = 0; i < this.list.length; i++) {
-            this.list[i].actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.list[i], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.science, new Decimal(new Decimal(100).times(Decimal.pow(10, new Decimal(i)))), this.game.upgradeScienceExp)]));
-            this.list[i].actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.list[i], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.science, new Decimal(new Decimal(100).times(Decimal.pow(10, new Decimal(i)))), this.game.upgradeScienceHireExp)]));
+            this.list[i].actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.list[i], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.science, new Decimal(new Decimal(100).times(Decimal.pow(10, new Decimal(i)))), this.game.upgradeScienceExp)]));
+            this.list[i].actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.list[i], [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.science, new Decimal(new Decimal(100).times(Decimal.pow(10, new Decimal(i)))), this.game.upgradeScienceHireExp)]));
         }
         this.list = this.list.reverse();
     };
@@ -2757,43 +2771,43 @@ var BaseWorld = (function () {
         this.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.advancedHunter, new Decimal(-10)));
         this.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.advancedHunter, new Decimal(-5)));
         //    Geologist
-        this.geologist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.geologist, [
+        this.geologist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* BuyAndUnlockAction */](this.game, this.geologist, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), this.game.buyExpUnit)
         ], [this.crystal, this.game.science.student]));
         //    Carpenter
-        this.carpenter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.carpenter, [
+        this.carpenter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* BuyAndUnlockAction */](this.game, this.carpenter, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood, new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit))
         ], [this.science]));
         //    Lumberjack
-        this.lumberjack.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.lumberjack, [
+        this.lumberjack.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* BuyAndUnlockAction */](this.game, this.lumberjack, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood, new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.soil, this.price2, new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit)),
         ], [this.wood]));
         //    Farmer
-        this.farmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.farmer, [
+        this.farmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* BuyAndUnlockAction */](this.game, this.farmer, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood, new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.soil, this.price2, new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit)),
         ], [this.fungus]));
         //    Hunter
-        this.hunter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.hunter, [
+        this.hunter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.hunter, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood.div(1.5), new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.wood, this.price2.div(1.5), new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit)),
         ]));
         //    Hunter 2
-        this.advancedHunter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.advancedHunter, [
+        this.advancedHunter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.advancedHunter, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.baseFood, new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.wood, this.price2, new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crystal, this.price2.div(1.5), new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit)),
         ]));
         this.level1.forEach(function (l) {
-            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost2, _this.game.upgradeScienceExp)]));
-            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost2, _this.game.upgradeScienceHireExp)]));
+            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost2, _this.game.upgradeScienceExp)]));
+            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost2, _this.game.upgradeScienceHireExp)]));
         });
         //
         //    Special
@@ -2801,7 +2815,7 @@ var BaseWorld = (function () {
         //  Composter
         // this.composterAnt.types = [Type.Ant]
         this.level2.push(this.composterAnt);
-        this.composterAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.composterAnt, [
+        this.composterAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.composterAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.specialFood, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.wood, this.specialRes2, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), this.game.buyExpUnit)
@@ -2811,7 +2825,7 @@ var BaseWorld = (function () {
         //  Refinery
         // this.refineryAnt.types = [Type.Ant]
         this.level2.push(this.refineryAnt);
-        this.refineryAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.refineryAnt, [
+        this.refineryAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.refineryAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.specialFood, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.soil, this.specialRes2, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), this.game.buyExpUnit)
@@ -2821,7 +2835,7 @@ var BaseWorld = (function () {
         //  Laser
         //   this.laserAnt.types = [Type.Ant]
         this.level2.push(this.laserAnt);
-        this.laserAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.laserAnt, [
+        this.laserAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.laserAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.specialFood, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.sand, this.specialRes2, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), this.game.buyExpUnit)
@@ -2831,7 +2845,7 @@ var BaseWorld = (function () {
         //  Hydro
         //  this.hydroAnt.types = [Type.Ant]
         this.level2.push(this.hydroAnt);
-        this.hydroAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.hydroAnt, [
+        this.hydroAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.hydroAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.specialFood, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crystal, this.specialRes2, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), this.game.buyExpUnit)
@@ -2841,7 +2855,7 @@ var BaseWorld = (function () {
         //  Planter
         //    this.planterAnt.types = [Type.Ant]
         this.level2.push(this.planterAnt);
-        this.planterAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.planterAnt, [
+        this.planterAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.planterAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.food, this.specialFood, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.fungus, this.specialRes2, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.littleAnt, new Decimal(1), this.game.buyExpUnit)
@@ -2849,8 +2863,8 @@ var BaseWorld = (function () {
         this.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.planterAnt, this.specialProduction));
         this.fungus.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.planterAnt, this.specialCost));
         this.level2.forEach(function (l) {
-            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost3, _this.game.upgradeScienceExp)]));
-            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost3, _this.game.upgradeScienceHireExp)]));
+            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost3, _this.game.upgradeScienceExp)]));
+            l.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](_this.game, l, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.science, _this.game.scienceCost3, _this.game.upgradeScienceHireExp)]));
         });
     };
     BaseWorld.prototype.addWorld = function () {
@@ -2932,34 +2946,34 @@ var Beach = (function () {
         this.beachList.push(this.shark2);
         this.beachList.push(this.shark);
         //    Shark 2
-        this.sharkRes2 = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("sharkRes2", "大鲨鱼", "解锁大鲨鱼。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E9))], [this.shark2], this.game);
+        this.sharkRes2 = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("sharkRes2", "大鲨鱼", "解锁大鲨鱼。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E9))], [this.shark2], this.game);
         //    Shark
-        this.sharkRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("sharkRes", "鲨鱼", "解锁鲨鱼", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E6))], [this.shark, this.sharkRes2], this.game);
+        this.sharkRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("sharkRes", "鲨鱼", "解锁鲨鱼", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E6))], [this.shark, this.sharkRes2], this.game);
         //    lobster
-        this.lobsterRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("lobsterRes", "龙虾", "解锁龙虾。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E5))], [this.lobster, this.sharkRes], this.game);
+        this.lobsterRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("lobsterRes", "龙虾", "解锁龙虾。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E5))], [this.lobster, this.sharkRes], this.game);
         //    shrimp
-        this.shrimpRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("shrimpRes", "虾", "解锁虾。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(2E3))], [this.shrimp], this.game);
+        this.shrimpRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("shrimpRes", "虾", "解锁虾。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(2E3))], [this.shrimp], this.game);
         //    Crab Jobs
-        this.crabJobRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("crabJobRes", "螃蟹作业", "为您的螃蟹解锁更多的工作。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1.5E3))], [this.crabFarmer, this.crabScientist], this.game);
+        this.crabJobRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("crabJobRes", "螃蟹作业", "为您的螃蟹解锁更多的工作。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1.5E3))], [this.crabFarmer, this.crabScientist], this.game);
         //    Research
-        this.seaRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("seaRes", "海上助手", "解锁海上助手。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(30))], [this.crab, this.crabQueen, this.crabJobRes, this.shrimpRes, this.lobsterRes], this.game);
+        this.seaRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("seaRes", "海上助手", "解锁海上助手。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(30))], [this.crab, this.crabQueen, this.crabJobRes, this.shrimpRes, this.lobsterRes], this.game);
         this.seaRes.avabileBaseWorld = false;
         this.game.lists.push(new __WEBPACK_IMPORTED_MODULE_4__typeList__["a" /* TypeList */]("海滩", this.beachList));
     };
     Beach.prototype.initStuff = function () {
         //    Crab
-        this.crab.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.crab, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E3), this.game.buyExp)]));
-        this.crab.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.crab, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.crab.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.crab, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
+        this.crab.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.crab, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E3), this.game.buyExp)]));
+        this.crab.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.crab, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.crab.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.crab, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
         this.game.baseWorld.sand.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crab));
         //    Crab Farmer
-        this.crabFarmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.crabFarmer, [
+        this.crabFarmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.crabFarmer, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E3), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.sand, new Decimal(100), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crab, new Decimal(1), this.game.buyExpUnit)
         ]));
-        this.crabFarmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.crabFarmer, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.crabFarmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.crabFarmer, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
+        this.crabFarmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.crabFarmer, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.crabFarmer.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.crabFarmer, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
         this.game.baseWorld.fungus.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crabFarmer));
         this.game.baseWorld.sand.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crabFarmer, new Decimal(-1)));
         var specialProduction = new Decimal(15);
@@ -2967,65 +2981,65 @@ var Beach = (function () {
         var specialFood = new Decimal(1E7);
         var specialRes2 = new Decimal(1E4);
         //    Crab Scientist
-        this.crabScientist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.crabScientist, [
+        this.crabScientist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.crabScientist, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, specialFood.div(5), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.sand, specialRes2.div(5), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crab, new Decimal(1), this.game.buyExpUnit)
         ]));
-        this.crabScientist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.crabScientist, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.times(1.5), this.game.upgradeScienceExp)]));
-        this.crabScientist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.crabScientist, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.times(1.5), this.game.upgradeScienceHireExp)]));
+        this.crabScientist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.crabScientist, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.times(1.5), this.game.upgradeScienceExp)]));
+        this.crabScientist.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.crabScientist, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.times(1.5), this.game.upgradeScienceHireExp)]));
         this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crabScientist, specialProduction.times(0.75)));
         this.game.baseWorld.sand.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crabScientist, specialCost));
         //    Crab Queen ?!
         //    Not sure if really exists
-        this.crabQueen.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.crabQueen, [
+        this.crabQueen.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* BuyAndUnlockAction */](this.game, this.crabQueen, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E5), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crab, new Decimal(50), this.game.buyExpUnit)
         ], [this.crabNest]));
-        this.crabQueen.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.crabQueen, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
-        this.crabQueen.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.crabQueen, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceHireExp)]));
+        this.crabQueen.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.crabQueen, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.crabQueen.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.crabQueen, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceHireExp)]));
         this.crab.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crabQueen));
         //    Crab Nest
-        this.crabNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.crabNest, [
+        this.crabNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.crabNest, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.baseWorld.prestigeFood.div(1.5), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.sand, this.game.baseWorld.prestigeOther1.times(2), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.crabQueen, new Decimal(250), this.game.buyExpUnit)
         ]));
-        this.crabNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.crabNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
-        this.crabNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.crabNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceHireExp)]));
+        this.crabNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.crabNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
+        this.crabNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.crabNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceHireExp)]));
         this.crabQueen.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.crabNest));
         //    Shrimp
-        this.shrimp.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.shrimp, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(3E3), this.game.buyExp)]));
-        this.shrimp.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.shrimp, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.shrimp.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.shrimp, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
+        this.shrimp.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.shrimp, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(3E3), this.game.buyExp)]));
+        this.shrimp.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.shrimp, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.shrimp.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.shrimp, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
         this.game.baseWorld.sand.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.shrimp));
         this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.shrimp, new Decimal(0.5)));
         //    lobster
         var lobsterScience = this.game.scienceCost3.times(1.5);
-        this.lobster.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.lobster, [
+        this.lobster.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.lobster, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.machines.price1.times(5000), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.sand, this.game.machines.price1.times(1.5), this.game.buyExp)
         ]));
-        this.lobster.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.lobster, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, lobsterScience, this.game.upgradeScienceExp)]));
-        this.lobster.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.lobster, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, lobsterScience, this.game.upgradeScienceHireExp)]));
+        this.lobster.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.lobster, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, lobsterScience, this.game.upgradeScienceExp)]));
+        this.lobster.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.lobster, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, lobsterScience, this.game.upgradeScienceHireExp)]));
         this.game.baseWorld.sand.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.lobster, this.game.machines.machineryProd.div(5)));
         this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.lobster, this.game.machines.machineryProd.div(10)));
         // Shark
-        this.shark.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.shark, [
+        this.shark.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.shark, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.machines.price1.times(50000), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.game.machines.price1.times(5), this.game.buyExp)
         ]));
-        this.shark.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.shark, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
-        this.shark.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.shark, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceHireExp)]));
+        this.shark.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.shark, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
+        this.shark.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.shark, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceHireExp)]));
         this.game.baseWorld.food.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.shark, this.game.machines.machineryProd.times(100)));
         this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.shark, this.game.machines.machineryProd.times(50)));
         // Shark 2
-        this.shark2.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.shark2, [
+        this.shark2.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.shark2, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.machines.price1.times(500000), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.shark, new Decimal(100), this.game.buyExpUnit)
         ]));
-        this.shark2.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.shark2, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4.times(5), this.game.upgradeScienceExp)]));
-        this.shark2.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.shark2, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4.times(5), this.game.upgradeScienceHireExp)]));
+        this.shark2.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.shark2, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4.times(5), this.game.upgradeScienceExp)]));
+        this.shark2.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.shark2, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4.times(5), this.game.upgradeScienceHireExp)]));
         this.shark.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.shark2));
     };
     Beach.prototype.addWorld = function () {
@@ -3096,32 +3110,32 @@ var Bee = (function () {
         var beeHireUp = this.game.upgradeScienceHireExp.times(0.8);
         //    Foragging
         // this.foragingBee.types = [Type.Bee]
-        this.foragingBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.foragingBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(100), this.game.buyExp)]));
+        this.foragingBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["c" /* BuyAction */](this.game, this.foragingBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(100), this.game.buyExp)]));
         this.game.baseWorld.nectar.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.foragingBee));
-        this.foragingBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.foragingBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, beeTeamUp)]));
-        this.foragingBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.foragingBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, beeHireUp)]));
+        this.foragingBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpAction */](this.game, this.foragingBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, beeTeamUp)]));
+        this.foragingBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["h" /* UpHire */](this.game, this.foragingBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, beeHireUp)]));
         // this.queenBee.types = [Type.Bee]
         // this.hiveBee.types = [Type.Bee]
         //    Worker
         // this.workerBee.types = [Type.Bee]
-        this.workerBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["d" /* BuyAndUnlockAction */](this.game, this.workerBee, [
+        this.workerBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["e" /* BuyAndUnlockAction */](this.game, this.workerBee, [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.nectar, new Decimal(100), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1000), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, new Decimal(1), this.game.buyExpUnit)
         ], [this.queenBee]));
         this.game.baseWorld.nectar.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.workerBee, new Decimal(-2)));
         this.game.baseWorld.honey.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.workerBee, new Decimal(1.5)));
-        this.workerBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.workerBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeTeamUp)]));
-        this.workerBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.workerBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeHireUp)]));
+        this.workerBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpAction */](this.game, this.workerBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeTeamUp)]));
+        this.workerBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["h" /* UpHire */](this.game, this.workerBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeHireUp)]));
         //  Queen
-        this.queenBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["d" /* BuyAndUnlockAction */](this.game, this.queenBee, [
+        this.queenBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["e" /* BuyAndUnlockAction */](this.game, this.queenBee, [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, new Decimal(50), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, new Decimal(1E3), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E6), this.game.buyExp),
         ], [this.hiveBee]));
         this.foragingBee.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.queenBee));
         //  Hive
-        this.hiveBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.hiveBee, [
+        this.hiveBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["c" /* BuyAction */](this.game, this.hiveBee, [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.queenBee, new Decimal(100), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, this.game.baseWorld.prestigeOther1.times(1.5), this.game.buyExp.times(1.1)),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.baseWorld.prestigeFood.times(0.8), this.game.buyExp),
@@ -3129,13 +3143,13 @@ var Bee = (function () {
         this.queenBee.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.hiveBee));
         this.foragingBee.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.hiveBee, new Decimal(-5)));
         this.workerBee.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.hiveBee, new Decimal(5)));
-        this.queenBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.queenBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, beeTeamUp)]));
-        this.queenBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.queenBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, new Decimal(10))]));
-        this.hiveBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.hiveBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, beeTeamUp)]));
-        this.hiveBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.hiveBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, beeHireUp)]));
+        this.queenBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpAction */](this.game, this.queenBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, beeTeamUp)]));
+        this.queenBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["h" /* UpHire */](this.game, this.queenBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, new Decimal(10))]));
+        this.hiveBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpAction */](this.game, this.hiveBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, beeTeamUp)]));
+        this.hiveBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["h" /* UpHire */](this.game, this.hiveBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, beeHireUp)]));
         //    Scientist
         // this.scientistBee.types = [Type.Bee]
-        this.scientistBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.scientistBee, [
+        this.scientistBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["c" /* BuyAction */](this.game, this.scientistBee, [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, new Decimal(1), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, new Decimal(6E3), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.crystal, new Decimal(4E3), this.game.buyExp),
@@ -3143,20 +3157,20 @@ var Bee = (function () {
         this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.scientistBee, new Decimal(15)));
         this.game.baseWorld.honey.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.scientistBee, new Decimal(-2)));
         this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.scientistBee, new Decimal(-1)));
-        this.scientistBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.scientistBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeTeamUp)]));
-        this.scientistBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.scientistBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeHireUp)]));
+        this.scientistBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpAction */](this.game, this.scientistBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeTeamUp)]));
+        this.scientistBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["h" /* UpHire */](this.game, this.scientistBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, beeHireUp)]));
         //    Food
         // this.foodBee.types = [Type.Bee]
-        this.foodBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.foodBee, [
+        this.foodBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["c" /* BuyAction */](this.game, this.foodBee, [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, new Decimal(1), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, new Decimal(1E3), this.game.buyExp)
         ]));
         this.game.baseWorld.food.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.foodBee, new Decimal(15)));
         this.game.baseWorld.honey.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.foodBee, new Decimal(-5)));
-        this.foodBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.foodBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E3), new Decimal(10))]));
-        this.foodBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.foodBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E3), new Decimal(10))]));
+        this.foodBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpAction */](this.game, this.foodBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E3), new Decimal(10))]));
+        this.foodBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["h" /* UpHire */](this.game, this.foodBee, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E3), new Decimal(10))]));
         //    University
-        this.universityBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.universityBee, [
+        this.universityBee.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["c" /* BuyAction */](this.game, this.universityBee, [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.foragingBee, new Decimal(1E3), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.wood, this.game.machines.price1, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.game.machines.price2, this.game.buyExp),
@@ -3167,39 +3181,39 @@ var Bee = (function () {
         this.game.engineers.beeEnginer.addProductor(this.engineersProd);
         this.universityBee.togableProductions = [new __WEBPACK_IMPORTED_MODULE_0__units_togableProductions__["a" /* TogableProduction */]("产生蜜蜂工程师", [this.engineersProd])];
         //  Bear
-        this.bear.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.bear, [
+        this.bear.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["c" /* BuyAction */](this.game, this.bear, [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.machines.price1.times(50000), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, this.game.machines.price1.times(5), this.game.buyExp)
         ]));
-        this.bear.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.bear, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
-        this.bear.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.bear, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceHireExp)]));
+        this.bear.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpAction */](this.game, this.bear, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.bear.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["h" /* UpHire */](this.game, this.bear, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceHireExp)]));
         this.game.baseWorld.honey.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.bear, this.game.machines.machineryCost));
         this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.bear, this.game.machines.machineryProd.times(50)));
         this.game.baseWorld.soil.addProductor(this.bearSoilProduction);
         this.game.baseWorld.crystal.addProductor(this.bearCrystalProduction);
         //  Panda
-        this.panda.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.panda, [
+        this.panda.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["c" /* BuyAction */](this.game, this.panda, [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.machines.price1.times(50000), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.honey, this.game.machines.price1.times(5), this.game.buyExp)
         ]));
-        this.panda.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.panda, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.div(5), this.game.upgradeScienceExp)]));
-        this.panda.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.panda, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.div(5), this.game.upgradeScienceHireExp)]));
+        this.panda.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpAction */](this.game, this.panda, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.div(5), this.game.upgradeScienceExp)]));
+        this.panda.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["h" /* UpHire */](this.game, this.panda, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.div(5), this.game.upgradeScienceHireExp)]));
         this.game.baseWorld.honey.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.panda, this.game.machines.machineryCost));
         this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.panda, this.game.machines.machineryProd.times(50)));
         //  Bears crystall
-        this.bear3Res = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("bg3Res", "采矿熊", "熊也产生水晶。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E8))], [this.bearCrystalProduction], this.game);
+        this.bear3Res = new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* Research */]("bg3Res", "采矿熊", "熊也产生水晶。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E8))], [this.bearCrystalProduction], this.game);
         //  Bears soil
-        this.bear2Res = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("bg2Res", "木匠熊", "熊也会产生土壤。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E6))], [this.bearSoilProduction, this.bear3Res], this.game);
+        this.bear2Res = new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* Research */]("bg2Res", "木匠熊", "熊也会产生土壤。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E6))], [this.bearSoilProduction, this.bear3Res], this.game);
         //  Bears
-        this.bearRes = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("bgRes", "熊", "熊喜欢蜂蜜。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E5))], [this.bear, this.panda, this.bear2Res], this.game);
+        this.bearRes = new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* Research */]("bgRes", "熊", "熊喜欢蜂蜜。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E5))], [this.bear, this.panda, this.bear2Res], this.game);
         //  Dep of bee
-        this.universityResBee2 = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("uniResBee2", "蜜蜂工程系", "蜜蜂大学还产生蜜蜂工程师。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(7E7))], [this.engineersProd], this.game);
+        this.universityResBee2 = new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* Research */]("uniResBee2", "蜜蜂工程系", "蜜蜂大学还产生蜜蜂工程师。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(7E7))], [this.engineersProd], this.game);
         //  Research
-        this.universityResBee = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("universityResBee", "蜜蜂大学", "获得一所蜜蜂大学。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(6E6))], [this.universityBee, this.universityResBee2], this.game);
+        this.universityResBee = new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* Research */]("universityResBee", "蜜蜂大学", "获得一所蜜蜂大学。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(6E6))], [this.universityBee, this.universityResBee2], this.game);
         //  Research
-        this.advancedBee = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("advBee", "高级蜜蜂", "蜜蜂更多的工作种类。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E3))], [this.scientistBee, this.foodBee, this.universityResBee, this.bearRes], this.game);
+        this.advancedBee = new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* Research */]("advBee", "高级蜜蜂", "蜜蜂更多的工作种类。", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E3))], [this.scientistBee, this.foodBee, this.universityResBee, this.bearRes], this.game);
         //    Bee
-        this.beeResearch = new __WEBPACK_IMPORTED_MODULE_3__units_action__["a" /* Research */]("beeRes", "蜜蜂", "解锁蜜蜂 !", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(0))], [this.game.baseWorld.nectar, this.foragingBee, this.workerBee, this.game.baseWorld.honey, this.advancedBee], this.game);
+        this.beeResearch = new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* Research */]("beeRes", "蜜蜂", "解锁蜜蜂 !", [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(0))], [this.game.baseWorld.nectar, this.foragingBee, this.workerBee, this.game.baseWorld.honey, this.advancedBee], this.game);
         this.beeResearch.avabileBaseWorld = false;
     };
     Bee.prototype.addWorld = function () {
@@ -3316,12 +3330,12 @@ var Engineers = (function () {
     Engineers.prototype.initStuff = function () {
         var _this = this;
         this.listEnginer.forEach(function (e) {
-            e.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](_this.game, e, [
+            e.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](_this.game, e, [
                 new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.game.baseWorld.littleAnt, new Decimal(1E4), _this.game.buyExpUnit),
                 new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.game.baseWorld.science, _this.game.scienceCost3, _this.game.buyExp)
             ]));
-            e.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](_this.game, e, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.game.baseWorld.science, _this.game.scienceCost4, _this.game.upgradeScienceExp)]));
-            e.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](_this.game, e, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.game.baseWorld.science, _this.game.scienceCost4, _this.game.upgradeScienceHireExp)]));
+            e.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](_this.game, e, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.game.baseWorld.science, _this.game.scienceCost4, _this.game.upgradeScienceExp)]));
+            e.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](_this.game, e, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](_this.game.baseWorld.science, _this.game.scienceCost4, _this.game.upgradeScienceHireExp)]));
         });
         var _loop_1 = function (i) {
             var engineer = this_1.listEnginer[i];
@@ -3351,7 +3365,7 @@ var Engineers = (function () {
             var dep = this.listDep[i];
             engineer.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](dep, new Decimal(1)));
             this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](dep, new Decimal(-2000)));
-            dep.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, dep, [
+            dep.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, dep, [
                 new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.science.university, new Decimal(1), this.game.buyExpUnit),
                 new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](engineer, new Decimal(100), this.game.buyExp),
                 new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](machine, new Decimal(1E4), this.game.buyExp)
@@ -3413,15 +3427,15 @@ var Forest = (function () {
         this.beetleWoodProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetle, new Decimal(0.4), false);
         this.beetleSoilProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetle, new Decimal(0.2), false);
         this.beetleCrystalProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.beetle, new Decimal(0.1), false);
-        this.moleScienceProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.mole, this.game.machines.machineryProd.times(45), false);
-        var moleRes2 = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("mo2Res", "鼹鼠窝", "解锁鼹鼠窝", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E7))], [this.moleNest], this.game);
-        var moleSciRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("moleRes", "科学家鼹鼠", "鼹鼠也产生科学", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E6))], [this.moleScienceProduction], this.game);
-        var moleRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("moleRes", "鼹鼠", "解锁鼹鼠", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E5))], [this.mole, moleSciRes, moleRes2], this.game);
-        var beetleWood = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleWood", "伐木训练", "甲虫也生产木材", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(500))], [this.beetleWoodProduction], this.game);
-        var beetleSoil = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleSoil", "土壤训练", "甲虫也生产土壤", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E4))], [this.beetleSoilProduction], this.game);
-        var beetleCrystal = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleCrystal", "采矿培训", "甲虫也产生水晶", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E6))], [this.beetleCrystalProduction], this.game);
-        var advancedBeetle = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("advBeetle", "高级甲虫作业", "更多的甲虫工作", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E3))], [this.ambrosiaBeetle, this.ladybird, moleRes], this.game);
-        this.beetleResearch = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("beetleRes", "甲虫", "解锁甲壳虫", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(600))], [this.larva, advancedBeetle, beetleWood, beetleSoil, beetleCrystal], this.game);
+        this.moleScienceProduction = new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.mole, this.game.machines.machineryProd.times(10), false);
+        var moleRes2 = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("mo2Res", "鼹鼠窝", "解锁鼹鼠窝", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E7))], [this.moleNest], this.game);
+        var moleSciRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("moleRes", "科学家鼹鼠", "鼹鼠也产生科学", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E6))], [this.moleScienceProduction], this.game);
+        var moleRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("moleRes", "鼹鼠", "解锁鼹鼠", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E5))], [this.mole, moleSciRes, moleRes2], this.game);
+        var beetleWood = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("beetleWood", "伐木训练", "甲虫也生产木材", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(500))], [this.beetleWoodProduction], this.game);
+        var beetleSoil = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("beetleSoil", "土壤训练", "甲虫也生产土壤", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E4))], [this.beetleSoilProduction], this.game);
+        var beetleCrystal = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("beetleCrystal", "采矿培训", "甲虫也产生水晶", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E6))], [this.beetleCrystalProduction], this.game);
+        var advancedBeetle = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("advBeetle", "高级甲虫作业", "更多的甲虫工作", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E3))], [this.ambrosiaBeetle, this.ladybird, moleRes], this.game);
+        this.beetleResearch = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("beetleRes", "甲虫", "解锁甲壳虫", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(600))], [this.larva, advancedBeetle, beetleWood, beetleSoil, beetleCrystal], this.game);
         this.beetleResearch.avabileBaseWorld = false;
     };
     Forest.prototype.initStuff = function () {
@@ -3440,75 +3454,75 @@ var Forest = (function () {
         this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.powderpostBeetle));
         this.game.baseWorld.science.addProductor(this.moleScienceProduction);
         //    Larva
-        this.larva.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.larva, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(10), this.game.buyExp)], [this.beetle, this.powderpostBeetle]));
-        this.larva.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.larva, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, this.game.upgradeScienceExp)]));
-        this.larva.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.larva, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, this.game.upgradeScienceExp)]));
+        this.larva.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* BuyAndUnlockAction */](this.game, this.larva, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(10), this.game.buyExp)], [this.beetle, this.powderpostBeetle]));
+        this.larva.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.larva, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, this.game.upgradeScienceExp)]));
+        this.larva.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.larva, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost1, this.game.upgradeScienceExp)]));
         //    Beetle
-        this.beetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.beetle, [
+        this.beetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* BuyAndUnlockAction */](this.game, this.beetle, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.larva, new Decimal(1), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(4000), this.game.buyExp)
         ], [this.beetleNest]));
-        this.beetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.beetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.beetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.beetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.beetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.beetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.beetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.beetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         //    Beetle Nest
-        this.beetleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["d" /* BuyAndUnlockAction */](this.game, this.beetleNest, [
+        this.beetleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["e" /* BuyAndUnlockAction */](this.game, this.beetleNest, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.beetle, new Decimal(100), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(1E4), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, new Decimal(1E3), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E3), this.game.buyExp)
         ], [this.beetleColony]));
-        this.beetleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.beetleNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
-        this.beetleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.beetleNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.beetleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.beetleNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.beetleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.beetleNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
         //    Beetle Colony
-        this.beetleColony.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.beetleColony, [
+        this.beetleColony.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.beetleColony, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.beetleNest, new Decimal(200), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E10), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(1E6), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, new Decimal(1E5), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, new Decimal(5E4), this.game.buyExp),
         ]));
-        this.beetleColony.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.beetleColony, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
-        this.beetleColony.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.beetleColony, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
+        this.beetleColony.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.beetleColony, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
+        this.beetleColony.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.beetleColony, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
         //    Lady Beetle
-        this.ladybird.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.ladybird, [
+        this.ladybird.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.ladybird, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.larva, new Decimal(1), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, new Decimal(1E4), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E6), this.game.buyExp)
         ]));
-        this.ladybird.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.ladybird, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
-        this.ladybird.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.ladybird, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.ladybird.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.ladybird, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.ladybird.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.ladybird, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
         //    Ambrosia Beetle
-        this.ambrosiaBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.ambrosiaBeetle, [
+        this.ambrosiaBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.ambrosiaBeetle, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.larva, new Decimal(1), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, new Decimal(1E4), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(1E4), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E7), this.game.buyExp)
         ]));
-        this.ambrosiaBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.ambrosiaBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.ambrosiaBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.ambrosiaBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.ambrosiaBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.ambrosiaBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.ambrosiaBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.ambrosiaBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         //    Powderpost
-        this.powderpostBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.powderpostBeetle, [
+        this.powderpostBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.powderpostBeetle, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.larva, new Decimal(1), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(1000), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(5000), this.game.buyExp)
         ]));
-        this.powderpostBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.powderpostBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.powderpostBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.powderpostBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.powderpostBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.powderpostBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.powderpostBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.powderpostBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         //    Mole
-        this.mole.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.mole, [
+        this.mole.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.mole, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, this.game.machines.price1.times(1000), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, this.game.machines.price1.times(2), this.game.buyExp)
         ]));
-        this.mole.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.mole, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.div(10), this.game.upgradeScienceExp)]));
-        this.mole.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.mole, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.div(10), this.game.upgradeScienceExp)]));
+        this.mole.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.mole, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.div(10), this.game.upgradeScienceExp)]));
+        this.mole.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.mole, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3.div(10), this.game.upgradeScienceExp)]));
         this.game.baseWorld.soil.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.mole, this.game.machines.machineryProd.times(50)));
         //    Mole Nest
-        this.moleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.moleNest, [
+        this.moleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.moleNest, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, this.game.machines.price1.times(500), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.mole, new Decimal(100), this.game.buyExpUnit)
         ]));
-        this.moleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.moleNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4.div(10), this.game.upgradeScienceExp)]));
-        this.moleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.moleNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4.div(10), this.game.upgradeScienceExp)]));
+        this.moleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.moleNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4.div(10), this.game.upgradeScienceExp)]));
+        this.moleNest.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.moleNest, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4.div(10), this.game.upgradeScienceExp)]));
         this.mole.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.moleNest));
     };
     Forest.prototype.addWorld = function () {
@@ -3565,38 +3579,38 @@ var Frozen = (function () {
         this.listFreezig.push(this.iceAnt);
         this.listFreezig.push(this.iceDrillAnt);
         this.listFreezig.push(this.iceMelter);
-        var iceResearch2 = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("iceRes2", "喷火器", "用火融化冰。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(800))], [this.iceMelter], this.game);
-        this.iceResearch = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("iceRes", "冰", "冰", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(30))], [this.iceAnt, this.iceDrillAnt, iceResearch2], this.game);
+        var iceResearch2 = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("iceRes2", "喷火器", "用火融化冰。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(800))], [this.iceMelter], this.game);
+        this.iceResearch = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("iceRes", "冰", "冰", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(30))], [this.iceAnt, this.iceDrillAnt, iceResearch2], this.game);
         this.iceResearch.avabileBaseWorld = false;
         this.game.lists.push(new __WEBPACK_IMPORTED_MODULE_4__typeList__["a" /* TypeList */]("冻结", this.listFreezig));
     };
     Frozen.prototype.initStuff = function () {
         //  Ice Provisioner
         this.game.baseWorld.ice.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.iceAnt));
-        this.iceAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.iceAnt, [
+        this.iceAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.iceAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1000), new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit))
         ]));
-        this.iceAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.iceAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.iceAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.iceAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.iceAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.iceAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.iceAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.iceAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         //  Ice Driller
         this.game.baseWorld.ice.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.iceDrillAnt, new Decimal(-10)));
-        this.iceDrillAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.iceDrillAnt, [
+        this.iceDrillAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.iceDrillAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1000), new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit))
         ]));
-        this.iceDrillAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.iceDrillAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.iceDrillAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.iceDrillAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.iceDrillAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.iceDrillAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.iceDrillAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.iceDrillAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         // Ice Melter
         this.game.baseWorld.ice.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.iceMelter, new Decimal(-100)));
         this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.iceMelter, new Decimal(-5)));
-        this.iceMelter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.iceMelter, [
+        this.iceMelter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.iceMelter, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1E7), new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(1E4), new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit))
         ]));
-        this.iceMelter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.iceMelter, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
-        this.iceMelter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.iceMelter, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.iceMelter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.iceMelter, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.iceMelter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.iceMelter, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
     };
     Frozen.prototype.addWorld = function () {
         __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */].worldPrefix.push(new __WEBPACK_IMPORTED_MODULE_5__world__["a" /* World */](this.game, "寒冷", "", [], [
@@ -3666,11 +3680,11 @@ var Infestation = (function () {
         this.listInfestation.push(this.chemistBee);
         this.game.lists.push(new __WEBPACK_IMPORTED_MODULE_4__typeList__["a" /* TypeList */]("侵扰", this.listInfestation));
         //    Weedkiller
-        this.weedkillerRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("weedkillerRes", "除草剂", "除草剂会慢慢杀死有毒植物。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.weedkiller, this.chemistAnt], this.game);
+        this.weedkillerRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("weedkillerRes", "除草剂", "除草剂会慢慢杀死有毒植物。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.weedkiller, this.chemistAnt], this.game);
         //    Flame
-        this.flametrowerRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("flametrowerRes", "喷火器", "烧掉有毒植物。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E3))], [this.flametrowerAnt, this.flametrowerBeetle], this.game);
+        this.flametrowerRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("flametrowerRes", "喷火器", "烧掉有毒植物。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E3))], [this.flametrowerAnt, this.flametrowerBeetle], this.game);
         //    Disinfestation
-        this.basicDisinfestationRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["a" /* Research */]("basicDisinfestationRes", "杀灭", "解锁基本的灭虫单位。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(100))], [
+        this.basicDisinfestationRes = new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* Research */]("basicDisinfestationRes", "杀灭", "解锁基本的灭虫单位。", [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(100))], [
             this.disinfestationAnt, this.disinfestationBeetle,
             this.flametrowerRes, this.weedkillerRes
         ], this.game);
@@ -3690,49 +3704,49 @@ var Infestation = (function () {
         this.game.baseWorld.soil.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.chemistAnt, new Decimal(-10)));
         this.weedkiller.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.chemistAnt, new Decimal(0.1)));
         //  Disinfestation
-        this.disinfestationAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.disinfestationAnt, [
+        this.disinfestationAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.disinfestationAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1000), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, new Decimal(100), this.game.buyExp)
         ]));
-        this.disinfestationAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.disinfestationAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.disinfestationAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.disinfestationAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.disinfestationAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.disinfestationAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.disinfestationAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.disinfestationAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         //  Flametrower
-        this.flametrowerAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.flametrowerAnt, [
+        this.flametrowerAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.flametrowerAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(12E3), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(8E3), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, new Decimal(4E3), this.game.buyExp)
         ]));
-        this.flametrowerAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.flametrowerAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
-        this.flametrowerAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.flametrowerAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.flametrowerAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.flametrowerAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.flametrowerAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.flametrowerAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
         //  Chemist
-        this.chemistAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.chemistAnt, [
+        this.chemistAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.chemistAnt, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(12E3), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, new Decimal(1E5), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, new Decimal(6E4), this.game.buyExp)
         ]));
-        this.chemistAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.chemistAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
-        this.chemistAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.chemistAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
+        this.chemistAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.chemistAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
+        this.chemistAnt.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.chemistAnt, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost4, this.game.upgradeScienceExp)]));
         //    Beetle
-        this.disinfestationBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.disinfestationBeetle, [
+        this.disinfestationBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.disinfestationBeetle, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.forest.larva, new Decimal(1), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(300), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(3000), this.game.buyExp)
         ]));
-        this.disinfestationBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.disinfestationBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.disinfestationBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.disinfestationBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.disinfestationBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.disinfestationBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.disinfestationBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.disinfestationBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         this.disinfestationBeetle.avabileBaseWorld = false;
         //  Flametrower  Beetle
-        this.flametrowerBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.flametrowerBeetle, [
+        this.flametrowerBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.flametrowerBeetle, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.forest.larva, new Decimal(1), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, new Decimal(15E3), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(5E3), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, new Decimal(6E4), this.game.buyExp)
         ]));
-        this.flametrowerBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["f" /* UpAction */](this.game, this.flametrowerBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.flametrowerBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpHire */](this.game, this.flametrowerBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.flametrowerBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["g" /* UpAction */](this.game, this.flametrowerBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.flametrowerBeetle.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["h" /* UpHire */](this.game, this.flametrowerBeetle, [new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
         this.flametrowerBeetle.avabileBaseWorld = false;
     };
     Infestation.prototype.addWorld = function () {
@@ -3812,7 +3826,7 @@ var Machine = (function () {
     Machine.prototype.initStuff = function () {
         //    Composter
         // this.composterStation.types = [Type.Machinery]
-        this.composterStation.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.composterStation, [
+        this.composterStation.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.composterStation, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, this.price1, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, this.price2, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.price3, this.game.buyExp)
@@ -3821,7 +3835,7 @@ var Machine = (function () {
         this.game.baseWorld.wood.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.composterStation, this.machineryCost));
         //    Refinery
         // this.refineryStation.types = [Type.Machinery]
-        this.refineryStation.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.refineryStation, [
+        this.refineryStation.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.refineryStation, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, this.price1, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, this.price2, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, this.price3, this.game.buyExp)
@@ -3830,7 +3844,7 @@ var Machine = (function () {
         this.game.baseWorld.soil.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.refineryStation, this.machineryCost));
         //    Laser
         // this.laserStation.types = [Type.Machinery]
-        this.laserStation.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.laserStation, [
+        this.laserStation.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.laserStation, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.sand, this.price1, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, this.price2, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, this.price3, this.game.buyExp)
@@ -3839,7 +3853,7 @@ var Machine = (function () {
         this.game.baseWorld.sand.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.laserStation, this.machineryCost));
         //    Hydroponic Farm
         // this.hydroFarm.types = [Type.Machinery]
-        this.hydroFarm.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.hydroFarm, [
+        this.hydroFarm.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.hydroFarm, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.price1, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.sand, this.price2, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, this.price3, this.game.buyExp)
@@ -3848,7 +3862,7 @@ var Machine = (function () {
         this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_0__production__["a" /* Production */](this.hydroFarm, this.machineryCost));
         //    Planting Machine
         // this.plantingMachine.types = [Type.Machinery]
-        this.plantingMachine.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.plantingMachine, [
+        this.plantingMachine.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.plantingMachine, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.fungus, this.price1, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.price2, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.sand, this.price3, this.game.buyExp)
@@ -3860,7 +3874,7 @@ var Machine = (function () {
         //    Sand digger
         this.sandDigger.avabileBaseWorld = false;
         // this.sandDigger.types = [Type.Machinery]
-        this.sandDigger.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.sandDigger, [
+        this.sandDigger.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.sandDigger, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, this.price1, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.price2, this.game.buyExp)
         ]));
@@ -3868,7 +3882,7 @@ var Machine = (function () {
         //    Wood
         this.loggingMachine.avabileBaseWorld = false;
         // this.loggingMachine.types = [Type.Machinery]
-        this.loggingMachine.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.loggingMachine, [
+        this.loggingMachine.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.loggingMachine, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, this.price1, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.price2, this.game.buyExp)
         ]));
@@ -3876,7 +3890,7 @@ var Machine = (function () {
         //    Mine
         this.mine.avabileBaseWorld = false;
         // this.mine.types = [Type.Machinery]
-        this.mine.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.mine, [
+        this.mine.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.mine, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, this.price1, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, this.price2, this.game.buyExp)
         ]));
@@ -3884,7 +3898,7 @@ var Machine = (function () {
         //    Honey
         this.honeyMaker.avabileBaseWorld = false;
         // this.honeyMaker.types = [Type.Machinery]
-        this.honeyMaker.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.honeyMaker, [
+        this.honeyMaker.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.honeyMaker, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.nectar, this.price1, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.honey, this.price2, this.game.buyExp)
         ]));
@@ -3893,7 +3907,7 @@ var Machine = (function () {
         //    Ice Compacter
         this.iceCompacter.avabileBaseWorld = false;
         // this.iceCompacter.types = [Type.Machinery]
-        this.iceCompacter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.iceCompacter, [
+        this.iceCompacter.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.iceCompacter, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.price1, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, this.price2, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, this.price3, this.game.buyExp)
@@ -3903,7 +3917,7 @@ var Machine = (function () {
         //    Ice Collector
         this.iceCollector.avabileBaseWorld = false;
         // this.iceCollector.types = [Type.Machinery]
-        this.iceCollector.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.iceCollector, [
+        this.iceCollector.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.iceCollector, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, this.price1, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.soil, this.price2, this.game.buyExp)
         ]));
@@ -3911,7 +3925,7 @@ var Machine = (function () {
         //    Ice Burning Glass
         this.burningGlass.avabileBaseWorld = false;
         // this.burningGlass.types = [Type.Machinery]
-        this.burningGlass.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["b" /* BuyAction */](this.game, this.burningGlass, [
+        this.burningGlass.actions.push(new __WEBPACK_IMPORTED_MODULE_2__units_action__["c" /* BuyAction */](this.game, this.burningGlass, [
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.price1, this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_3__cost__["a" /* Cost */](this.game.baseWorld.wood, this.price2, this.game.buyExp)
         ]));
@@ -3994,7 +4008,7 @@ var Prestige = (function () {
         this.expAnt.push(this.pAntFungus);
         this.expAnt.forEach(function (p) {
             _this.allPrestigeUp.push(p);
-            p.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, p, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(15), expIncrement)]));
+            p.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* BuyAction */](_this.game, p, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(15), expIncrement)]));
             p.unlocked = true;
         });
         this.game.baseWorld.littleAnt.prestigeBonusProduction.push(this.pAntPower);
@@ -4015,7 +4029,7 @@ var Prestige = (function () {
             this.pFarmerNext, this.pCarpenterNext, this.pLumberjackNext];
         this.expFollower.forEach(function (n) {
             _this.allPrestigeUp.push(n);
-            n.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, n, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(10), expIncrement)]));
+            n.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* BuyAction */](_this.game, n, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(10), expIncrement)]));
         });
         this.game.baseWorld.littleAnt.prestigeBonusStart = this.pAntNext;
         this.game.baseWorld.geologist.prestigeBonusStart = this.pGeologistNext;
@@ -4028,7 +4042,7 @@ var Prestige = (function () {
         //#region Machinery
         this.expMachinery = new Array();
         this.pMachineryPower = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this.game, "pMach", "机器能力", "机器的产量和消耗更多的30％的资源。", true);
-        this.pMachineryPower.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.pMachineryPower, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(20), expIncrement)]));
+        this.pMachineryPower.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* BuyAction */](this.game, this.pMachineryPower, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(20), expIncrement)]));
         this.expMachinery.push(this.pMachineryPower);
         this.game.machines.listMachinery.forEach(function (m) { return m.prestigeBonusProduction.push(_this.pMachineryPower); });
         this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("机器", this.expMachinery));
@@ -4046,7 +4060,7 @@ var Prestige = (function () {
         this.expTech.push(this.pHydro);
         this.expTech.push(this.pPlanter);
         this.expTech.forEach(function (p) {
-            p.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, p, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(30), expIncrement)]));
+            p.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* BuyAction */](_this.game, p, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(30), expIncrement)]));
         });
         this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("技术", this.expTech));
         this.game.machines.composterStation.prestigeBonusProduction.push(this.pComposter);
@@ -4074,9 +4088,9 @@ var Prestige = (function () {
         });
         for (var i = 0; i < supplyMaterials.length; i++) {
             var n = this.supplyList[i];
-            var resup = new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* Resupply */](this.game, supplyMaterials[i], n);
+            var resup = new __WEBPACK_IMPORTED_MODULE_1__units_action__["d" /* Resupply */](this.game, supplyMaterials[i], n);
             this.allPrestigeUp.push(n);
-            n.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["d" /* BuyAndUnlockAction */](this.game, n, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(12), expIncrement)], [resup]));
+            n.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["e" /* BuyAndUnlockAction */](this.game, n, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(12), expIncrement)], [resup]));
             supplyMaterials[i].prestigeBonusStart = this.supplyList[i];
             supplyMaterials[i].actions.push(resup);
         }
@@ -4106,7 +4120,7 @@ var Prestige = (function () {
         ];
         var _loop_1 = function (i) {
             var eff = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this_1.game, "eff" + names[i], names[i], names[i] + " 单位消耗的资源减少5％。 最大-50％。", true);
-            var ba = new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this_1.game, eff, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this_1.experience, new Decimal(50), expIncrement)]);
+            var ba = new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* BuyAction */](this_1.game, eff, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this_1.experience, new Decimal(50), expIncrement)]);
             ba.limit = new Decimal(10);
             eff.actions.push(ba);
             effMatrix[i].forEach(function (u) { return u.forEach(function (u2) { return u2.produces
@@ -4128,7 +4142,7 @@ var Prestige = (function () {
         this.effListEng = new Array();
         this.game.engineers.listEnginer.forEach(function (eng) {
             var eff = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](_this.game, "effEng" + eng.id, eng.name, eng.name + " 资源消耗减少5％。 最多减少50％。", true);
-            var ba = new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, eff, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(50), expIncrement)]);
+            var ba = new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* BuyAction */](_this.game, eff, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(50), expIncrement)]);
             ba.limit = new Decimal(10);
             eff.actions.push(ba);
             eng.produces.filter(function (p) { return p.efficiency.lessThanOrEqualTo(0); })
@@ -4145,7 +4159,7 @@ var Prestige = (function () {
         this.effListDep = new Array();
         this.game.engineers.listDep.forEach(function (dep) {
             var eff = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](_this.game, "effDep" + dep.id, dep.name, dep.name + " consume 5% less resources. Max -50%.", true);
-            var ba = new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, eff, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(60), expIncrement)]);
+            var ba = new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* BuyAction */](_this.game, eff, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(60), expIncrement)]);
             ba.limit = new Decimal(10);
             eff.actions.push(ba);
             dep.produces.filter(function (p) { return p.efficiency.lessThanOrEqualTo(0); })
@@ -4164,13 +4178,13 @@ var Prestige = (function () {
         this.timeMaker.percentage = 100;
         this.timeMaker.alwaysOn = true;
         this.timeBank = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this.game, "ptimeBank", "时间银行", "时间银行将最长存储时间增加1小时。 基地储存4小时。", true);
-        this.timeMaker.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.timeMaker, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(25), expIncrement)]));
-        this.timeBank.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.timeBank, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(100), expIncrement)]));
-        this.game.actMin = new __WEBPACK_IMPORTED_MODULE_1__units_action__["e" /* TimeWarp */](this.game, new Decimal(60), "分钟");
-        this.game.actHour = new __WEBPACK_IMPORTED_MODULE_1__units_action__["e" /* TimeWarp */](this.game, new Decimal(3600), "小时");
+        this.timeMaker.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* BuyAction */](this.game, this.timeMaker, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(25), expIncrement)]));
+        this.timeBank.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* BuyAction */](this.game, this.timeBank, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(100), expIncrement)]));
+        this.game.actMin = new __WEBPACK_IMPORTED_MODULE_1__units_action__["f" /* TimeWarp */](this.game, new Decimal(60), "分钟");
+        this.game.actHour = new __WEBPACK_IMPORTED_MODULE_1__units_action__["f" /* TimeWarp */](this.game, new Decimal(3600), "小时");
         this.time.actions.push(this.game.actMin);
         this.time.actions.push(this.game.actHour);
-        this.time.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["e" /* TimeWarp */](this.game, new Decimal(3600 * 24), "天"));
+        this.time.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["f" /* TimeWarp */](this.game, new Decimal(3600 * 24), "天"));
         // this.time.addProductor(new Production(this.timeMaker, new Decimal(0.1)))
         this.timeList = [this.time, this.timeMaker, this.timeBank];
         this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("时间管理", this.timeList));
@@ -4191,18 +4205,18 @@ var Prestige = (function () {
                     prod.bonusList.push([u, new Decimal(1)]);
                 });
             });
-            u.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](_this.game, u, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(12), expIncrement)]));
+            u.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* BuyAction */](_this.game, u, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](_this.experience, new Decimal(12), expIncrement)]));
             return u;
         });
         this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("非蚂蚁", this.otherList));
         //#endregion
         //#region World
         this.worldBuilder = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this.game, "worldBuilder", "世界建造者", "解锁世界建造者！ （一次性购买）");
-        this.worldBuilder.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.worldBuilder, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(1E3), expIncrement)]));
+        this.worldBuilder.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* BuyAction */](this.game, this.worldBuilder, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(1E3), expIncrement)]));
         // this.worldBuilder.buyAction.oneTime = true
         this.worldBuilder.buyAction.limit = new Decimal(1);
         this.worldBetter = new __WEBPACK_IMPORTED_MODULE_0__units_unit__["a" /* Unit */](this.game, "worldBetter", "世界适应", "增加新世界的积极影响。 + 50％'的生产'和'产量和消费'");
-        this.worldBetter.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["b" /* BuyAction */](this.game, this.worldBetter, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(10), expIncrement)]));
+        this.worldBetter.actions.push(new __WEBPACK_IMPORTED_MODULE_1__units_action__["c" /* BuyAction */](this.game, this.worldBetter, [new __WEBPACK_IMPORTED_MODULE_2__cost__["a" /* Cost */](this.experience, new Decimal(10), expIncrement)]));
         this.worldList = [this.worldBuilder, this.worldBetter];
         this.expLists.push(new __WEBPACK_IMPORTED_MODULE_3__typeList__["a" /* TypeList */]("世界", this.worldList));
         //#endregion
@@ -4239,103 +4253,103 @@ var Researchs = (function () {
     Researchs.prototype.initStuff = function () {
         var _this = this;
         //    Bi
-        this.bi = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("biResea", "商业智能", "查看资源的生产者或消耗者。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(2E3))], [], this.game);
+        this.bi = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("biResea", "商业智能", "查看资源的生产者或消耗者。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(2E3))], [], this.game);
         //    Evolution
-        this.evolution = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("evolution", "进化", "增加旅行到新世界的资源（x5），并增加你将获得的经验（x3）。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E10))], [], this.game, function () {
+        this.evolution = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("evolution", "进化", "增加旅行到新世界的资源（x5），并增加你将获得的经验（x3）。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E10))], [], this.game, function () {
             _this.game.world.toUnlock.forEach(function (t) { return t.basePrice = t.basePrice.times(5); });
             _this.game.world.experience = _this.game.world.experience.times(3);
         });
         //    Escape
-        this.escape = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("escapism", "逃避", "降低50％前往一个新的世界的资源需求。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E10))], [], this.game, function () {
+        this.escape = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("escapism", "逃避", "降低50％前往一个新的世界的资源需求。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E10))], [], this.game, function () {
             _this.game.world.toUnlock.forEach(function (t) { return t.basePrice = t.basePrice.div(2); });
             // this.game.world.toUnlockMax.forEach(t => t.basePrice = t.basePrice.times(4))
         });
         //    Adaptation
-        this.adaptation = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("adaptation", "适应", "降低50％前往一个新的世界的资源需求。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E8))], [this.escape], this.game, function () {
+        this.adaptation = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("adaptation", "适应", "降低50％前往一个新的世界的资源需求。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(5E8))], [this.escape], this.game, function () {
             _this.game.world.toUnlock.forEach(function (t) { return t.basePrice = t.basePrice.div(2); });
             //   this.game.world.toUnlockMax.forEach(t => t.basePrice = t.basePrice.times(4))
         });
         //  Time Warp
-        this.timeWarp = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("timeWarp", "时间扭曲", "每4小时更新。 明智地使用它。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1))], [], this.game, function () {
+        this.timeWarp = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("timeWarp", "时间扭曲", "每4小时更新。 明智地使用它。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1))], [], this.game, function () {
             _this.game.longUpdate(3600 * 4000, true);
         });
         //    Here and Now 2
-        this.hereAndNow2 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("han2Res", "此时此地2", "获得50％的世界经验。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E10))], [], this.game, function () {
-            var expToAdd = _this.game.world.experience.div(2);
+        this.hereAndNow2 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("han2Res", "此时此地2", "获得15％的世界经验。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E12))], [], this.game, function () {
+            var expToAdd = _this.game.world.experience.times(0.15);
             _this.game.prestige.experience.quantity = _this.game.prestige.experience.quantity.plus(expToAdd);
             _this.game.maxLevel = _this.game.maxLevel.plus(expToAdd);
             _this.game.expTabAv = true;
         });
         //    Here and Now
-        this.hereAndNow = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("hereAndNow", "此时此地", "获得10经验。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E9))], [this.timeWarp, this.hereAndNow2], this.game, function () {
+        this.hereAndNow = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("hereAndNow", "此时此地", "获得10经验。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E9))], [this.timeWarp, this.hereAndNow2], this.game, function () {
             _this.game.prestige.experience.quantity = _this.game.prestige.experience.quantity.plus(10);
             _this.game.maxLevel = _this.game.maxLevel.plus(10);
             _this.game.expTabAv = true;
         });
         //    University 4
-        this.depEduRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("depEduRes", "教育部门", "解锁教育部。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E10))], [this.game.science.depEdu], this.game);
+        this.depEduRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("depEduRes", "教育部门", "解锁教育部。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E10))], [this.game.science.depEdu], this.game);
         //    University 3
-        this.advancedLesson = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("advancedLesson", "高级课程", "大学也生产科学家", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E6))], [this.game.science.scientistProduction, this.depEduRes], this.game);
+        this.advancedLesson = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("advancedLesson", "高级课程", "大学也生产科学家", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E6))], [this.game.science.scientistProduction, this.depEduRes], this.game);
         //    University 2
-        this.publicLesson = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("publicLesson", "公共课", "大学还生产学生", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E5))], [this.game.science.studentProduction, this.advancedLesson], this.game);
+        this.publicLesson = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("publicLesson", "公共课", "大学还生产学生", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E5))], [this.game.science.studentProduction, this.advancedLesson], this.game);
         //    University
-        this.universityRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("University", "大学", "解锁大学。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(6E4))], [this.game.science.university, this.publicLesson], this.game);
+        this.universityRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("University", "大学", "解锁大学。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(6E4))], [this.game.science.university, this.publicLesson], this.game);
         //    Scientific Method
-        this.scientificMethod = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("scientificMethod", "科学方法", "科学生产 +100%", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(4E3))], [this.universityRes], this.game);
+        this.scientificMethod = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("scientificMethod", "科学方法", "科学生产 +100%", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(4E3))], [this.universityRes], this.game);
         this.game.baseWorld.science.bonusProduction.push([this.scientificMethod, new Decimal(1)]);
         //  Departements
         var deps = this.game.engineers.listDep;
-        this.departmentRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("departementsRes", "部门", "部门产生工程师。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E11))], deps, this.game);
+        this.departmentRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("departementsRes", "部门", "部门产生工程师。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E11))], deps, this.game);
         //    Engineer
         var eng = this.game.engineers.listEnginer;
-        this.engineerRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("engineerRes", "工程师", "工程师将慢慢建造机器。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E6))], eng.concat(this.departmentRes), this.game);
+        this.engineerRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("engineerRes", "工程师", "工程师将慢慢建造机器。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E6))], eng.concat(this.departmentRes), this.game);
         //    Planter
-        this.planterResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("planRes", "种植", "植树是移植树苗的过程。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.planterAnt], this.game);
+        this.planterResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("planRes", "种植", "植树是移植树苗的过程。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.planterAnt], this.game);
         //    Hydro
-        this.hydroResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("hydroRes", "水培", "水培是无土栽培植物的艺术。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.hydroAnt], this.game);
+        this.hydroResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("hydroRes", "水培", "水培是无土栽培植物的艺术。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.hydroAnt], this.game);
         //    Laser
-        this.laserResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("lasRes", "激光", "沙子可以融合成水晶。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.laserAnt], this.game);
+        this.laserResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("lasRes", "激光", "沙子可以融合成水晶。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.laserAnt], this.game);
         //    Refinery
-        this.refineryResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("refRes", "精炼厂", "土壤可以精制成沙子。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.refineryAnt], this.game);
+        this.refineryResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("refRes", "精炼厂", "土壤可以精制成沙子。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.refineryAnt], this.game);
         //    Compost
-        this.composterResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("compRes", "堆肥", "木材可以降解成肥沃的土壤。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.composterAnt], this.game);
+        this.composterResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("compRes", "堆肥", "木材可以降解成肥沃的土壤。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E4))], [this.game.baseWorld.composterAnt], this.game);
         //    Experiment
-        this.experimentResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("experimentRes", "实验", "解锁科学家蚂蚁", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(800))], [this.game.science.scientist, this.scientificMethod], this.game);
+        this.experimentResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("experimentRes", "实验", "解锁科学家蚂蚁", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(800))], [this.game.science.scientist, this.scientificMethod], this.game);
         //    Prestige
-        this.prestigeResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("prestigeRes", "旅行", "让你移动到新的世界。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E7))], [this.hereAndNow, this.adaptation, this.evolution], this.game, function () { _this.game.worldTabAv = true; });
+        this.prestigeResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("prestigeRes", "旅行", "让你移动到新的世界。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E7))], [this.hereAndNow, this.adaptation, this.evolution], this.game, function () { _this.game.worldTabAv = true; });
         //    Machinery
         var listM = new Array();
         listM = listM.concat(this.game.machines.listMachinery, [this.engineerRes]);
-        this.machineryRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("machiRes", "机器", "解锁功能强大的机器。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E6))], listM, this.game);
+        this.machineryRes = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("machiRes", "机器", "解锁功能强大的机器。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E6))], listM, this.game);
         //    Special
-        this.specialResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("speRes", "技术", "允许你研究新技术。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E3))], [this.composterResearch, this.refineryResearch, this.laserResearch, this.hydroResearch,
+        this.specialResearch = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("speRes", "技术", "允许你研究新技术。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(3E3))], [this.composterResearch, this.refineryResearch, this.laserResearch, this.hydroResearch,
             this.planterResearch, this.experimentResearch,
             this.machineryRes, this.prestigeResearch,
             this.bi], this.game);
         //    Up Combined
-        this.upCombined = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("upComb", "综合加成", "这是最终的加成：单位的加成乘以每个雇用的加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E10))], [], this.game);
+        this.upCombined = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("upComb", "综合加成", "这是最终的加成：单位的加成乘以每个雇用的加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1E10))], [], this.game);
         //    Up Hire
         var allUpH = Array.from(this.game.unitMap.values()).filter(function (u) { return u.upHire; }).map(function (u) { return u.upHire; });
         allUpH.push(this.upCombined);
-        this.r4 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R4", "双胞胎", "允许您以相同的价格获得更多的单位。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(7E3))], allUpH, this.game);
+        this.r4 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("R4", "双胞胎", "允许您以相同的价格获得更多的单位。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(7E3))], allUpH, this.game);
         //    Up 2
         var allUp = Array.from(this.game.unitMap.values()).filter(function (u) { return u.upAction; }).map(function (u) { return u.upAction; });
         allUp.push(this.r4);
-        this.r2 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R2", "团队合作2", "升级您的单位生产加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(500))], allUp, this.game);
+        this.r2 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("R2", "团队合作2", "升级您的单位生产加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(500))], allUp, this.game);
         //    Up basic
-        this.up1 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("RUp1", "团队合作", "根据您购买单位的次数提供生产加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(50))], [this.r2], this.game);
+        this.up1 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("RUp1", "团队合作", "根据您购买单位的次数提供生产加成。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(50))], [this.r2], this.game);
         //    Hunter 2
-        var hunting2 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("HuntR2", "高级狩猎", "蚂蚁装备更好的武器。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(4000))], [this.game.baseWorld.advancedHunter], this.game);
+        var hunting2 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("HuntR2", "高级狩猎", "蚂蚁装备更好的武器。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(4000))], [this.game.baseWorld.advancedHunter], this.game);
         //    Hunter
-        var hunting = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("HuntR1", "狩猎", "用武器装备蚂蚁以获得食物。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(2000))], [this.game.baseWorld.hunter, hunting2, this.specialResearch], this.game);
+        var hunting = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("HuntR1", "狩猎", "用武器装备蚂蚁以获得食物。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(2000))], [this.game.baseWorld.hunter, hunting2, this.specialResearch], this.game);
         //    Wood
-        var woodcutting = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("WR1", "伐木", "允许您收集木材以备将来使用。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1000))], [this.game.baseWorld.lumberjack, hunting], this.game);
+        var woodcutting = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("WR1", "伐木", "允许您收集木材以备将来使用。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1000))], [this.game.baseWorld.lumberjack, hunting], this.game);
         //    Fungus up
-        var r3 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R3", "真菌实验", "允许你通过做实验来增加真菌的食物生产。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1000))], [this.game.baseWorld.fungus.upSpecial], this.game);
+        var r3 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("R3", "真菌实验", "允许你通过做实验来增加真菌的食物生产。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(1000))], [this.game.baseWorld.fungus.upSpecial], this.game);
         //    Farming
-        var r1 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("R1", "蚂蚁的真菌共生", "让你培养真菌。 真菌是食物的来源。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(100))], [this.game.baseWorld.farmer, r3, woodcutting], this.game);
+        var r1 = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("R1", "蚂蚁的真菌共生", "让你培养真菌。 真菌是食物的来源。", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(100))], [this.game.baseWorld.farmer, r3, woodcutting], this.game);
         //    Soil
-        this.rDirt = new __WEBPACK_IMPORTED_MODULE_0__units_action__["a" /* Research */]("RDirt", "土壤", "允许您收集土壤以备将来使用", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(50))], [this.game.baseWorld.soil, this.game.baseWorld.carpenter, r1, this.up1], this.game);
+        this.rDirt = new __WEBPACK_IMPORTED_MODULE_0__units_action__["b" /* Research */]("RDirt", "土壤", "允许您收集土壤以备将来使用", [new __WEBPACK_IMPORTED_MODULE_1__cost__["a" /* Cost */](this.game.baseWorld.science, new Decimal(50))], [this.game.baseWorld.soil, this.game.baseWorld.carpenter, r1, this.up1], this.game);
     };
     Researchs.prototype.addWorld = function () {
     };
@@ -4392,26 +4406,26 @@ var Science = (function () {
         var specialFood = new Decimal(1E7);
         var specialRes2 = new Decimal(1E4);
         //    Student
-        this.student.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["d" /* BuyAndUnlockAction */](this.game, this.student, [
+        this.student.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["e" /* BuyAndUnlockAction */](this.game, this.student, [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, new Decimal(1000), new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.crystal, new Decimal(100), new Decimal(this.game.buyExp)),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), new Decimal(this.game.buyExpUnit))
         ], [this.game.baseWorld.science]));
-        this.student.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.student, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
-        this.student.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.student, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
+        this.student.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpAction */](this.game, this.student, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceExp)]));
+        this.student.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["h" /* UpHire */](this.game, this.student, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost2, this.game.upgradeScienceHireExp)]));
         //  Scientist
         // this.scientist.types = [Type.Ant]
-        this.scientist.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.scientist, [
+        this.scientist.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["c" /* BuyAction */](this.game, this.scientist, [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.food, specialFood.div(5), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.crystal, specialRes2.div(5), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.littleAnt, new Decimal(1), this.game.buyExpUnit)
         ]));
         this.game.baseWorld.science.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.scientist, specialProduction.times(2)));
         this.game.baseWorld.crystal.addProductor(new __WEBPACK_IMPORTED_MODULE_1__production__["a" /* Production */](this.scientist, specialCost));
-        this.scientist.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["f" /* UpAction */](this.game, this.scientist, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
-        this.scientist.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpHire */](this.game, this.scientist, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceHireExp)]));
+        this.scientist.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["g" /* UpAction */](this.game, this.scientist, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceExp)]));
+        this.scientist.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["h" /* UpHire */](this.game, this.scientist, [new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.science, this.game.scienceCost3, this.game.upgradeScienceHireExp)]));
         //  University
-        this.university.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.university, [
+        this.university.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["c" /* BuyAction */](this.game, this.university, [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.wood, this.game.machines.price1.times(2), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.game.machines.price2.times(2), this.game.buyExp)
         ]));
@@ -4424,7 +4438,7 @@ var Science = (function () {
             new __WEBPACK_IMPORTED_MODULE_0__units_togableProductions__["a" /* TogableProduction */]("产生科学家", [this.scientistProduction])
         ];
         //  Dep
-        this.depEdu.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["b" /* BuyAction */](this.game, this.depEdu, [
+        this.depEdu.actions.push(new __WEBPACK_IMPORTED_MODULE_3__units_action__["c" /* BuyAction */](this.game, this.depEdu, [
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.university, new Decimal(100), this.game.buyExpUnit),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.wood, this.game.machines.price1.times(100), this.game.buyExp),
             new __WEBPACK_IMPORTED_MODULE_4__cost__["a" /* Cost */](this.game.baseWorld.crystal, this.game.machines.price2.times(100), this.game.buyExp),
@@ -4930,7 +4944,7 @@ ResPipePipe = __decorate([
 /***/ "../../../../../src/app/ui/ui.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form>\n\n  <section class=\"form-block\">\n    <label>界面选项</label>\n\n    <div class=\"form-group\">\n      <div class=\"toggle-switch\">\n        <input name=\"dark\" type=\"checkbox\" id=\"toggle_1\" [(ngModel)]=\"gameService.game.options.dark\" (change)=\"setCss()\">\n        <label for=\"toggle_1\">使用黑色皮肤</label>\n      </div>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"selects_1\">顶部颜色</label>\n      <div class=\"select\">\n        <select name=\"header\" id=\"selects_1\" [(ngModel)]=\"gameService.game.options.header\">\n          <option>1</option>\n          <option>2</option>\n          <option>3</option>\n          <option>4</option>\n          <option>5</option>\n          <option>6</option>\n          <option>7</option>\n        </select>\n      </div>\n\n    </div>\n  </section>\n\n</form>\n"
+module.exports = "<form>\n\n  <section class=\"form-block\">\n    <label>界面选项</label>\n\n    <div class=\"form-group\">\n      <div class=\"toggle-switch\">\n        <input name=\"dark\" type=\"checkbox\" id=\"toggle_1\" [(ngModel)]=\"gameService.game.options.dark\" (change)=\"setCss()\">\n        <label for=\"toggle_1\">使用黑色皮肤</label>\n      </div>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"selects_1\">顶部颜色</label>\n      <div class=\"select\">\n        <select name=\"header\" id=\"selects_1\" [(ngModel)]=\"gameService.game.options.header\">\n          <option [class.darkFix]=\"gameService.game.options.dark\">1</option>\n          <option [class.darkFix]=\"gameService.game.options.dark\">2</option>\n          <option [class.darkFix]=\"gameService.game.options.dark\">3</option>\n          <option [class.darkFix]=\"gameService.game.options.dark\">4</option>\n          <option [class.darkFix]=\"gameService.game.options.dark\">5</option>\n          <option [class.darkFix]=\"gameService.game.options.dark\">6</option>\n          <option [class.darkFix]=\"gameService.game.options.dark\">7</option>\n        </select>\n      </div>\n\n      <div class=\"form-group\">\n        <div class=\"toggle-switch\">\n          <input type=\"checkbox\" id=\"format\" name=\"format\" [(ngModel)]=\"gameService.game.options.usaFormat\">\n          <label for=\"format\">替代数字格式</label>\n        </div>\n      </div>\n\n    </div>\n\n  </section>\n\n</form>\n"
 
 /***/ }),
 
@@ -5137,7 +5151,7 @@ var _a, _b, _c, _d;
 /***/ "../../../../../src/app/world-builder/world-builder.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"this.gameService.game.prestige.worldBuilder.buyAction.owned(); else super_anti_cheat\">\n  <div class=\"row\">\n    <div class=\"col-xs-6 col-md-6 col-lg-6 col-xl-6\">\n      <form>\n\n        <form>\n          <section class=\"form-block\">\n            <label>Generate your world</label>\n            <div class=\"form-group\">\n              <label for=\"aForm_1\">Level</label>\n              <label role=\"tooltip\" class=\"tooltip tooltip-validation tooltip-md\" for=\"aForm_1\" [class.invalid]=\"level > this.gameService.game.maxMax || level <0\">\n                <input type=\"number\" name=\"level\" [placeholder]=\"gameService.game.maxMax\" [(ngModel)]=\"level\" [min]=\"gameService.game.minUser\"\n                  [max]=\"gameService.game.maxMax\" (change)=\"generate($event)\">\n                <span class=\"tooltip-content\">\n                  Level not valid.\n                </span>\n              </label>\n\n            </div>\n\n            <div class=\"form-group\">\n              <label for=\"aForm_pre\">Prefix</label>\n              <div class=\"select\">\n                <select id=\"aForm_pre\" name=\"pre\" [(ngModel)]=\"preName\" (change)=\"setPre($event)\">\n                  <option *ngFor=\"let pre of World.worldPrefix\">\n                    {{pre.name}}\n                  </option>\n                </select>\n              </div>\n            </div>\n\n            <div class=\"form-group\">\n              <label for=\"aForm_type\">Type</label>\n              <div class=\"select\">\n                <select id=\"aForm_type\" name=\"type\" [(ngModel)]=\"typeName\" (change)=\"setType($event)\">\n                  <option *ngFor=\"let pre of World.worldTypes\">\n                    {{pre.name}}\n                  </option>\n                </select>\n              </div>\n            </div>\n\n            <div class=\"form-group\">\n              <label for=\"aForm_suff\">Suffix</label>\n              <div class=\"select\">\n                <select id=\"aForm_suff\" name=\"suff\" [(ngModel)]=\"suffName\" (change)=\"setSuff($event)\">\n                  <option *ngFor=\"let pre of World.worldSuffix\">\n                    {{pre.name}}\n                  </option>\n                </select>\n              </div>\n            </div>\n\n            <!-- <button type=\"submit\" class=\"btn btn-primary\">Button</button> -->\n          </section>\n        </form>\n\n      </form>\n    </div>\n    <div class=\"col-xs-6 col-md-6 col-lg-6 col-xl-6\">\n      <app-world [world]=\"world\" [showKeep]=\"false\"></app-world>\n    </div>\n  </div>\n</div>\n\n<ng-template #super_anti_cheat>\n  <h1>You shoud not be here, buy the world builder</h1>\n</ng-template>\n"
+module.exports = "<div *ngIf=\"this.gameService.game.prestige.worldBuilder.buyAction.owned(); else super_anti_cheat\">\n  <div class=\"row\">\n    <div class=\"col-xs-6 col-md-6 col-lg-6 col-xl-6\">\n      <form>\n\n        <form>\n          <section class=\"form-block\">\n            <label>Generate your world</label>\n            <div class=\"form-group\">\n              <label for=\"aForm_1\">Level</label>\n              <label role=\"tooltip\" class=\"tooltip tooltip-validation tooltip-md\" for=\"aForm_1\" [class.invalid]=\"level > this.gameService.game.maxMax || level <0\">\n                <input type=\"number\" name=\"level\" [placeholder]=\"gameService.game.maxMax\" [(ngModel)]=\"level\" [min]=\"gameService.game.minUser\"\n                  [max]=\"gameService.game.maxMax\" (change)=\"generate($event)\">\n                <span class=\"tooltip-content\">\n                  Level not valid.\n                </span>\n              </label>\n\n            </div>\n\n            <div class=\"form-group\">\n              <label for=\"aForm_pre\">Prefix</label>\n              <div class=\"select\" >\n                <select id=\"aForm_pre\" name=\"pre\" [(ngModel)]=\"preName\" (change)=\"setPre($event)\">\n                  <option *ngFor=\"let pre of World.worldPrefix\" [class.darkFix]=\"gameService.game.options.dark\">\n                    {{pre.name}}\n                  </option>\n                </select>\n              </div>\n            </div>\n\n            <div class=\"form-group\">\n              <label for=\"aForm_type\">Type</label>\n              <div class=\"select\">\n                <select id=\"aForm_type\" name=\"type\" [(ngModel)]=\"typeName\" (change)=\"setType($event)\">\n                  <option *ngFor=\"let pre of World.worldTypes\" [class.darkFix]=\"gameService.game.options.dark\">\n                    {{pre.name}}\n                  </option>\n                </select>\n              </div>\n            </div>\n\n            <div class=\"form-group\">\n              <label for=\"aForm_suff\">Suffix</label>\n              <div class=\"select\">\n                <select id=\"aForm_suff\" name=\"suff\" [(ngModel)]=\"suffName\" (change)=\"setSuff($event)\">\n                  <option *ngFor=\"let pre of World.worldSuffix\" [class.darkFix]=\"gameService.game.options.dark\">\n                    {{pre.name}}\n                  </option>\n                </select>\n              </div>\n            </div>\n\n            <!-- <button type=\"submit\" class=\"btn btn-primary\">Button</button> -->\n          </section>\n        </form>\n\n      </form>\n    </div>\n    <div class=\"col-xs-6 col-md-6 col-lg-6 col-xl-6\">\n      <app-world [world]=\"world\" [showKeep]=\"false\"></app-world>\n    </div>\n  </div>\n</div>\n\n<ng-template #super_anti_cheat>\n  <h1>You shoud not be here, buy the world builder</h1>\n</ng-template>\n"
 
 /***/ }),
 
